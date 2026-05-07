@@ -1,4 +1,5 @@
 :root {
+  /* Colors */
   --bg0: #05090f;
   --bg1: #080e1a;
   --bg2: #0c1424;
@@ -21,11 +22,37 @@
   --text0: #eef2ff;
   --text1: #8da0c4;
   --text2: #4d6285;
-  --r8: 8px;
+
+  /* Border radii */
+  --r6:  6px;
+  --r8:  8px;
   --r12: 12px;
   --r16: 16px;
   --r22: 22px;
   --r32: 32px;
+
+  /* Fonts */
   --font-display: 'Syne', sans-serif;
   --font-body: 'DM Sans', sans-serif;
+
+  /* Layout */
+  --sidebar-w: 260px;
+  --topbar-h: 60px;
+  --content-px: 36px;
+  --content-py: 32px;
+  --content-pb: 60px;
+
+  /* Spacing scale */
+  --sp4:  4px;
+  --sp8:  8px;
+  --sp10: 10px;
+  --sp12: 12px;
+  --sp14: 14px;
+  --sp16: 16px;
+  --sp18: 18px;
+  --sp20: 20px;
+  --sp24: 24px;
+  --sp28: 28px;
+  --sp32: 32px;
+  --sp36: 36px;
 }

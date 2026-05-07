@@ -97,6 +97,10 @@
 .tot-box.blue .tot-val { color: #8ea6ff; }
 
 @media (max-width: 900px) {
-  .al-grid      { grid-template-columns: 1fr; }
-  .totals-row   { grid-template-columns: 1fr; }
+  .al-grid    { grid-template-columns: 1fr; }
+  .totals-row { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (max-width: 600px) {
+  .totals-row { grid-template-columns: 1fr; }
 }

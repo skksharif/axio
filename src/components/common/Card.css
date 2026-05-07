@@ -4,7 +4,9 @@
   border-radius: var(--r22);
   padding: 24px;
   margin-bottom: 16px;
+  width: 100%;
 }
+.card:last-child { margin-bottom: 0; }
 .card.accent-card {
   background: rgba(79, 110, 247, .06);
   border-color: rgba(79, 110, 247, .25);

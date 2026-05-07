@@ -1,10 +1,16 @@
 @import './variables.css';
 @import './animations.css';
 
-* {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
@@ -14,62 +20,72 @@ body {
   font-size: 14px;
   line-height: 1.5;
   min-height: 100vh;
-  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-/* LAYOUT */
+/* ─── LAYOUT ─────────────────────────────────────────────── */
 .app {
   display: flex;
   min-height: 100vh;
+  overflow-x: hidden;
 }
 
 .main-content {
-  margin-left: 260px;
+  margin-left: var(--sidebar-w);
   flex: 1;
+  min-width: 0;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  overflow-x: hidden;
 }
 
 .screen-area {
   flex: 1;
-  padding: 32px 36px 60px;
-  max-width: 960px;
   width: 100%;
+  padding: var(--content-py) var(--content-px) var(--content-pb);
 }
 
-/* GRID UTILITIES */
-.g2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-.g3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
-.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
-.grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+/* ─── GRID UTILITIES ─────────────────────────────────────── */
+.g2     { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp14); }
+.g3     { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: var(--sp12); }
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--sp10); }
+.grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--sp10); }
 
-/* TEXT UTILITIES */
-.text-small { font-size: 12px; }
-.text-xs { font-size: 11px; }
-.text-strong { color: var(--text0); font-weight: 700; }
+/* ─── TEXT UTILITIES ─────────────────────────────────────── */
+.text-small   { font-size: 12px; }
+.text-xs      { font-size: 11px; }
+.text-strong  { color: var(--text0); font-weight: 700; }
 .text-border2 { color: var(--border2); }
-.text-green { color: var(--green); }
-.text-yellow { color: var(--yellow); }
-.text-red { color: var(--red); }
+.text-green   { color: var(--green); }
+.text-yellow  { color: var(--yellow); }
+.text-red     { color: var(--red); }
+.text-accent  { color: var(--accent); }
 
-/* SPACING UTILITIES */
-.mb-24 { margin-bottom: 24px; }
-.mb-16 { margin-bottom: 16px; }
-.mb-14 { margin-bottom: 14px; }
-.padding-0 { padding: 0; }
+/* ─── SPACING UTILITIES ──────────────────────────────────── */
+.mb-4  { margin-bottom: var(--sp4); }
+.mb-8  { margin-bottom: var(--sp8); }
+.mb-12 { margin-bottom: var(--sp12); }
+.mb-14 { margin-bottom: var(--sp14); }
+.mb-16 { margin-bottom: var(--sp16); }
+.mb-20 { margin-bottom: var(--sp20); }
+.mb-24 { margin-bottom: var(--sp24); }
+.mb-28 { margin-bottom: var(--sp28); }
 
-/* FLEX UTILITIES */
+/* ─── FLEX UTILITIES ─────────────────────────────────────── */
 .flex-between { display: flex; justify-content: space-between; align-items: center; }
-.flex-center { display: flex; align-items: center; justify-content: center; }
+.flex-start   { display: flex; align-items: flex-start; }
+.flex-center  { display: flex; align-items: center; justify-content: center; }
+.flex-col     { display: flex; flex-direction: column; }
 
-/* DIVIDER */
-.divider { height: 1px; background: var(--border); margin: 20px 0; }
+/* ─── DIVIDER ────────────────────────────────────────────── */
+.divider { height: 1px; background: var(--border); margin: var(--sp20) 0; }
 
-/* HIDDEN */
+/* ─── VISIBILITY ─────────────────────────────────────────── */
 .hidden { display: none !important; }
 
-/* FORM LABELS & INPUTS */
+/* ─── FORM BASE ──────────────────────────────────────────── */
 .fl {
   display: block;
   font-size: 10.5px;
@@ -90,12 +106,12 @@ body {
   font-size: 14px;
   padding: 0 14px;
   outline: none;
-  transition: border .15s;
+  transition: border-color .15s;
   font-family: var(--font-body);
 }
-.inp:focus { border-color: var(--accent); }
+.inp:focus       { border-color: var(--accent); }
 .inp::placeholder { color: var(--text2); }
-.inp.error { border-color: var(--red); }
+.inp.error       { border-color: var(--red); }
 
 .sel {
   width: 100%;
@@ -108,48 +124,56 @@ body {
   padding: 0 14px;
   outline: none;
   -webkit-appearance: none;
+  appearance: none;
   cursor: pointer;
   font-family: var(--font-body);
+  transition: border-color .15s;
 }
 .sel:focus { border-color: var(--accent); }
 
-.fld { margin-bottom: 16px; }
-.fld:last-child { margin-bottom: 0; }
+.fld { margin-bottom: var(--sp16); }
+.fld + .fld:last-child { margin-bottom: 0; }
 
 .error-msg {
   font-size: 11px;
   color: var(--red);
-  margin-top: 4px;
+  margin-top: var(--sp4);
 }
 
-/* RANGE SLIDER */
-input[type=range] {
+/* ─── RANGE INPUT ────────────────────────────────────────── */
+input[type="range"] {
   width: 100%;
   accent-color: var(--accent);
   cursor: pointer;
   height: 4px;
   margin-bottom: 6px;
+  display: block;
 }
 
-/* OTP */
-.otp-inputs { display: flex; gap: 10px; margin: 20px 0; }
-.otp-inp {
-  width: 50px;
-  height: 56px;
-  background: var(--bg2);
-  border: 1px solid var(--border);
-  border-radius: var(--r8);
-  color: var(--text0);
-  font-size: 22px;
-  font-weight: 800;
-  text-align: center;
-  outline: none;
-  font-family: var(--font-display);
-}
-.otp-inp:focus { border-color: var(--accent); }
+/* ─── RESPONSIVE ─────────────────────────────────────────── */
 
-/* RESPONSIVE */
+/* Tablet: sidebar still visible, but content padding shrinks */
+@media (max-width: 1100px) {
+  .screen-area { padding: var(--content-py) 28px var(--content-pb); }
+}
+
+/* Small tablet / large phone: sidebar collapses */
 @media (max-width: 900px) {
-  .main-content { margin-left: 0; }
-  .screen-area { padding: 20px; }
+  .main-content {
+    margin-left: 0;
+  }
+  .screen-area {
+    padding: var(--sp20) var(--sp20) 48px;
+  }
+  .g2     { grid-template-columns: 1fr; }
+  .g3     { grid-template-columns: 1fr 1fr; }
+  .grid-3 { grid-template-columns: 1fr 1fr; }
+  .grid-4 { grid-template-columns: 1fr 1fr; }
+}
+
+/* Phone */
+@media (max-width: 520px) {
+  .g3     { grid-template-columns: 1fr; }
+  .grid-3 { grid-template-columns: 1fr; }
+  .grid-4 { grid-template-columns: 1fr 1fr; }
 }

@@ -3,7 +3,7 @@ import { SCREENS } from '../../constants/screens';
 import { getInitials } from '../../utils/format';
 import './TopBar.css';
 
-export function TopBar() {
+export function TopBar({ onMenuClick }) {
   const { state } = useApp();
   const { currentScreen, firstName, lastName } = state;
   const screen = SCREENS[currentScreen];
@@ -12,6 +12,9 @@ export function TopBar() {
   return (
     <div className="topbar">
       <div className="topbar-left">
+        <button className="topbar-hamburger" onClick={onMenuClick} aria-label="Open navigation">
+          <span /><span /><span />
+        </button>
         <span className="topbar-step">Step {currentScreen + 1} of {SCREENS.length}</span>
         <span className="topbar-divider">·</span>
         <span className="topbar-title">{screen?.label}</span>

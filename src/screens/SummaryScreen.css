@@ -121,5 +121,12 @@
 @media (max-width: 900px) {
   .metrics-grid { grid-template-columns: repeat(2, 1fr); }
   .ah-row { flex-direction: column; }
-  .submit-card { flex-direction: column; align-items: flex-start; }
+  .ah-top { padding: 18px; }
+  .ah-bottom { padding: 16px 18px; }
+  .submit-card { flex-direction: column; align-items: stretch; }
+}
+
+@media (max-width: 520px) {
+  .metrics-grid { grid-template-columns: repeat(2, 1fr); }
+  .svc-demo-bar { flex-wrap: wrap; }
 }
