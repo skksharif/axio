@@ -15,7 +15,7 @@ export const SCREENS = [
 ];
 
 export const TRUST_SIDEBAR = [
-  { icon: '🛡', text: 'Zero credit file impact during matching' },
-  { icon: '🔒', text: 'Bank-grade 256-bit encryption' },
-  { icon: '📱', text: 'Electronic only — no pressure calls' },
+  { icon: 'ShieldCheck', text: 'Zero credit file impact during matching' },
+  { icon: 'Lock',        text: 'Bank-grade 256-bit encryption' },
+  { icon: 'Smartphone',  text: 'Electronic only — no pressure calls' },
 ];

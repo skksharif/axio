@@ -12,7 +12,7 @@ export function LiabilitiesScreen() {
   return (
     <div className="screen-enter">
       <ScreenHeader
-        eyebrow="✦ Step 6 · Liabilities"
+        eyebrow="Step 6 · Liabilities"
         title="Your"
         titleGradient="liabilities"
         sub="Select all that apply. Any asset with finance attached is pre-linked below — no re-entry needed."
@@ -33,7 +33,7 @@ export function LiabilitiesScreen() {
             on={!!state.liabilities[l.id]}
             onToggle={() => toggleLiability(l.id)}
             isLinked={l.linked}
-            linkedMeta={l.linked ? '✦ Auto-linked from Real-estate · $410,000' : null}
+            linkedMeta={l.linked ? 'Auto-linked from Real-estate · $410,000' : null}
           />
         ))}
       </div>

@@ -4,19 +4,60 @@
   gap: 14px;
 }
 .lender-card {
-  border-radius: var(--r22); border: 1px solid var(--border);
-  background: var(--bg1); overflow: hidden; display: flex; flex-direction: column;
+  border-radius: var(--r22);
+  border: 1px solid var(--glass-border);
+  background: rgba(23, 16, 47, 0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: var(--card-shadow);
+  transition: border-color .22s, box-shadow .22s, transform .22s;
 }
-.lender-card.best { border-color: rgba(79,110,247,.45); background: rgba(79,110,247,.04); }
+.lender-card:hover {
+  border-color: rgba(139, 92, 246, 0.35);
+  box-shadow: var(--card-shadow-hover);
+  transform: translateY(-2px);
+}
+.lender-card.best {
+  border-color: rgba(139, 92, 246, 0.5);
+  background: rgba(109, 40, 217, 0.1);
+  box-shadow: 0 0 0 1px rgba(139, 92, 246, 0.25), var(--card-shadow);
+}
 
-.lender-head { padding: 18px 18px 14px; border-bottom: 1px solid var(--border); }
-.lender-name { font-family: var(--font-display); font-size: 16px; font-weight: 800; margin-bottom: 4px; }
-.lender-rate { font-family: var(--font-display); font-size: 28px; font-weight: 900; }
+.lender-head {
+  padding: 18px 18px 14px;
+  border-bottom: 1px solid var(--border);
+}
+.lender-name {
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+.lender-rate {
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: -.5px;
+}
 .lender-rate span { font-size: 13px; font-weight: 400; color: var(--text1); }
 
-.type-pill { font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 20px; border: 1px solid; }
-.type-fixed    { border-color: rgba(79,110,247,.4); color: #8ea6ff; background: rgba(79,110,247,.1); }
-.type-variable { border-color: rgba(245,166,35,.35); color: var(--yellow); background: var(--yellowbg); }
+.type-pill {
+  font-size: 11px; font-weight: 600; padding: 3px 9px;
+  border-radius: 20px; border: 1px solid;
+}
+.type-fixed {
+  border-color: rgba(139, 92, 246, 0.4);
+  color: var(--hover);
+  background: rgba(139, 92, 246, 0.12);
+}
+.type-variable {
+  border-color: rgba(245, 158, 11, 0.35);
+  color: var(--yellow);
+  background: var(--yellowbg);
+}
 
 .lender-body { padding: 14px 18px; flex: 1; }
 .fee-row {
@@ -25,14 +66,15 @@
 }
 .fee-row.last { border-bottom: none; }
 .fee-label { color: var(--text1); display: flex; align-items: center; gap: 5px; }
-.fee-val { font-weight: 700; }
+.fee-val   { font-weight: 700; }
 .fee-val.green  { color: var(--green); }
 .fee-val.yellow { color: var(--yellow); }
 
 .qmark {
   width: 16px; height: 16px; border-radius: 50%;
-  background: var(--bg3); border: 1px solid var(--border2);
-  font-size: 10px; font-weight: 700; color: #8ea6ff;
+  background: rgba(30, 27, 75, 0.8);
+  border: 1px solid rgba(167, 139, 250, 0.25);
+  font-size: 10px; font-weight: 700; color: var(--hover);
   display: flex; align-items: center; justify-content: center;
   cursor: help; position: relative;
 }
@@ -40,31 +82,47 @@
 .tooltip {
   position: absolute; bottom: calc(100% + 8px); left: 50%;
   transform: translateX(-50%); width: 220px;
-  background: var(--bg1); border: 1px solid rgba(79,110,247,.35);
+  background: rgba(26, 11, 56, 0.95);
+  border: 1px solid rgba(139, 92, 246, 0.35);
   border-radius: var(--r12); padding: 12px 14px;
-  z-index: 99; pointer-events: none; opacity: 0; transition: opacity .15s;
+  z-index: 99; pointer-events: none; opacity: 0;
+  transition: opacity .18s;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: var(--glow-sm);
 }
 .tooltip.vis { opacity: 1; pointer-events: auto; }
 .tooltip-ai  { display: flex; align-items: center; gap: 7px; margin-bottom: 7px; }
 .tooltip-ai-icon {
-  width: 20px; height: 20px; border-radius: 50%; background: var(--accentg);
+  width: 20px; height: 20px; border-radius: 50%;
+  background: var(--accentg);
   display: flex; align-items: center; justify-content: center;
   font-size: 8px; font-weight: 800; color: #fff;
+  box-shadow: var(--glow-sm);
 }
-.tooltip-title { font-size: 11px; font-weight: 700; color: #8ea6ff; }
+.tooltip-title { font-size: 11px; font-weight: 700; color: var(--hover); }
 .tooltip-body  { font-size: 11.5px; color: var(--text1); line-height: 1.55; }
 
 .lender-repay {
   padding: 12px 18px;
-  background: rgba(79,110,247,.08);
-  border-top: 1px solid rgba(79,110,247,.15);
+  background: rgba(109, 40, 217, 0.1);
+  border-top: 1px solid rgba(139, 92, 246, 0.18);
 }
-.lr-label { font-size: 11px; color: var(--text1); margin-bottom: 2px; }
-.lr-val   { font-family: var(--font-display); font-size: 20px; font-weight: 900; }
+.lr-label { font-size: 11px; color: var(--text1); margin-bottom: 2px; font-weight: 500; }
+.lr-val   {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: -.3px;
+}
 .lr-note  { font-size: 10.5px; color: var(--text2); margin-top: 2px; }
 
-.approval-section { padding: 12px 18px; border-top: 1px solid var(--border); background: var(--bg2); }
-.approval-bar  { height: 5px; background: var(--bg3); border-radius: 5px; overflow: hidden; margin: 8px 0; }
+.approval-section {
+  padding: 12px 18px;
+  border-top: 1px solid var(--border);
+  background: rgba(30, 27, 75, 0.4);
+}
+.approval-bar  { height: 5px; background: rgba(167, 139, 250, 0.1); border-radius: 5px; overflow: hidden; margin: 8px 0; }
 .approval-fill { height: 100%; border-radius: 5px; }
 
 .reason {
@@ -74,17 +132,39 @@
 .reason::before {
   content: ''; width: 5px; height: 5px;
   border-radius: 50%; background: var(--green); flex-shrink: 0;
+  box-shadow: 0 0 4px rgba(16, 185, 129, 0.6);
 }
 
 .lender-cta { margin: 12px 18px 16px; }
-.lender-cta button { width: 100%; height: 40px; border-radius: var(--r8); border: none; font-size: 13px; font-weight: 700; cursor: pointer; font-family: var(--font-display); }
-.primary-cta { background: var(--accentg); color: #fff; }
-.ghost-cta   { background: transparent; border: 1px solid var(--border2) !important; color: var(--text1); }
+.lender-cta button {
+  width: 100%; height: 40px; border-radius: var(--r8);
+  border: none; font-size: 13px; font-weight: 600;
+  cursor: pointer; font-family: var(--font-body);
+  transition: all .18s;
+}
+.primary-cta {
+  background: var(--accentg);
+  color: #fff;
+  box-shadow: 0 4px 14px rgba(109, 40, 217, 0.4);
+}
+.primary-cta:hover {
+  box-shadow: 0 6px 20px rgba(109, 40, 217, 0.55);
+  transform: translateY(-1px);
+}
+.ghost-cta {
+  background: transparent;
+  border: 1px solid var(--border2) !important;
+  color: var(--text1);
+}
+.ghost-cta:hover {
+  border-color: var(--hover) !important;
+  color: var(--text0);
+  background: rgba(139, 92, 246, 0.08);
+}
 
 @media (max-width: 1100px) {
   .lender-grid { grid-template-columns: 1fr 1fr; }
 }
-
 @media (max-width: 900px) {
   .lender-grid { grid-template-columns: 1fr; }
 }

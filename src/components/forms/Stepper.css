@@ -1,11 +1,13 @@
 .stepper {
   display: flex;
   align-items: center;
-  background: var(--bg2);
+  background: rgba(30, 27, 75, 0.6);
   border: 1px solid var(--border);
   border-radius: var(--r8);
   overflow: hidden;
   height: 42px;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
 }
 .st-btn {
   width: 40px;
@@ -19,13 +21,17 @@
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  transition: all .15s;
+  transition: all .18s;
 }
-.st-btn:hover { background: var(--bg3); color: var(--text0); }
+.st-btn:hover {
+  background: rgba(139, 92, 246, 0.15);
+  color: var(--text0);
+}
 .st-val {
   min-width: 88px;
   text-align: center;
   font-size: 14px;
   font-weight: 700;
   font-family: var(--font-display);
+  color: var(--text0);
 }

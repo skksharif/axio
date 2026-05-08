@@ -10,14 +10,19 @@
   height: 56px;
   border-radius: var(--r8);
   border: 1.5px solid var(--border2);
-  background: var(--bg3);
+  background: rgba(30, 27, 75, 0.65);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   color: var(--text0);
   font-size: 22px;
   font-weight: 800;
   text-align: center;
   font-family: var(--font-display);
   outline: none;
-  transition: border-color .15s;
-  caret-color: var(--accent);
+  transition: border-color .2s, box-shadow .2s;
+  caret-color: var(--hover);
 }
-.otp-inp:focus { border-color: var(--accent); }
+.otp-inp:focus {
+  border-color: var(--hover);
+  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.2), var(--glow-sm);
+}

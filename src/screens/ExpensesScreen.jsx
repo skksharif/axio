@@ -1,3 +1,5 @@
+import { Users, AlertTriangle } from 'lucide-react';
+import { Icon } from '../components/common/Icon';
 import { useApp } from '../context/AppContext';
 import { ScreenHeader } from '../components/common/ScreenHeader';
 import { AnikaStrip } from '../components/common/AnikaStrip';
@@ -22,7 +24,7 @@ export function ExpensesScreen() {
   return (
     <div className="screen-enter">
       <ScreenHeader
-        eyebrow="✦ Step 7 · Living expenses"
+        eyebrow="Step 7 · Living expenses"
         title="Monthly"
         titleGradient="living expenses"
         sub="Declare your actual monthly costs. Accuracy matters — lenders cross-check against bank statements."
@@ -32,7 +34,9 @@ export function ExpensesScreen() {
         <div className={`shared-card ${isCouple ? 'show' : ''}`}>
           <div className="shared-top">
             <div>
-              <div className="badge badge-green" style={{ marginBottom: 10 }}>👥 Household split available</div>
+              <div className="badge badge-green" style={{ marginBottom: 10, display: 'flex', alignItems: 'center', gap: 5 }}>
+                <Users size={13} /> Household split available
+              </div>
               <div className="text-strong" style={{ fontSize: 14, fontWeight: 800, marginBottom: 5 }}>Are your expenses shared with your partner?</div>
               <div className="text-small text-border2">
                 You're {state.relationshipStatus === 'married' ? 'married' : 'in a de facto relationship'}. If your partner contributes, declare your share only — improves serviceability.
@@ -78,11 +82,11 @@ export function ExpensesScreen() {
       </AnikaStrip>
 
       <Card>
-        <CardTitle icon="📊">Monthly expenses</CardTitle>
+        <CardTitle icon="BarChart2">Monthly expenses</CardTitle>
         {EXPENSE_CATEGORIES.map(e => (
           <div key={e.id} className="expense-row">
             <div className="er-left">
-              <div className="er-icon">{e.icon}</div>
+              <div className="er-icon"><Icon name={e.icon} size={20} /></div>
               <div>
                 <div className="er-name">{e.name}</div>
                 <div className="er-sub">{e.sub}</div>
@@ -113,7 +117,7 @@ export function ExpensesScreen() {
         </div>
 
         {totalExp < HEM && (
-          <InfoBanner icon="⚠" variant="yellow" style={{ marginTop: 12, marginBottom: 0 }}>
+          <InfoBanner icon="AlertTriangle" variant="yellow" style={{ marginTop: 12, marginBottom: 0 }}>
             Declared expenses below HEM benchmark of <strong>${HEM.toLocaleString()}/mo</strong>. Lenders will apply the higher figure in their assessment.
           </InfoBanner>
         )}

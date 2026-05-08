@@ -1,3 +1,4 @@
+import { CircleDot } from 'lucide-react';
 import { useApp } from '../../context/AppContext';
 import { SCREENS } from '../../constants/screens';
 import { getInitials } from '../../utils/format';
@@ -20,7 +21,10 @@ export function TopBar({ onMenuClick }) {
         <span className="topbar-title">{screen?.label}</span>
       </div>
       <div className="topbar-right">
-        <span className="save-indicator">● Progress saved</span>
+        <span className="save-indicator">
+          <CircleDot size={8} />
+          Progress saved
+        </span>
         <div className="topbar-avatar">{initials}</div>
       </div>
     </div>

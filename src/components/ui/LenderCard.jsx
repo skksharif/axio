@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Star, Clock } from 'lucide-react';
 import { Badge } from '../common/Badge';
 import { useApp } from '../../context/AppContext';
 import './LenderCard.css';
@@ -33,7 +34,7 @@ export function LenderCard({ lender }) {
     <div className={`lender-card ${best ? 'best' : ''}`}>
       <div className="lender-head">
         {best
-          ? <Badge variant="green" style={{ marginBottom: 8 }}>★ Best match</Badge>
+          ? <Badge variant="green" style={{ marginBottom: 8 }}><Star size={11} fill="currentColor" /> Best match</Badge>
           : <div style={{ height: 28 }} />
         }
         <div className="lender-name">{name}</div>
@@ -69,7 +70,9 @@ export function LenderCard({ lender }) {
         <div className="approval-bar">
           <div className="approval-fill" style={{ width: `${approval}%`, background: approval >= 85 ? 'var(--green)' : 'var(--accent)' }} />
         </div>
-        <div className="text-small text-border2" style={{ marginBottom: 10 }}>◷ Decision in {sla}</div>
+        <div className="text-small text-border2" style={{ marginBottom: 10, display: 'flex', alignItems: 'center', gap: 5 }}>
+          <Clock size={11} /> Decision in {sla}
+        </div>
         {reasons.map((r, i) => <div key={i} className="reason">{r}</div>)}
       </div>
 

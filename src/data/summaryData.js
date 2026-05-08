@@ -1,6 +1,6 @@
 export const SERVICEABILITY_DATA = {
   green: {
-    pill: '● Serviceable',
+    pill: 'Serviceable',
     pillCls: 'green',
     narrative: 'Your application profile is <strong>strong</strong>. Stable full-time employment, consistent income, manageable liabilities and a healthy net asset position. Likely to meet most lender serviceability requirements.',
     dtiVal: '42%',
@@ -13,7 +13,7 @@ export const SERVICEABILITY_DATA = {
     matchColor: 'var(--green)',
   },
   yellow: {
-    pill: '◐ Marginal',
+    pill: 'Marginal',
     pillCls: 'yellow',
     narrative: 'Your profile shows <strong>some serviceability pressure</strong>. Income is sufficient but commitments are moderate. Anika has identified lenders with more flexible criteria — approval is likely but conditions may vary.',
     dtiVal: '58%',
@@ -26,7 +26,7 @@ export const SERVICEABILITY_DATA = {
     matchColor: 'var(--yellow)',
   },
   red: {
-    pill: '● At risk',
+    pill: 'At risk',
     pillCls: 'red',
     narrative: 'Anika has detected <strong>serviceability concerns</strong>. Declared income relative to commitments may not meet standard lender policy. Consider reducing the loan amount or adding a co-borrower.',
     dtiVal: '74%',
@@ -43,7 +43,7 @@ export const SERVICEABILITY_DATA = {
 export const SNAP_CARDS = [
   {
     id: 'loan',
-    icon: '💳',
+    icon: 'CreditCard',
     title: 'Product & loan',
     sub: 'Personal Loan · $25,000 · 5 years',
     fields: [
@@ -59,7 +59,7 @@ export const SNAP_CARDS = [
   },
   {
     id: 'profile',
-    icon: '👤',
+    icon: 'User',
     title: 'Your profile',
     sub: 'Full-time · Mortgage · Citizen · Sydney',
     fields: [
@@ -73,7 +73,7 @@ export const SNAP_CARDS = [
   },
   {
     id: 'income',
-    icon: '💼',
+    icon: 'Briefcase',
     title: 'Income',
     sub: '$74,400 p.a. · PAYG wage',
     fields: [
@@ -85,7 +85,7 @@ export const SNAP_CARDS = [
   },
   {
     id: 'assets',
-    icon: '⚖',
+    icon: 'Scale',
     title: 'Assets & liabilities',
     sub: '$805,000 assets · $410,000 liabilities',
     fields: [
@@ -97,7 +97,7 @@ export const SNAP_CARDS = [
   },
   {
     id: 'expenses',
-    icon: '🏡',
+    icon: 'Home',
     title: 'Living expenses',
     sub: '$3,640 / mo declared · HEM $3,840',
     fields: [

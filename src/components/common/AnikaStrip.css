@@ -1,12 +1,15 @@
 .anika-strip {
-  background: rgba(79, 110, 247, .07);
-  border: 1px solid rgba(79, 110, 247, .2);
+  background: rgba(126, 34, 206, 0.1);
+  border: 1px solid rgba(139, 92, 246, 0.28);
   border-radius: var(--r16);
   padding: 14px 16px;
   display: flex;
   gap: 12px;
   align-items: flex-start;
   margin-bottom: 18px;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 0 16px rgba(126, 34, 206, 0.1);
 }
 
 .ai-orb {
@@ -15,21 +18,24 @@
   min-width: 32px;
   border-radius: 50%;
   background: var(--accentg);
+  box-shadow: var(--glow-sm);
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 10px;
-  font-weight: 800;
+  font-weight: 700;
   color: #fff;
-  font-family: var(--font-display);
+  font-family: var(--font-ai);
+  animation: pulseGlow 3s ease-in-out infinite;
 }
 
 .ai-txt {
   font-size: 12.5px;
   color: var(--text1);
   line-height: 1.65;
+  font-family: var(--font-ai);
 }
-.ai-txt strong { color: var(--text0); }
+.ai-txt strong { color: var(--text0); font-weight: 600; }
 
 .ai-orb-lg {
   width: 44px;
@@ -37,11 +43,12 @@
   min-width: 44px;
   border-radius: 50%;
   background: var(--accentg);
+  box-shadow: var(--glow-md);
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 13px;
-  font-weight: 800;
+  font-weight: 700;
   color: #fff;
-  font-family: var(--font-display);
+  font-family: var(--font-ai);
 }

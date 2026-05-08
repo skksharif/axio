@@ -5,7 +5,13 @@
   margin-bottom: 10px;
 }
 .range-label { font-size: 12px; color: var(--text1); font-weight: 500; }
-.range-val   { font-family: var(--font-display); font-size: 24px; font-weight: 900; color: var(--text0); }
+.range-val   {
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--text0);
+  letter-spacing: -.5px;
+}
 
 .range-minmax {
   display: flex;

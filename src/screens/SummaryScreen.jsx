@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { ShieldCheck } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import { ScreenHeader } from '../components/common/ScreenHeader';
 import { BtnPrimary, BtnGhost, BtnRow } from '../components/common/Button';
@@ -14,18 +15,13 @@ export function SummaryScreen() {
   const svc = state.selectedServiceability || 'green';
   const s = SERVICEABILITY_DATA[svc];
 
-  function setServiceability(v) {
-    updateState({ selectedServiceability: v });
-  }
-
-  function toggleSnap(id) {
-    setOpenSnap(prev => prev === id ? null : id);
-  }
+  const setServiceability = (v) => updateState({ selectedServiceability: v });
+  const toggleSnap = (id) => setOpenSnap(prev => prev === id ? null : id);
 
   return (
     <div className="screen-enter">
       <ScreenHeader
-        eyebrow="✦ Step 10 · Final Summary"
+        eyebrow="Step 10 · Final Summary"
         title="Application"
         titleGradient="summary"
         sub="Review your complete application before submission. Edit any section if needed."
@@ -124,7 +120,7 @@ export function SummaryScreen() {
           <div className="text-strong">Ready to view your lender matches?</div>
           <div className="text-small text-border2">Submitting sends your application to Anika's matching engine across 45+ lenders. Results ready in seconds.</div>
           <div className="text-small text-border2" style={{ marginTop: 8, display: 'flex', alignItems: 'center', gap: 5 }}>
-            🛡 <strong className="text-strong">does not</strong> affect your credit file — soft check only until you choose a lender
+            <ShieldCheck size={13} /> <strong className="text-strong">does not</strong> affect your credit file — soft check only until you choose a lender
           </div>
         </div>
         <BtnPrimary onClick={next} style={{ flexShrink: 0, height: 50, fontSize: 15 }}>Submit &amp; view matches →</BtnPrimary>

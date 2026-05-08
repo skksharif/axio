@@ -1,14 +1,21 @@
 .profile-avatar {
   width: 72px; height: 72px; border-radius: 50%;
   background: var(--accentg);
-  font-family: var(--font-display); font-size: 24px; font-weight: 900;
+  box-shadow: var(--glow-md);
+  font-family: var(--font-display); font-size: 24px; font-weight: 800;
   color: #fff; cursor: pointer; flex-shrink: 0;
   display: flex; align-items: center; justify-content: center;
+  transition: box-shadow .22s;
 }
+.profile-avatar:hover { box-shadow: var(--glow-lg); }
 
 .cond-panel {
-  background: var(--yellowbg); border: 1px solid var(--yellowborder);
-  border-radius: var(--r12); padding: 14px 16px; margin-top: 12px; display: none;
+  background: var(--yellowbg);
+  border: 1px solid var(--yellowborder);
+  border-radius: var(--r12);
+  padding: 14px 16px;
+  margin-top: 12px;
+  display: none;
 }
 .cond-panel.show { display: block; }
 .cond-head {

@@ -12,7 +12,7 @@ export function AssetsScreen() {
   return (
     <div className="screen-enter">
       <ScreenHeader
-        eyebrow="✦ Step 5 · Assets"
+        eyebrow="Step 5 · Assets"
         title="Your"
         titleGradient="assets"
         sub="Select each asset type to expand and declare. Toggle finance on if the asset has an attached loan — it auto-links to liabilities."

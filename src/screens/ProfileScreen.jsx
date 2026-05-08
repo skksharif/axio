@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { AlertTriangle, Sparkles } from 'lucide-react';
+import { Icon } from '../components/common/Icon';
 import { useApp } from '../context/AppContext';
 import { ScreenHeader } from '../components/common/ScreenHeader';
 import { AnikaStrip } from '../components/common/AnikaStrip';
@@ -11,17 +13,17 @@ import { getInitials } from '../utils/format';
 import './ProfileScreen.css';
 
 const REL_OPTIONS = [
-  { id: 'single',    icon: '🧍', title: 'Single' },
-  { id: 'married',   icon: '💍', title: 'Married' },
-  { id: 'defacto',   icon: '🤝', title: 'De facto' },
-  { id: 'separated', icon: '↔',  title: 'Separated' },
-  { id: 'divorced',  icon: '📃', title: 'Divorced' },
-  { id: 'widowed',   icon: '🕊', title: 'Widowed' },
+  { id: 'single',    icon: 'User',         title: 'Single' },
+  { id: 'married',   icon: 'Heart',        title: 'Married' },
+  { id: 'defacto',   icon: 'Users',        title: 'De facto' },
+  { id: 'separated', icon: 'UserMinus',    title: 'Separated' },
+  { id: 'divorced',  icon: 'FileX',        title: 'Divorced' },
+  { id: 'widowed',   icon: 'Feather',      title: 'Widowed' },
 ];
 const RESIDENCY_OPTIONS = [
-  { id: 'citizen', icon: '🌏', title: 'Australian citizen' },
-  { id: 'pr',      icon: '📋', title: 'Permanent resident' },
-  { id: 'visa',    icon: '✈',  title: 'Visa holder' },
+  { id: 'citizen', icon: 'Globe',         title: 'Australian citizen' },
+  { id: 'pr',      icon: 'ClipboardList', title: 'Permanent resident' },
+  { id: 'visa',    icon: 'Plane',         title: 'Visa holder' },
 ];
 const LIVING_OPTIONS = ['Mortgage','Owner','Rent — agent','Rent — private','Parents / family','Boarding'];
 const EMP_OPTIONS = ['Full-time','Part-time','Casual','Contract','Self-employed','Not employed'];
@@ -46,14 +48,14 @@ export function ProfileScreen() {
   return (
     <div className="screen-enter">
       <ScreenHeader
-        eyebrow="✦ Step 3 · Profile"
+        eyebrow="Step 3 · Profile"
         title="About"
         titleGradient="you"
         sub="Your personal details, relationship status and household makeup. Previous address and employment are requested automatically when current history is under 3 years."
       />
 
       <Card>
-        <CardTitle icon="👤">Personal information</CardTitle>
+        <CardTitle icon="User">Personal information</CardTitle>
         <div className="flex-between" style={{ gap: 20, marginBottom: 22, paddingBottom: 20, borderBottom: '1px solid var(--border)' }}>
           <div className="profile-avatar">{initials}</div>
           <div>
@@ -76,17 +78,17 @@ export function ProfileScreen() {
       </Card>
 
       <Card>
-        <CardTitle icon="🌏">Residency status</CardTitle>
+        <CardTitle icon="Globe">Residency status</CardTitle>
         <ChoiceGrid cols={3}>
           {RESIDENCY_OPTIONS.map(r => (
             <ChoiceCard key={r.id} selected={state.residency === r.id} onClick={() => updateState({ residency: r.id })}>
-              <div className="cc-icon">{r.icon}</div>
+              <div className="cc-icon"><Icon name={r.icon} size={22} /></div>
               <div className="cc-title" style={{ fontSize: 12.5 }}>{r.title}</div>
             </ChoiceCard>
           ))}
         </ChoiceGrid>
         <div className="divider" />
-        <InfoBanner icon="✦" variant="blue">Visa details required by lenders for assessment eligibility.</InfoBanner>
+        <InfoBanner icon="Sparkles" variant="blue">Visa details required by lenders for assessment eligibility.</InfoBanner>
         {state.residency === 'visa' && (
           <div className="g2">
             <div className="fld"><label className="fl">Visa class</label>
@@ -106,13 +108,13 @@ export function ProfileScreen() {
       </Card>
 
       <Card>
-        <CardTitle icon="💑">Relationship &amp; household</CardTitle>
+        <CardTitle icon="Users">Relationship &amp; household</CardTitle>
         <div className="fld">
           <label className="fl">Relationship status</label>
           <div className="choice-grid-6" style={{ marginTop: 8 }}>
             {REL_OPTIONS.map(r => (
               <ChoiceCard key={r.id} selected={state.relationshipStatus === r.id} onClick={() => updateState({ relationshipStatus: r.id })}>
-                <div className="cc-icon" style={{ fontSize: 20, marginBottom: 7 }}>{r.icon}</div>
+                <div className="cc-icon" style={{ marginBottom: 7 }}><Icon name={r.icon} size={20} /></div>
                 <div className="cc-title" style={{ fontSize: 11.5 }}>{r.title}</div>
               </ChoiceCard>
             ))}
@@ -121,7 +123,7 @@ export function ProfileScreen() {
         <div className="divider" />
         {isCouple && (
           <>
-            <InfoBanner icon="👥" variant="blue">Partner details help assess household position. Income is not declared as yours unless adding a joint applicant.</InfoBanner>
+            <InfoBanner icon="Users" variant="blue">Partner details help assess household position. Income is not declared as yours unless adding a joint applicant.</InfoBanner>
             <div className="g2">
               <div className="fld"><label className="fl">Partner full name</label><input className="inp" placeholder="Full name" /></div>
               <div className="fld"><label className="fl">Partner date of birth</label><input className="inp" placeholder="DD / MM / YYYY" /></div>
@@ -152,7 +154,7 @@ export function ProfileScreen() {
                   <Chip key={a} selected={state.dependantAges.includes(a)} onClick={() => toggleDependantAge(a)}>{a}</Chip>
                 ))}
               </Chips>
-              <InfoBanner icon="✦" variant="blue" style={{ marginTop: 12, marginBottom: 0 }}>
+              <InfoBanner icon="Sparkles" variant="blue" style={{ marginTop: 12, marginBottom: 0 }}>
                 Anika: younger dependants attract a higher HEM benchmark applied by lenders.
               </InfoBanner>
             </div>
@@ -161,7 +163,7 @@ export function ProfileScreen() {
       </Card>
 
       <Card>
-        <CardTitle icon="🏠">Residential history</CardTitle>
+        <CardTitle icon="Home">Residential history</CardTitle>
         <div className="fld"><label className="fl">Current address</label><input className="inp" placeholder="⌕  Search address" /></div>
         <div className="fld">
           <label className="fl">Living situation</label>
@@ -178,7 +180,9 @@ export function ProfileScreen() {
         </div>
         {state.addressHistoryUnder3 && (
           <div className="cond-panel show">
-            <div className="cond-head">⚠ Previous address needed — current address under 3 years</div>
+            <div className="cond-head" style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+              <AlertTriangle size={13} /> Previous address needed — current address under 3 years
+            </div>
             <div className="fld"><label className="fl">Previous address</label><input className="inp" placeholder="⌕  Search previous address" /></div>
             <div className="g2">
               <div className="fld" style={{ marginBottom: 0 }}><label className="fl">Years there</label><input className="inp" type="number" min="0" placeholder="Years" /></div>
@@ -189,7 +193,7 @@ export function ProfileScreen() {
       </Card>
 
       <Card>
-        <CardTitle icon="💼">Employment</CardTitle>
+        <CardTitle icon="Briefcase">Employment</CardTitle>
         <div className="fld">
           <label className="fl">Employment type</label>
           <Chips style={{ marginTop: 6 }}>
@@ -209,14 +213,18 @@ export function ProfileScreen() {
         </div>
         {state.employmentHistoryUnder3 && (
           <div className="cond-panel show">
-            <div className="cond-head">⚠ Previous employment needed — current role under 3 years</div>
+            <div className="cond-head" style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+              <AlertTriangle size={13} /> Previous employment needed — current role under 3 years
+            </div>
             <div className="g2">
               <div className="fld"><label className="fl">Previous employer / ABN</label><input className="inp" placeholder="⌕  Search" /></div>
               <div className="fld"><label className="fl">Previous role title</label><input className="inp" placeholder="e.g. Senior Analyst" /></div>
             </div>
           </div>
         )}
-        <div className="text-small text-border2" style={{ marginTop: 12 }}>✦ Anika will never contact your employer without your explicit consent.</div>
+        <div className="text-small text-border2" style={{ marginTop: 12, display: 'flex', alignItems: 'center', gap: 5 }}>
+          <Sparkles size={10} /> Anika will never contact your employer without your explicit consent.
+        </div>
       </Card>
 
       <BtnRow>

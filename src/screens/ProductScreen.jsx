@@ -1,3 +1,5 @@
+import { ShieldCheck } from 'lucide-react';
+import { Icon } from '../components/common/Icon';
 import { useApp } from '../context/AppContext';
 import { ScreenHeader } from '../components/common/ScreenHeader';
 import { BtnPrimary } from '../components/common/Button';
@@ -11,7 +13,7 @@ export function ProductScreen() {
   return (
     <div className="screen-enter">
       <ScreenHeader
-        eyebrow="✦ Axio Finance · No broker bias · Soft check only"
+        eyebrow="Axio Finance · No broker bias · Soft check only"
         title="Finance for the"
         titleGradient="new generation"
         sub="Compare 45+ lenders in under 2 minutes. No credit file impact. No broker pressure. Just the right deal for you."
@@ -20,7 +22,7 @@ export function ProductScreen() {
       <div className="trust-strip">
         {TRUST_STRIP_ITEMS.map((t, i) => (
           <div key={i} className="trust-item">
-            <div className="trust-icon-big">{t.icon}</div>
+            <div className="trust-icon-big"><Icon name={t.icon} size={22} /></div>
             <div className="trust-val">{t.val}</div>
             <div className="trust-lbl">{t.lbl}</div>
           </div>
@@ -35,7 +37,7 @@ export function ProductScreen() {
             onClick={() => updateState({ loanType: p.id })}
           >
             <div className="pc-body">
-              <div className="pc-icon">{p.icon}</div>
+              <div className="pc-icon"><Icon name={p.icon} size={28} /></div>
               <div className="pc-title">{p.title}</div>
               <div className="pc-desc">{p.desc}</div>
               <div className="pc-rate">{p.rate} <span>{p.rateNote}</span></div>
@@ -52,7 +54,7 @@ export function ProductScreen() {
       <div className="promise-grid">
         {PROMISE_CARDS.map((c, i) => (
           <div key={i} className="promise-card">
-            <div className="promise-icon">{c.icon}</div>
+            <div className="promise-icon"><Icon name={c.icon} size={22} /></div>
             <div className="promise-title">{c.title}</div>
             <div className="promise-text">{c.text}</div>
           </div>
@@ -66,7 +68,9 @@ export function ProductScreen() {
         </div>
         <BtnPrimary onClick={next}>Get started — it's free →</BtnPrimary>
       </div>
-      <div className="no-credit-note">🛡 Checking your rate will <strong className="text-strong">not</strong> affect your credit score</div>
+      <div className="no-credit-note">
+        <ShieldCheck size={14} /> Checking your rate will <strong className="text-strong">not</strong> affect your credit score
+      </div>
     </div>
   );
 }

@@ -1,4 +1,5 @@
 import { useState, useRef } from 'react';
+import { CheckCircle2, ShieldX, FileText } from 'lucide-react';
 import { InfoBanner } from '../common/InfoBanner';
 import { BtnPrimary, BtnGhost } from '../common/Button';
 import './RegoLookup.css';
@@ -74,7 +75,7 @@ export function RegoLookup({ prefix }) {
             ))}
           </div>
           <div style={{ padding: '0 16px 14px' }}>
-            <InfoBanner icon="✅" variant="green" style={{ marginBottom: 10 }}>
+            <InfoBanner icon="CheckCircle2" variant="green" style={{ marginBottom: 10 }}>
               <strong style={{ color: 'var(--green)' }}>No finance encumbrance found.</strong> PPSR shows this vehicle has no registered financial interest. Eligible for use as security.
             </InfoBanner>
             <div className="g2">
@@ -99,7 +100,7 @@ export function RegoLookup({ prefix }) {
           </div>
           <div style={{ padding: '12px 16px' }}>
             <div className="info-banner" style={{ background: 'var(--redbg)', border: '1px solid var(--redborder)', marginBottom: 10 }}>
-              <span className="icon">🚫</span>
+              <span className="icon"><ShieldX size={15} style={{ color: 'var(--red)' }} /></span>
               <span style={{ color: 'rgba(247,95,122,.8)' }}>
                 <strong style={{ color: 'var(--red)' }}>Finance encumbrance detected.</strong> This vehicle cannot be used as security. Use a different vehicle or proceed unsecured.
               </span>

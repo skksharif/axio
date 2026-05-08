@@ -1,29 +1,54 @@
 :root {
-  /* Colors */
-  --bg0: #05090f;
-  --bg1: #080e1a;
-  --bg2: #0c1424;
-  --bg3: #111c31;
-  --bg4: #17253e;
-  --border: #1a2d4a;
-  --border2: #243d5e;
-  --accent: #4f6ef7;
-  --accent2: #7c5cff;
-  --accentg: linear-gradient(135deg, #4f6ef7, #7c5cff);
-  --green: #0fe085;
-  --greenbg: rgba(15, 224, 133, .08);
-  --greenborder: rgba(15, 224, 133, .2);
-  --yellow: #f5a623;
-  --yellowbg: rgba(245, 166, 35, .08);
-  --yellowborder: rgba(245, 166, 35, .2);
-  --red: #f75f7a;
-  --redbg: rgba(247, 95, 122, .08);
-  --redborder: rgba(247, 95, 122, .2);
-  --text0: #eef2ff;
-  --text1: #8da0c4;
-  --text2: #4d6285;
+  /* ─── BACKGROUNDS ─────────────────────────────────────────── */
+  --bg0: #100720;          /* Main Background */
+  --bg1: #1A0B38;          /* Secondary / Sidebar */
+  --bg2: #17102F;          /* Card Background */
+  --bg3: #1E1B4B;          /* Glass Background */
+  --bg4: #24124D;          /* Inner Cards */
 
-  /* Border radii */
+  /* ─── BRAND PURPLE SPECTRUM ───────────────────────────────── */
+  --accent:  #7E22CE;      /* Main Purple */
+  --accent2: #9333EA;      /* Glow Purple */
+  --cta:     #6D28D9;      /* CTA Purple */
+  --hover:   #8B5CF6;      /* Hover Purple */
+  --deep:    #3B0764;      /* Deep Violet */
+
+  /* ─── GRADIENTS ───────────────────────────────────────────── */
+  --accentg:      linear-gradient(135deg, #6D28D9 0%, #7E22CE 55%, #9333EA 100%);
+  --accentg-deep: linear-gradient(135deg, #3B0764 0%, #581C87 45%, #7E22CE 100%);
+  --dashg:        linear-gradient(145deg, #100720 0%, #1A0B38 40%, #2B105C 100%);
+
+  /* ─── BORDERS & GLASS ─────────────────────────────────────── */
+  --border:       rgba(167, 139, 250, 0.14);
+  --border2:      rgba(167, 139, 250, 0.28);
+  --glass-border: rgba(167, 139, 250, 0.18);
+  --white-glass:  rgba(255, 255, 255, 0.06);
+
+  /* ─── TEXT ────────────────────────────────────────────────── */
+  --text0: #FFFFFF;        /* Primary */
+  --text1: #C4B5FD;        /* Muted / Secondary */
+  --text2: #7C6AAD;        /* Dim / Labels / Placeholders */
+
+  /* ─── STATUS ──────────────────────────────────────────────── */
+  --green:        #10B981;
+  --greenbg:      rgba(16, 185, 129, .08);
+  --greenborder:  rgba(16, 185, 129, .22);
+  --yellow:       #F59E0B;
+  --yellowbg:     rgba(245, 158, 11, .08);
+  --yellowborder: rgba(245, 158, 11, .22);
+  --red:          #F43F5E;
+  --redbg:        rgba(244, 63, 94, .08);
+  --redborder:    rgba(244, 63, 94, .22);
+
+  /* ─── GLOW & SHADOWS ──────────────────────────────────────── */
+  --glow-clr:          rgba(147, 51, 234, 0.45);
+  --glow-sm:           0 0 12px rgba(147, 51, 234, 0.28);
+  --glow-md:           0 0 24px rgba(147, 51, 234, 0.38);
+  --glow-lg:           0 0 40px rgba(147, 51, 234, 0.52);
+  --card-shadow:       0 4px 24px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  --card-shadow-hover: 0 8px 32px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(139, 92, 246, 0.15);
+
+  /* ─── BORDER RADII ────────────────────────────────────────── */
   --r6:  6px;
   --r8:  8px;
   --r12: 12px;
@@ -31,18 +56,19 @@
   --r22: 22px;
   --r32: 32px;
 
-  /* Fonts */
-  --font-display: 'Syne', sans-serif;
-  --font-body: 'DM Sans', sans-serif;
+  /* ─── FONTS ───────────────────────────────────────────────── */
+  --font-display: 'Inter', sans-serif;
+  --font-body:    'Inter', sans-serif;
+  --font-ai:      'Geist', 'Inter', sans-serif;
 
-  /* Layout */
-  --sidebar-w: 260px;
-  --topbar-h: 60px;
+  /* ─── LAYOUT ──────────────────────────────────────────────── */
+  --sidebar-w:  260px;
+  --topbar-h:   60px;
   --content-px: 36px;
   --content-py: 32px;
   --content-pb: 60px;
 
-  /* Spacing scale */
+  /* ─── SPACING SCALE ───────────────────────────────────────── */
   --sp4:  4px;
   --sp8:  8px;
   --sp10: 10px;

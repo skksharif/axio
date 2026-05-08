@@ -1,3 +1,4 @@
+import { Icon } from './Icon';
 import './Card.css';
 
 export function Card({ children, className = '', style }) {
@@ -11,7 +12,11 @@ export function Card({ children, className = '', style }) {
 export function CardTitle({ icon, children }) {
   return (
     <div className="card-title">
-      {icon && <div className="card-icon">{icon}</div>}
+      {icon && (
+        <div className="card-icon">
+          <Icon name={icon} size={18} />
+        </div>
+      )}
       {children}
     </div>
   );

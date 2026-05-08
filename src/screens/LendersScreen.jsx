@@ -13,7 +13,7 @@ export function LendersScreen() {
   return (
     <div className="screen-enter">
       <ScreenHeader
-        eyebrow="✦ Step 11 · Lender Results"
+        eyebrow="Step 11 · Lender Results"
         title="Your lender"
         titleGradient="matches"
         sub="Ranked by approval probability. Powered by Anika AI."
@@ -21,7 +21,7 @@ export function LendersScreen() {
 
       <AnikaStrip style={{ marginBottom: 14 }}>
         <strong>Anika found {LENDERS.length} lender matches</strong> based on your profile — stable PAYG income, 42% debt-to-income ratio, and 6+ years residential stability.
-        <InfoBanner icon="✦" variant="green" style={{ marginTop: 10 }}>
+        <InfoBanner icon="Sparkles" variant="green" style={{ marginTop: 10 }}>
           Axio works on full transparency — no hidden fees. Every total shown is exactly what you pay each month, inclusive of all fees and lender charges.
         </InfoBanner>
       </AnikaStrip>

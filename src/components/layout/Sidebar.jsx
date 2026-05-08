@@ -1,4 +1,6 @@
 import { useMemo } from 'react';
+import { Check } from 'lucide-react';
+import { Icon } from '../common/Icon';
 import { useApp } from '../../context/AppContext';
 import { SCREENS, TRUST_SIDEBAR } from '../../constants/screens';
 import './Sidebar.css';
@@ -69,7 +71,7 @@ export function Sidebar({ open, onClose }) {
                 onKeyDown={e => e.key === 'Enter' && handleNavClick(item)}
               >
                 <div className="nav-num">
-                  {item.isCompleted ? '' : item.index + 1}
+                  {item.isCompleted ? <Check size={11} strokeWidth={2.5} /> : item.index + 1}
                 </div>
                 <span className="nav-label">{item.screen.label}</span>
                 <span className="nav-dot" />
@@ -81,7 +83,7 @@ export function Sidebar({ open, onClose }) {
         <div className="sidebar-trust">
           {TRUST_SIDEBAR.map((t, i) => (
             <div key={i} className="trust-item">
-              <span className="trust-icon">{t.icon}</span>
+              <span className="trust-icon"><Icon name={t.icon} size={14} /></span>
               {t.text}
             </div>
           ))}

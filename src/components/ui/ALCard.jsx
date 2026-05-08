@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { Check, Sparkles, Link } from 'lucide-react';
+import { Icon } from '../common/Icon';
 import { ToggleSwitch } from '../forms/ToggleSwitch';
 import './ALCard.css';
 
@@ -15,13 +17,15 @@ export function ALCard({ id, icon, title, desc, hasFin, on, onToggle, isLinked, 
     <div className={`al-card ${on ? 'on' : ''} ${isLinked ? 'green-card' : ''}`}>
       <div className="al-head" onClick={onToggle}>
         <div>
-          <div className="al-icon-box">{icon}</div>
+          <div className="al-icon-box"><Icon name={icon} size={20} /></div>
           <div className="al-title">{title}</div>
           <div className="al-desc">{desc}</div>
           {on && <div className="al-meta">1 item declared</div>}
           {linkedMeta && <div className="al-meta">{linkedMeta}</div>}
         </div>
-        <div className="al-check" style={isLinked ? { background: 'var(--green)', borderColor: 'var(--green)' } : {}}>✓</div>
+        <div className="al-check" style={isLinked ? { background: 'var(--green)', borderColor: 'var(--green)' } : {}}>
+          <Check size={13} strokeWidth={2.5} />
+        </div>
       </div>
 
       {on && (
@@ -53,7 +57,7 @@ function LinkedEntry() {
     <div className="al-entry">
       <div className="flex-between" style={{ marginBottom: 10 }}>
         <span className="text-strong" style={{ fontSize: 12.5 }}>Main home · CBA</span>
-        <span className="linked-pill">✦ From assets</span>
+        <span className="linked-pill"><Sparkles size={10} /> From assets</span>
       </div>
       <div className="al-fields">
         <div className="al-field"><label>Lender</label><input value="CBA" readOnly style={{ color: 'var(--text2)' }} /></div>
@@ -110,7 +114,7 @@ function DefaultEntry({ title, isRealEstate, hasFin, finOpen, finNote, onFinTogg
             </div>
           )}
           {finNote && (
-            <div className="fin-note">✦ Auto-linked to Liabilities section</div>
+            <div className="fin-note"><Link size={10} /> Auto-linked to Liabilities section</div>
           )}
         </>
       )}

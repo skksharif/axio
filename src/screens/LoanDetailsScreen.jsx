@@ -1,3 +1,5 @@
+import { Sparkles, RefreshCw, AlertTriangle } from 'lucide-react';
+import { Icon } from '../components/common/Icon';
 import { useApp } from '../context/AppContext';
 import { ScreenHeader } from '../components/common/ScreenHeader';
 import { AnikaStrip } from '../components/common/AnikaStrip';
@@ -30,7 +32,7 @@ export function LoanDetailsScreen() {
   return (
     <div className="screen-enter">
       <ScreenHeader
-        eyebrow={`✦ Step 2 · ${isPersonal ? 'Personal Loan' : 'Car Loan'} Details`}
+        eyebrow={`Step 2 · ${isPersonal ? 'Personal Loan' : 'Car Loan'} Details`}
         title="Tell us about"
         titleGradient={isPersonal ? 'your loan' : 'your car loan'}
         sub="Anika uses these details to run early lender signals and estimate your repayment."
@@ -59,7 +61,7 @@ function PersonalLoanDetails({ repay, rateLabel }) {
   return (
     <>
       <Card>
-        <CardTitle icon="🎯">What is the loan for?</CardTitle>
+        <CardTitle icon="Target">What is the loan for?</CardTitle>
         <ChoiceGrid cols={3}>
           {PURPOSES.map(p => (
             <ChoiceCard
@@ -67,7 +69,7 @@ function PersonalLoanDetails({ repay, rateLabel }) {
               selected={state.purpose === p.id}
               onClick={() => updateState({ purpose: p.id })}
             >
-              <div className="cc-icon" style={{ fontSize: 22, marginBottom: 7 }}>{p.icon}</div>
+              <div className="cc-icon" style={{ marginBottom: 7 }}><Icon name={p.icon} size={22} /></div>
               <div className="cc-title" style={{ fontSize: 12 }}>{p.title}</div>
               <div className="cc-desc" style={{ fontSize: 10.5 }}>{p.hint}</div>
             </ChoiceCard>
@@ -76,7 +78,7 @@ function PersonalLoanDetails({ repay, rateLabel }) {
       </Card>
 
       <Card>
-        <CardTitle icon="💰">Loan amount &amp; term</CardTitle>
+        <CardTitle icon="DollarSign">Loan amount &amp; term</CardTitle>
         <RangeSlider
           label="Loan amount"
           value={state.loanAmount}
@@ -104,7 +106,7 @@ function PersonalLoanDetails({ repay, rateLabel }) {
       </Card>
 
       <Card>
-        <CardTitle icon="🔒">Would you like to secure this loan?</CardTitle>
+        <CardTitle icon="Lock">Would you like to secure this loan?</CardTitle>
         <AnikaStrip style={{ marginBottom: 16 }}>
           <strong>Securing against a vehicle you own outright</strong> typically reduces your rate by 1.5–3% and improves approval probability. The vehicle must have no existing finance.
         </AnikaStrip>
@@ -113,7 +115,7 @@ function PersonalLoanDetails({ repay, rateLabel }) {
             selected={state.securityType === 'unsecured'}
             onClick={() => updateState({ securityType: 'unsecured' })}
           >
-            <div className="cc-icon">📋</div>
+            <div className="cc-icon"><Icon name="ClipboardList" size={22} /></div>
             <div className="cc-title">Unsecured</div>
             <div className="cc-desc">No asset required. Based on income and credit profile.</div>
             <div style={{ marginTop: 10 }}><Badge variant="yellow">From 8.49% p.a.</Badge></div>
@@ -122,14 +124,14 @@ function PersonalLoanDetails({ repay, rateLabel }) {
             selected={state.securityType === 'secured'}
             onClick={() => updateState({ securityType: 'secured' })}
           >
-            <div className="cc-icon">🚗</div>
+            <div className="cc-icon"><Icon name="Car" size={22} /></div>
             <div className="cc-title">Secured — vehicle</div>
             <div className="cc-desc">Use a vehicle you own outright. Lower rate, better approval odds.</div>
             <div style={{ marginTop: 10 }}><Badge variant="green">From 6.49% p.a.</Badge></div>
           </ChoiceCard>
         </ChoiceGrid>
         <div className="divider" />
-        <InfoBanner icon="⚠" variant="yellow">
+        <InfoBanner icon="AlertTriangle" variant="yellow">
           The vehicle used as security <strong>must be owned outright with no existing finance</strong>. A PPSR check will be run during assessment.
         </InfoBanner>
         {state.securityType === 'secured' && (
@@ -152,16 +154,19 @@ function CarLoanDetails({ repay, rateLabel }) {
   return (
     <>
       <Card>
-        <CardTitle icon="🚗">What type of vehicle?</CardTitle>
+        <CardTitle icon="Car">What type of vehicle?</CardTitle>
         <div className="cond-grid">
           {[
-            { id: 'new',  icon: '✨', title: 'New',  desc: 'Brand new from dealer',                badge: <Badge variant="green">From 5.99%</Badge> },
-            { id: 'used', icon: '🚙', title: 'Used', desc: 'Previously owned & registered',        badge: <Badge variant="blue">Up to 12 yrs</Badge> },
-            { id: 'demo', icon: '🏷', title: 'Demo', desc: 'Dealer demonstrator, low kms',          badge: <Badge variant="yellow">Near-new rates</Badge> },
+            { id: 'new',  icon: 'Sparkles', title: 'New',  desc: 'Brand new from dealer',             badge: <Badge variant="green">From 5.99%</Badge> },
+            { id: 'used', icon: 'Car',      title: 'Used', desc: 'Previously owned & registered',     badge: <Badge variant="blue">Up to 12 yrs</Badge> },
+            { id: 'demo', icon: 'Tag',      title: 'Demo', desc: 'Dealer demonstrator, low kms',       badge: <Badge variant="yellow">Near-new rates</Badge> },
           ].map(c => (
             <CondCard
               key={c.id}
-              icon={c.icon} title={c.title} desc={c.desc} badge={c.badge}
+              icon={<Icon name={c.icon} size={28} />}
+              title={c.title}
+              desc={c.desc}
+              badge={c.badge}
               selected={state.vehicleCondition === c.id}
               onClick={() => updateState({ vehicleCondition: c.id })}
             />
@@ -170,10 +175,10 @@ function CarLoanDetails({ repay, rateLabel }) {
       </Card>
 
       <Card>
-        <CardTitle icon="🏢">Where are you buying from?</CardTitle>
+        <CardTitle icon="Building">Where are you buying from?</CardTitle>
         <ChoiceGrid cols={2}>
           <ChoiceCard selected={state.purchaseType === 'dealer'} onClick={() => updateState({ purchaseType: 'dealer' })}>
-            <div className="cc-icon">🏪</div>
+            <div className="cc-icon"><Icon name="Store" size={22} /></div>
             <div className="cc-title">Dealership</div>
             <div className="cc-desc">Licensed motor dealer — franchised, independent or online.</div>
             <div style={{ display: 'flex', gap: 4, marginTop: 8, justifyContent: 'center' }}>
@@ -182,7 +187,7 @@ function CarLoanDetails({ repay, rateLabel }) {
             </div>
           </ChoiceCard>
           <ChoiceCard selected={state.purchaseType === 'private'} onClick={() => updateState({ purchaseType: 'private' })}>
-            <div className="cc-icon">🤝</div>
+            <div className="cc-icon"><Icon name="Handshake" size={22} /></div>
             <div className="cc-title">Private sale</div>
             <div className="cc-desc">Individual seller via Carsales, Gumtree, Facebook Marketplace.</div>
             <div style={{ marginTop: 8 }}><Badge variant="yellow" style={{ fontSize: 10 }}>PPSR check required</Badge></div>
@@ -191,15 +196,15 @@ function CarLoanDetails({ repay, rateLabel }) {
       </Card>
 
       <Card>
-        <CardTitle icon="🔍">Have you found a vehicle?</CardTitle>
+        <CardTitle icon="Search">Have you found a vehicle?</CardTitle>
         <ChoiceGrid cols={2}>
           <ChoiceCard selected={state.vehicleFound} onClick={() => updateState({ vehicleFound: true })}>
-            <div className="cc-icon">✅</div>
+            <div className="cc-icon"><Icon name="CheckCircle2" size={22} /></div>
             <div className="cc-title">Yes — vehicle in mind</div>
             <div className="cc-desc">I have a specific car selected or know the details.</div>
           </ChoiceCard>
           <ChoiceCard selected={!state.vehicleFound} onClick={() => updateState({ vehicleFound: false })}>
-            <div className="cc-icon">🛒</div>
+            <div className="cc-icon"><Icon name="ShoppingCart" size={22} /></div>
             <div className="cc-title">Not yet — still browsing</div>
             <div className="cc-desc">Get approved first, then shop with your budget confirmed.</div>
           </ChoiceCard>
@@ -225,7 +230,9 @@ function CarLoanDetails({ repay, rateLabel }) {
             <div className="mp-top">
               <div className="flex-between" style={{ gap: 14, flexWrap: 'wrap' }}>
                 <div>
-                  <div className="mp-title">✦ Axio Vehicle Marketplace — unlocks after approval</div>
+                  <div className="mp-title" style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                    <Sparkles size={12} /> Axio Vehicle Marketplace — unlocks after approval
+                  </div>
                   <div className="mp-sub">Complete your application and get approved. Your portal will unlock the marketplace filtered to exactly your approved budget.</div>
                 </div>
                 <Badge variant="blue" style={{ whiteSpace: 'nowrap', flexShrink: 0 }}>In your portal</Badge>
@@ -242,7 +249,7 @@ function CarLoanDetails({ repay, rateLabel }) {
             <div className="mp-cars">
               {MARKETPLACE_CARS.map((c, i) => (
                 <div key={i} className="mp-car">
-                  <div className="mp-car-img">{c.icon}</div>
+                  <div className="mp-car-img"><Icon name={c.icon} size={22} /></div>
                   <div className="mp-car-info">
                     <div className="mp-car-name">{c.name}</div>
                     <div className="mp-car-price">{c.price}</div>
@@ -260,7 +267,7 @@ function CarLoanDetails({ repay, rateLabel }) {
       </Card>
 
       <Card>
-        <CardTitle icon="💰">Loan amount, deposit &amp; trade-in</CardTitle>
+        <CardTitle icon="DollarSign">Loan amount, deposit &amp; trade-in</CardTitle>
         <RangeSlider label="Vehicle price / loan amount" value={state.loanAmount} displayValue={fmt(state.loanAmount)} min={5000} max={500000} step={1000} onChange={v => updateState({ loanAmount: v })} minLabel="$5,000" maxLabel="$500,000" />
 
         <div className="divider" />
@@ -268,7 +275,9 @@ function CarLoanDetails({ repay, rateLabel }) {
 
         <div className="divider" />
         <div className="flex-between" style={{ marginBottom: 12 }}>
-          <div className="text-strong text-small">🔄 Trade-in vehicle</div>
+          <div className="text-strong text-small" style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+            <RefreshCw size={13} /> Trade-in vehicle
+          </div>
           <Chips>
             <Chip selected={state.tradeIn} onClick={() => updateState({ tradeIn: true })}>Yes</Chip>
             <Chip selected={!state.tradeIn} onClick={() => updateState({ tradeIn: false })}>No</Chip>
@@ -276,13 +285,15 @@ function CarLoanDetails({ repay, rateLabel }) {
         </div>
         {state.tradeIn && (
           <>
-            <InfoBanner icon="✦" variant="blue">Enter your trade-in rego — Anika retrieves vehicle details automatically.</InfoBanner>
+            <InfoBanner icon="Sparkles" variant="blue">Enter your trade-in rego — Anika retrieves vehicle details automatically.</InfoBanner>
             <RegoLookup prefix="ti" />
           </>
         )}
 
         <div className="divider" />
-        <div className="text-strong text-small" style={{ marginBottom: 8 }}>🎈 Balloon payment <span className="text-border2" style={{ fontSize: 11, fontWeight: 400 }}>(optional)</span></div>
+        <div className="text-strong text-small" style={{ marginBottom: 8, display: 'flex', alignItems: 'center', gap: 6 }}>
+          <Icon name="CircleDollarSign" size={13} /> Balloon payment <span className="text-border2" style={{ fontSize: 11, fontWeight: 400 }}>(optional)</span>
+        </div>
         <div className="card" style={{ background: 'var(--bg2)', borderRadius: 'var(--r8)', padding: 14 }}>
           <RangeSlider label="Balloon percentage" value={state.balloonPct} displayValue={`${state.balloonPct}%`} min={0} max={40} step={5} onChange={v => updateState({ balloonPct: v })} minLabel="0% (none)" maxLabel="40%" />
         </div>
@@ -310,7 +321,7 @@ function CarLoanDetails({ repay, rateLabel }) {
           ].map(b => (
             <div key={b.label} className="card" style={{ background: b.accent ? 'rgba(79,110,247,.1)' : 'var(--bg2)', border: `1px solid ${b.accent ? 'rgba(79,110,247,.25)' : 'var(--border)'}`, borderRadius: 'var(--r8)', padding: 12, textAlign: 'center' }}>
               <div className="text-small text-border2" style={{ marginBottom: 3 }}>{b.label}</div>
-              <div className={b.accent ? 'text-strong' : 'text-strong'} style={b.accent ? { color: '#8ea6ff' } : {}}>{b.val}</div>
+              <div className="text-strong" style={b.accent ? { color: '#8ea6ff' } : {}}>{b.val}</div>
             </div>
           ))}
         </div>

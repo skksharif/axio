@@ -1,9 +1,8 @@
 .dash-hero-card {
-  background: linear-gradient(135deg, var(--bg1), var(--bg2));
-  border-color: rgba(79,110,247,.25);
+  background: linear-gradient(135deg, rgba(26, 11, 56, 0.9), rgba(36, 18, 77, 0.85));
+  border-color: rgba(139, 92, 246, 0.3);
+  box-shadow: var(--glow-sm);
 }
-
-/* .divider is defined in global.css */
 
 .timeline { display: flex; flex-direction: column; gap: 12px; }
 
@@ -20,11 +19,11 @@
   height: 10px;
   min-width: 10px;
   border-radius: 50%;
-  border: 2px solid var(--border2);
+  border: 2px solid rgba(167, 139, 250, 0.3);
   flex-shrink: 0;
 }
-.tl-dot.done    { background: var(--green); border-color: var(--green); }
-.tl-dot.pending { background: transparent; border-color: var(--border2); }
+.tl-dot.done    { background: var(--green); border-color: var(--green); box-shadow: 0 0 6px rgba(16, 185, 129, 0.5); }
+.tl-dot.pending { background: transparent; border-color: rgba(167, 139, 250, 0.3); }
 
 .tl-label { font-weight: 600; color: var(--text0); flex: 1; min-width: 0; }
 .tl-sub   { font-size: 11.5px; color: var(--text2); flex-shrink: 0; }
@@ -36,11 +35,15 @@
 }
 
 .dash-card {
-  background: var(--bg2);
+  background: rgba(30, 27, 75, 0.55);
   border: 1px solid var(--border);
   border-radius: var(--r16);
   padding: 18px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition: border-color .2s;
 }
+.dash-card:hover { border-color: var(--border2); }
 
 .sum-row {
   display: flex;
@@ -64,14 +67,20 @@
 .dash-doc-item:last-child { border-bottom: none; }
 
 .dash-product-card {
-  background: var(--bg2);
+  background: rgba(30, 27, 75, 0.5);
   border: 1px solid var(--border);
   border-radius: var(--r12);
   padding: 16px;
   cursor: pointer;
-  transition: border-color .15s;
+  transition: all .2s;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
 }
-.dash-product-card:hover { border-color: var(--border2); }
+.dash-product-card:hover {
+  border-color: rgba(139, 92, 246, 0.4);
+  background: rgba(139, 92, 246, 0.08);
+  transform: translateY(-1px);
+}
 
 @media (max-width: 900px) {
   .dash-grid { grid-template-columns: 1fr; }

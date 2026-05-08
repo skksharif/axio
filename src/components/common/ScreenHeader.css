@@ -4,33 +4,38 @@
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  background: var(--bg2);
-  border: 1px solid var(--border);
+  background: rgba(126, 34, 206, 0.12);
+  border: 1px solid rgba(139, 92, 246, 0.3);
   border-radius: 30px;
   padding: 5px 14px;
   font-size: 11px;
-  color: #8ea6ff;
+  color: var(--hover);
   font-weight: 600;
   margin-bottom: 14px;
   font-family: var(--font-display);
+  letter-spacing: .3px;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
 }
 
 .screen-title {
   font-family: var(--font-display);
   font-size: 28px;
-  font-weight: 800;
-  letter-spacing: -.8px;
-  margin-bottom: 6px;
-  line-height: 1.15;
+  font-weight: 700;
+  letter-spacing: -.7px;
+  margin-bottom: 8px;
+  line-height: 1.18;
 }
 .screen-title span {
   background: var(--accentg);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .screen-sub {
   font-size: 14px;
+  font-weight: 400;
   color: var(--text1);
   line-height: 1.65;
   max-width: 640px;

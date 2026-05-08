@@ -1,3 +1,5 @@
+import { FileText, Building2, CreditCard } from 'lucide-react';
+import { Icon } from '../components/common/Icon';
 import { useApp } from '../context/AppContext';
 import { ScreenHeader } from '../components/common/ScreenHeader';
 import { BtnGhost, BtnRow } from '../components/common/Button';
@@ -8,31 +10,31 @@ import '../components/ui/ALCard.css';
 import './DashboardScreen.css';
 
 const EXPLORE_PRODUCTS = [
-  { icon: '🚗', title: 'Car Loan', desc: 'From 5.99% p.a.' },
-  { icon: '🏠', title: 'Home Loan', desc: 'From 5.89% p.a.' },
-  { icon: '💳', title: 'Credit Card', desc: 'From 12.99%' },
+  { icon: 'Car',        title: 'Car Loan',    desc: 'From 5.99% p.a.' },
+  { icon: 'Home',       title: 'Home Loan',   desc: 'From 5.89% p.a.' },
+  { icon: 'CreditCard', title: 'Credit Card', desc: 'From 12.99%' },
 ];
 
 const TIMELINE = [
-  { label: 'Application submitted', sub: 'Today, 2:14 PM', done: true },
-  { label: 'Soft credit check complete', sub: 'Today, 2:15 PM', done: true },
-  { label: 'Documents required', sub: '2 items pending', active: true },
-  { label: 'Lender assessment', sub: 'Estimated 24–48 hrs', pending: true },
-  { label: 'Approval & settlement', sub: '', pending: true },
+  { label: 'Application submitted',    sub: 'Today, 2:14 PM',       done: true },
+  { label: 'Soft credit check complete', sub: 'Today, 2:15 PM',     done: true },
+  { label: 'Documents required',       sub: '2 items pending',      active: true },
+  { label: 'Lender assessment',        sub: 'Estimated 24–48 hrs',  pending: true },
+  { label: 'Approval & settlement',    sub: '',                      pending: true },
 ];
 
 const SNAPSHOT = [
-  { key: 'Annual income', val: '$74,400', color: 'var(--green)' },
-  { key: 'Total assets', val: '$805,000' },
+  { key: 'Annual income',   val: '$74,400', color: 'var(--green)' },
+  { key: 'Total assets',    val: '$805,000' },
   { key: 'Monthly expenses', val: '$3,640' },
-  { key: 'Monthly surplus', val: '$1,460', color: 'var(--green)' },
-  { key: 'Debt-to-income', val: '42%', color: 'var(--green)' },
+  { key: 'Monthly surplus',  val: '$1,460', color: 'var(--green)' },
+  { key: 'Debt-to-income',   val: '42%',    color: 'var(--green)' },
 ];
 
 const DOCS = [
-  { icon: '📄', name: 'Payslips', status: 'Needed', variant: 'yellow' },
-  { icon: '🏦', name: 'Bank statements', status: 'Needed', variant: 'yellow' },
-  { icon: '🪪', name: 'Identity', status: 'Verified', variant: 'green' },
+  { Icon: FileText,  name: 'Payslips',         status: 'Needed',   variant: 'yellow' },
+  { Icon: Building2, name: 'Bank statements',  status: 'Needed',   variant: 'yellow' },
+  { Icon: CreditCard,name: 'Identity',         status: 'Verified', variant: 'green' },
 ];
 
 export function DashboardScreen() {
@@ -41,7 +43,7 @@ export function DashboardScreen() {
   return (
     <div className="screen-enter">
       <ScreenHeader
-        eyebrow="✦ Dashboard · Welcome back"
+        eyebrow="Dashboard · Welcome back"
         title="Your"
         titleGradient="portal"
         sub="Track your application, manage documents and explore more products — all in one place."
@@ -85,7 +87,9 @@ export function DashboardScreen() {
           <div className="text-small text-border2" style={{ fontWeight: 700, textTransform: 'uppercase', letterSpacing: '.5px', marginBottom: 14 }}>Documents</div>
           {DOCS.map((d, i) => (
             <div key={i} className="doc-item dash-doc-item">
-              <div className="doc-icon" style={{ width: 30, height: 30, fontSize: 14 }}>{d.icon}</div>
+              <div className="doc-icon" style={{ width: 30, height: 30, fontSize: 14 }}>
+                <d.Icon size={16} />
+              </div>
               <div className="doc-info"><div className="doc-name" style={{ fontSize: 12.5 }}>{d.name}</div></div>
               <Badge variant={d.variant}>{d.status}</Badge>
             </div>
@@ -94,11 +98,11 @@ export function DashboardScreen() {
       </div>
 
       <Card style={{ marginTop: 14 }}>
-        <CardTitle icon="🚗">Explore more products</CardTitle>
+        <CardTitle icon="Car">Explore more products</CardTitle>
         <div className="choice-grid-3">
           {EXPLORE_PRODUCTS.map(p => (
             <div key={p.title} className="dash-product-card">
-              <div style={{ fontSize: 20, marginBottom: 6 }}>{p.icon}</div>
+              <div style={{ marginBottom: 6 }}><Icon name={p.icon} size={22} /></div>
               <div style={{ fontSize: 16, fontWeight: 700, marginBottom: 3 }}>{p.title}</div>
               <div style={{ fontSize: 12, color: 'var(--text1)' }}>{p.desc}</div>
             </div>

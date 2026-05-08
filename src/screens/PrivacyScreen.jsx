@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { ChevronDown, Check } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import { ScreenHeader } from '../components/common/ScreenHeader';
 import { BtnPrimary, BtnGhost, BtnRow } from '../components/common/Button';
@@ -17,19 +18,21 @@ export function PrivacyScreen() {
   return (
     <div className="screen-enter">
       <ScreenHeader
-        eyebrow="✦ Step 9 · Privacy & Consent"
+        eyebrow="Step 9 · Privacy & Consent"
         title="Privacy &"
         titleGradient="consent"
         sub="Please read and confirm before we submit your application to lenders."
       />
 
       <Card>
-        <CardTitle icon="📋">Disclosures</CardTitle>
+        <CardTitle icon="ClipboardList">Disclosures</CardTitle>
         {PRIVACY_SECTIONS.map((s, i) => (
           <div key={i} className="priv-section">
             <div className="priv-head" onClick={() => togglePanel(i)}>
               <span>{s.title}</span>
-              <span style={{ color: 'var(--text2)', transition: 'transform .2s', display: 'inline-block', transform: openPanel === i ? 'rotate(180deg)' : 'none' }}>▾</span>
+              <span style={{ transition: 'transform .2s', display: 'inline-flex', transform: openPanel === i ? 'rotate(180deg)' : 'none' }}>
+                <ChevronDown size={16} />
+              </span>
             </div>
             {openPanel === i && (
               <div className="priv-body open">{s.body}</div>
@@ -39,11 +42,11 @@ export function PrivacyScreen() {
       </Card>
 
       <Card>
-        <CardTitle icon="✅">Declarations</CardTitle>
+        <CardTitle icon="CheckCircle2">Declarations</CardTitle>
         {DECLARATIONS.map((d, i) => (
           <div key={i} className="check-item" onClick={() => toggleConsent(i)}>
             <div className={`check-box ${state.checkedConsents.includes(i) ? 'checked' : ''}`}>
-              {state.checkedConsents.includes(i) ? '✓' : ''}
+              {state.checkedConsents.includes(i) ? <Check size={11} strokeWidth={2.5} /> : null}
             </div>
             <div style={{ fontSize: 13, color: 'var(--text1)', lineHeight: 1.6 }}>{d}</div>
           </div>

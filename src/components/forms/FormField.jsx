@@ -1,3 +1,4 @@
+import { Check } from 'lucide-react';
 import './FormField.css';
 
 export function FormField({ label, error, children, style }) {
@@ -40,7 +41,7 @@ export function CheckItem({ checked, onToggle, children }) {
         className={`check-box ${checked ? 'checked' : ''}`}
         onClick={onToggle}
       >
-        {checked ? '✓' : ''}
+        {checked ? <Check size={11} strokeWidth={2.5} /> : null}
       </div>
       <div style={{ fontSize: 13, color: 'var(--text1)', lineHeight: 1.6 }}>{children}</div>
     </div>

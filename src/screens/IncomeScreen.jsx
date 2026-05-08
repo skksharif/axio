@@ -1,3 +1,5 @@
+import { Check } from 'lucide-react';
+import { Icon } from '../components/common/Icon';
 import { useApp } from '../context/AppContext';
 import { ScreenHeader } from '../components/common/ScreenHeader';
 import { BtnPrimary, BtnGhost, BtnRow } from '../components/common/Button';
@@ -15,14 +17,14 @@ export function IncomeScreen() {
   return (
     <div className="screen-enter">
       <ScreenHeader
-        eyebrow="✦ Step 4 · Income"
+        eyebrow="Step 4 · Income"
         title=""
         titleGradient="Income"
         sub="Select all income types that apply. Anika annualises each source automatically."
       />
 
       <Card>
-        <CardTitle icon="✦">Select your income types</CardTitle>
+        <CardTitle icon="Sparkles">Select your income types</CardTitle>
         <div className="income-type-grid">
           {INCOME_TYPES.map(t => (
             <div
@@ -30,8 +32,8 @@ export function IncomeScreen() {
               className={`itc ${state.incomeTypes.includes(t.id) ? 'on' : ''}`}
               onClick={() => toggleIncomeType(t.id)}
             >
-              <div className="itc-check">✓</div>
-              <div className="itc-icon">{t.icon}</div>
+              <div className="itc-check"><Check size={11} strokeWidth={2.5} /></div>
+              <div className="itc-icon"><Icon name={t.icon} size={22} /></div>
               <div className="itc-label">{t.label}</div>
               <div className="itc-hint">{t.hint}</div>
             </div>
@@ -59,7 +61,7 @@ export function IncomeScreen() {
           </div>
         )}
 
-        <InfoBanner icon="✦" variant="green" style={{ marginTop: 14 }}>
+        <InfoBanner icon="TrendingUp" variant="green" style={{ marginTop: 14 }}>
           <strong style={{ color: 'var(--green)' }}>Total declared income</strong> annualised across all sources.
         </InfoBanner>
         <div className="totals-row">

@@ -4,13 +4,24 @@
   padding: 9px 16px;
   border-radius: var(--r8);
   border: 1px solid var(--border);
-  background: var(--bg2);
+  background: rgba(30, 27, 75, 0.55);
   color: var(--text1);
   font-size: 13px;
   cursor: pointer;
-  transition: all .15s;
+  transition: all .18s;
   font-weight: 500;
   font-family: var(--font-body);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
 }
-.chip:hover { border-color: var(--border2); color: var(--text0); }
-.chip.on    { border-color: var(--accent); background: rgba(79,110,247,.14); color: var(--text0); }
+.chip:hover {
+  border-color: rgba(139, 92, 246, 0.45);
+  color: var(--text0);
+  background: rgba(126, 34, 206, 0.1);
+}
+.chip.on {
+  border-color: rgba(139, 92, 246, 0.6);
+  background: rgba(126, 34, 206, 0.18);
+  color: var(--text0);
+  box-shadow: 0 0 0 1px rgba(139, 92, 246, 0.2);
+}

@@ -2,14 +2,18 @@
   width: 46px;
   height: 26px;
   border-radius: 13px;
-  background: var(--bg3);
-  border: 1px solid var(--border2);
+  background: rgba(30, 27, 75, 0.8);
+  border: 1px solid rgba(167, 139, 250, 0.2);
   position: relative;
   cursor: pointer;
-  transition: background .15s;
+  transition: all .2s;
   flex-shrink: 0;
 }
-.sw.on { background: var(--accent); border-color: var(--accent); }
+.sw.on {
+  background: var(--accentg);
+  border-color: transparent;
+  box-shadow: var(--glow-sm);
+}
 .sw::after {
   content: '';
   position: absolute;
@@ -19,6 +23,7 @@
   height: 18px;
   border-radius: 50%;
   background: #fff;
-  transition: left .15s;
+  transition: left .2s cubic-bezier(.22, 1, .36, 1);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
 }
 .sw.on::after { left: 21px; }
