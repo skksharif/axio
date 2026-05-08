@@ -74,10 +74,6 @@ export function IncomeScreen() {
             <div className="tot-lbl">Sources selected</div>
             <div className="tot-val">{state.incomeTypes.length}</div>
           </div>
-          <div className="tot-box yellow">
-            <div className="tot-lbl">Verified</div>
-            <div className="tot-val">Payslips</div>
-          </div>
         </div>
       </Card>
 

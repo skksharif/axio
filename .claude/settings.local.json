@@ -2,7 +2,13 @@
   "permissions": {
     "allow": [
       "Bash(npm run *)",
-      "Bash(npm install *)"
+      "Bash(npm install *)",
+      "Bash(node -e \"const p=require\\('./node_modules/react-day-picker/package.json'\\); console.log\\(p.version\\);\")",
+      "Bash(node -e \"const m=require\\('./node_modules/react-day-picker'\\); console.log\\(Object.keys\\(m\\).join\\(', '\\)\\)\")",
+      "Bash(node -e \"const {SelectionState}=require\\('./node_modules/react-day-picker'\\); console.log\\('SelectionState:', JSON.stringify\\(SelectionState,null,1\\)\\);\")",
+      "Bash(node -e \"const p=require\\('./node_modules/react-day-picker/package.json'\\); console.log\\(p.exports ? JSON.stringify\\(Object.keys\\(p.exports\\)\\) : 'no exports field'\\);\")",
+      "Bash(node -e \"const p=require\\('./node_modules/react-day-picker/package.json'\\); const styles=Object.entries\\(p.exports||{}\\).filter\\(\\([k]\\)=>k.includes\\('style'\\)||k.includes\\('css'\\)\\); console.log\\(JSON.stringify\\(styles\\)\\);\")",
+      "Bash(npx vite *)"
     ]
   }
 }

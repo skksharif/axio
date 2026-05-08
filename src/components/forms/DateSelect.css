@@ -1,0 +1,196 @@
+/* ─── Trigger ─────────────────────────────────────────────── */
+.dp {
+  position: relative;
+}
+
+.dp__trigger {
+  width: 100%;
+  height: 46px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 14px;
+  background: rgba(30, 27, 75, 0.55);
+  border: 1px solid var(--border);
+  border-radius: var(--r8);
+  color: var(--text2);
+  font-size: 14px;
+  font-family: var(--font-body);
+  cursor: pointer;
+  transition: border-color .2s, box-shadow .2s, color .2s;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  outline: none;
+  text-align: left;
+}
+.dp__trigger--set { color: var(--text0); }
+.dp__trigger:hover,
+.dp__trigger:focus-visible {
+  border-color: var(--hover);
+  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.16);
+}
+
+.dp__cal-icon {
+  flex-shrink: 0;
+  color: var(--text2);
+  transition: color .2s;
+}
+.dp__trigger--set .dp__cal-icon { color: var(--hover); }
+
+.dp__label { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+.dp__clear {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  color: var(--text2);
+  transition: background .15s, color .15s;
+  flex-shrink: 0;
+}
+.dp__clear:hover {
+  background: rgba(244, 63, 94, 0.15);
+  color: var(--red);
+}
+
+/* ─── Popup — rendered via portal into document.body ─────── */
+/*   position: fixed so it escapes every overflow/stacking    */
+/*   context; coordinates set inline from getBoundingClientRect */
+.dp__popup {
+  position: fixed;
+  z-index: 9999;
+  width: max-content;  /* size to calendar content — no extra space */
+  background: rgba(20, 12, 42, 0.97);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--r12);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.6),
+    0 0 0 1px rgba(139, 92, 246, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  padding: 14px 14px 16px;
+  animation: dp-appear .15s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes dp-appear {
+  from { opacity: 0; transform: translateY(-6px) scale(0.98); }
+  to   { opacity: 1; transform: translateY(0)   scale(1);    }
+}
+
+/* ─── react-day-picker v10 theme ──────────────────────────── */
+.dp__popup .rdp-root {
+  --rdp-day-height: 38px;
+  --rdp-day-width: 38px;
+  --rdp-day_button-height: 34px;
+  --rdp-day_button-width: 34px;
+  --rdp-day_button-border-radius: var(--r8);
+  --rdp-day_button-border: 2px solid transparent;
+  --rdp-nav_button-height: 32px;
+  --rdp-nav_button-width: 32px;
+  --rdp-nav-height: 38px;
+  --rdp-dropdown-gap: 6px;
+
+  --rdp-accent-color: var(--hover);
+  --rdp-accent-background-color: rgba(139, 92, 246, 0.18);
+  --rdp-today-color: var(--hover);
+  --rdp-selected-border: 2px solid transparent;
+  --rdp-outside-opacity: 0.35;
+  --rdp-weekday-opacity: 1;
+  --rdp-weekday-padding: 0.4rem 0;
+  --rdp-animation_duration: 0.18s;
+
+  color: var(--text1);
+  font-family: var(--font-body);
+  font-size: 13px;
+}
+
+/* Nav */
+.dp__popup .rdp-button_previous,
+.dp__popup .rdp-button_next {
+  border-radius: var(--r8);
+  color: var(--text2);
+  transition: background .14s, color .14s;
+}
+.dp__popup .rdp-button_previous:hover,
+.dp__popup .rdp-button_next:hover {
+  background: rgba(139, 92, 246, 0.14);
+  color: var(--text0);
+}
+.dp__popup .rdp-chevron {
+  fill: currentColor;
+  width: 16px;
+  height: 16px;
+}
+
+/* Caption */
+.dp__popup .rdp-month_caption { font-size: 14px; }
+.dp__popup .rdp-caption_label {
+  color: var(--text0);
+  font-weight: 700;
+  font-size: 13px;
+  gap: 4px;
+}
+
+/* Month / year dropdown chips */
+.dp__popup .rdp-dropdown_root {
+  background: rgba(30, 27, 75, 0.7);
+  border: 1px solid var(--border);
+  border-radius: var(--r8);
+  padding: 3px 10px 3px 8px;
+  cursor: pointer;
+  transition: border-color .14s, background .14s;
+}
+.dp__popup .rdp-dropdown_root:hover {
+  border-color: var(--hover);
+  background: rgba(139, 92, 246, 0.1);
+}
+.dp__popup .rdp-dropdown_root .rdp-chevron {
+  fill: var(--text2);
+}
+
+/* Weekday headers */
+.dp__popup .rdp-weekday {
+  color: var(--text2);
+  font-size: 10.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+/* Day cells */
+.dp__popup .rdp-day { color: var(--text1); }
+
+.dp__popup .rdp-day_button {
+  transition: background .12s, color .12s, box-shadow .12s;
+}
+.dp__popup .rdp-day_button:hover:not(:disabled) {
+  background: rgba(139, 92, 246, 0.18);
+  color: var(--text0);
+}
+
+/* Selected */
+.dp__popup .rdp-selected .rdp-day_button {
+  background: var(--accentg);
+  color: #fff;
+  border-color: transparent;
+  box-shadow: 0 2px 12px rgba(109, 40, 217, 0.45);
+}
+.dp__popup .rdp-selected .rdp-day_button:hover {
+  background: var(--accentg);
+  color: #fff;
+}
+
+/* Today (unselected) */
+.dp__popup .rdp-today:not(.rdp-outside) .rdp-day_button {
+  color: var(--hover);
+  font-weight: 700;
+}
+.dp__popup .rdp-today:not(.rdp-outside):not(.rdp-selected) .rdp-day_button {
+  background: rgba(139, 92, 246, 0.08);
+}
+
+/* Outside-month days */
+.dp__popup .rdp-outside { opacity: var(--rdp-outside-opacity); }

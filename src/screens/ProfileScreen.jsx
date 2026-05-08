@@ -9,6 +9,7 @@ import { Card, CardTitle } from '../components/common/Card';
 import { InfoBanner } from '../components/common/InfoBanner';
 import { ChoiceCard, ChoiceGrid } from '../components/forms/ChoiceCard';
 import { Chip, Chips } from '../components/forms/Chip';
+import { DateSelect } from '../components/forms/DateSelect';
 import { getInitials } from '../utils/format';
 import './ProfileScreen.css';
 
@@ -33,6 +34,9 @@ export function ProfileScreen() {
   const { state, updateState, toggleDependantAge, next, prev } = useApp();
   const [addrYrs, setAddrYrs] = useState('');
   const [empYrs,  setEmpYrs]  = useState('');
+  const [dob,        setDob]        = useState(null);
+  const [visaExpiry, setVisaExpiry] = useState(null);
+  const [partnerDob, setPartnerDob] = useState(null);
   const isCouple = state.relationshipStatus === 'married' || state.relationshipStatus === 'defacto';
   const initials = getInitials(state.firstName, state.lastName);
 
@@ -68,7 +72,7 @@ export function ProfileScreen() {
         <div className="g2">
           <div className="fld"><label className="fl">First name</label><input className="inp" placeholder="First name" value={state.firstName} onChange={e => updateState({ firstName: e.target.value })} /></div>
           <div className="fld"><label className="fl">Last name</label><input className="inp" placeholder="Last name" value={state.lastName} onChange={e => updateState({ lastName: e.target.value })} /></div>
-          <div className="fld"><label className="fl">Date of birth</label><input className="inp" placeholder="DD / MM / YYYY" /></div>
+          <div className="fld"><label className="fl">Date of birth</label><DateSelect value={dob} onChange={setDob} yearRange={[1940, new Date().getFullYear() - 18]} /></div>
           <div className="fld"><label className="fl">Gender (optional)</label>
             <select className="sel"><option>Prefer not to say</option><option>Male</option><option>Female</option><option>Non-binary</option><option>Other</option></select>
           </div>
@@ -99,7 +103,7 @@ export function ProfileScreen() {
               </select>
             </div>
             <div className="fld"><label className="fl">Visa subclass number</label><input className="inp" placeholder="e.g. 482" /></div>
-            <div className="fld"><label className="fl">Visa expiry</label><input className="inp" placeholder="DD / MM / YYYY" /></div>
+            <div className="fld"><label className="fl">Visa expiry</label><DateSelect value={visaExpiry} onChange={setVisaExpiry} yearRange={[new Date().getFullYear(), new Date().getFullYear() + 15]} /></div>
             <div className="fld"><label className="fl">Work entitlement</label>
               <select className="sel"><option>Full work rights</option><option>Limited work rights</option><option>No work rights</option></select>
             </div>
@@ -126,7 +130,7 @@ export function ProfileScreen() {
             <InfoBanner icon="Users" variant="blue">Partner details help assess household position. Income is not declared as yours unless adding a joint applicant.</InfoBanner>
             <div className="g2">
               <div className="fld"><label className="fl">Partner full name</label><input className="inp" placeholder="Full name" /></div>
-              <div className="fld"><label className="fl">Partner date of birth</label><input className="inp" placeholder="DD / MM / YYYY" /></div>
+              <div className="fld"><label className="fl">Partner date of birth</label><DateSelect value={partnerDob} onChange={setPartnerDob} yearRange={[1940, new Date().getFullYear() - 18]} /></div>
               <div className="fld"><label className="fl">Partner employment</label>
                 <select className="sel"><option value="">Select…</option><option>Full-time</option><option>Part-time</option><option>Casual</option></select>
               </div>
