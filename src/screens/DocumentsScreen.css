@@ -181,7 +181,7 @@
   border-radius: var(--r22);
   padding: 20px 22px;
   box-shadow: var(--card-shadow);
-  min-height: 320px;
+  min-height: clamp(260px, 65vw, 320px);
   display: flex;
   flex-direction: column;
 }
@@ -219,6 +219,8 @@
 /* Internal step nav */
 .bank-step-nav {
   display: flex;
+  justify-content: space-between;
+  align-items: center;
   gap: 10px;
   margin-top: auto;
   padding-top: 14px;
@@ -243,7 +245,8 @@
 .bank-nav-back:disabled { opacity: .35; cursor: not-allowed; }
 
 .bank-nav-next {
-  flex: 1;
+  flex: 0 1 auto;
+  min-width: clamp(130px, 38vw, 190px);
   height: 40px;
   padding: 0 18px;
   border-radius: var(--r12);
@@ -308,9 +311,15 @@
 }
 .bank-search-input::placeholder { color: var(--text2); }
 
-.bank-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; }
+.bank-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
 
 .bank-btn {
+  flex: 1 1 calc(50% - 4px);
+  min-width: 120px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -327,7 +336,9 @@
 .bank-btn:hover  { border-color: var(--border2); background: rgba(139, 92, 246, 0.06); }
 .bank-btn.active { border-color: var(--accent2); background: rgba(126, 34, 206, 0.10); }
 
-.bank-btn-left { display: flex; align-items: center; gap: 9px; min-width: 0; }
+.bank-btn-left { display: flex; align-items: center; gap: 9px; min-width: 0; flex: 1; }
+
+.bank-btn-left > div:last-child { min-width: 0; overflow: hidden; }
 
 .bank-btn-icon {
   width: 34px; height: 34px; min-width: 34px;
@@ -1240,3 +1251,81 @@
 .doc-sheet-anika-icon  { color: var(--hover); flex-shrink: 0; margin-top: 1px; }
 .doc-sheet-anika-title { font-size: 12.5px; font-weight: 700; color: var(--text0); margin-bottom: 3px; }
 .doc-sheet-anika-desc  { font-size: 11.5px; color: var(--text2); line-height: 1.5; }
+
+/* ─── Bank section: mobile responsive ──────────────────────────── */
+@media (max-width: 520px) {
+  .bank-hero {
+    padding: 14px 16px;
+  }
+
+  .bank-hero-title { font-size: 17px; }
+
+  .bank-progress-card {
+    padding: 12px 14px;
+  }
+
+  .bank-content-card {
+    padding: 16px;
+  }
+
+  .bank-btn {
+    padding: 9px 10px;
+    gap: 6px;
+  }
+
+  .bank-btn-icon {
+    width: 28px;
+    height: 28px;
+    min-width: 28px;
+  }
+
+  .bank-btn-left { gap: 7px; }
+
+  .bank-step-nav {
+    gap: 8px;
+    padding-top: 12px;
+  }
+
+  .bank-nav-back  { padding: 0 14px; }
+  .bank-nav-next  { padding: 0 14px; }
+
+  .bank-connected-card {
+    padding: 12px 14px;
+    gap: 10px;
+  }
+
+  .bank-connected-disconnect {
+    padding: 5px 10px;
+    font-size: 11.5px;
+  }
+}
+
+@media (max-width: 400px) {
+  .bank-hero-icon-wrap { display: none; }
+
+  .bank-btn {
+    flex: 1 1 100%;
+  }
+}
+
+/* ─── Document section: mobile responsive ───────────────────────── */
+@media (max-width: 520px) {
+  .doc-anika-banner {
+    padding: 12px 14px;
+    gap: 10px;
+  }
+
+  .doc-upload-card {
+    padding: 12px 13px;
+  }
+
+  .doc-card-icon-wrap {
+    width: 36px;
+    height: 36px;
+    min-width: 36px;
+  }
+
+  .doc-card-title { font-size: 12.5px; }
+
+  .section-divider { margin: 14px 0 10px; }
+}
