@@ -27,6 +27,18 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* ─── SCROLLBAR ──────────────────────────────────────────── */
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: rgba(139, 92, 246, 0.22);
+  border-radius: 5px;
+}
+::-webkit-scrollbar-thumb:hover { background: rgba(139, 92, 246, 0.48); }
+::-webkit-scrollbar-corner { background: transparent; }
+
+* { scrollbar-width: thin; scrollbar-color: rgba(139, 92, 246, 0.22) transparent; }
+
 /* ─── LAYOUT ─────────────────────────────────────────────── */
 .app {
   display: flex;

@@ -17,6 +17,9 @@ export function ExpensesScreen() {
   const isCouple = state.relationshipStatus === 'married' || state.relationshipStatus === 'defacto';
   const HEM = isCouple ? HEM_COUPLE : HEM_SINGLE;
 
+  const setExpense = (id, v) =>
+    updateState({ expenses: { ...state.expenses, [id]: Math.max(0, v) } });
+
   const totalExp = Object.values(state.expenses).reduce((a, b) => a + b, 0);
   const yourShare = Math.round(totalExp * state.sharedPct / 100);
   const partnerCovers = totalExp - yourShare;
@@ -98,9 +101,9 @@ export function ExpensesScreen() {
               )}
               <Stepper
                 value={state.expenses[e.id] || 0}
-                displayValue={`$${(state.expenses[e.id] || 0).toLocaleString()}`}
                 onDecrement={() => stepExpense(e.id, -e.step)}
                 onIncrement={() => stepExpense(e.id, e.step)}
+                onChange={(v) => setExpense(e.id, v)}
               />
             </div>
           </div>

@@ -1,5 +1,73 @@
-/* .lender-grid is defined in LenderCard.css */
+/* ─── Frequency tab bar ─────────────────────────────────────────── */
+.freq-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
 
-@media (max-width: 900px) {
-  .lender-grid { grid-template-columns: 1fr; }
+.freq-bar-label {
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--text2);
+  text-transform: uppercase;
+  letter-spacing: .5px;
+}
+
+.freq-tabs {
+  display: flex;
+  background: rgba(23, 16, 47, 0.7);
+  border: 1px solid var(--border);
+  border-radius: var(--r12);
+  padding: 3px;
+  gap: 2px;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.freq-tab {
+  padding: 7px 16px;
+  border-radius: var(--r8);
+  border: none;
+  background: transparent;
+  color: var(--text2);
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: var(--font-body);
+  transition: background .18s, color .18s, box-shadow .18s;
+  white-space: nowrap;
+}
+
+.freq-tab:hover {
+  color: var(--text1);
+  background: rgba(139, 92, 246, 0.08);
+}
+
+.freq-tab.active {
+  background: var(--accentg);
+  color: #fff;
+  box-shadow: 0 2px 10px rgba(109, 40, 217, 0.35);
+}
+
+/* ─── Responsive ────────────────────────────────────────────────── */
+@media (max-width: 520px) {
+  .freq-bar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .freq-tabs {
+    width: 100%;
+  }
+
+  .freq-tab {
+    flex: 1;
+    padding: 7px 10px;
+    text-align: center;
+    font-size: 12px;
+  }
 }

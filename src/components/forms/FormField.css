@@ -1,19 +1,32 @@
 .repay-box {
-  background: rgba(109, 40, 217, 0.1);
-  border: 1px solid rgba(139, 92, 246, 0.28);
+  position: relative;
+  background: linear-gradient(135deg, rgba(109, 40, 217, 0.13) 0%, rgba(147, 51, 234, 0.07) 100%);
+  border: 1px solid rgba(139, 92, 246, 0.3);
+  border-left: 3px solid var(--hover);
   border-radius: var(--r12);
-  padding: 16px 20px;
+  padding: 15px 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 16px;
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  margin-top: 18px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 2px 16px rgba(109, 40, 217, 0.12);
+  overflow: hidden;
 }
-.rb-label { font-size: 12px; color: var(--text1); margin-bottom: 3px; font-weight: 500; }
-.rb-sub   { font-size: 11px; color: var(--text2); }
-.rb-val   { font-family: var(--font-display); font-size: 26px; font-weight: 800; text-align: right; }
-.rb-rate  { font-size: 11px; color: var(--text2); text-align: right; margin-top: 2px; }
+
+.repay-box::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(139, 92, 246, 0.04) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+.rb-label { font-size: 11.5px; color: var(--text1); margin-bottom: 3px; font-weight: 600; letter-spacing: .15px; }
+.rb-sub   { font-size: 10.5px; color: var(--text2); }
+.rb-val   { font-family: var(--font-display); font-size: 28px; font-weight: 800; text-align: right; letter-spacing: -.6px; line-height: 1; }
+.rb-rate  { font-size: 11px; color: var(--text2); text-align: right; margin-top: 4px; }
 
 .upload-zone {
   border: 1.5px dashed rgba(167, 139, 250, 0.3);

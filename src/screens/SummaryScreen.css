@@ -1,32 +1,3 @@
-.svc-demo-bar {
-  display: flex;
-  gap: 6px;
-  margin-bottom: 18px;
-  background: rgba(30, 27, 75, 0.55);
-  border: 1px solid var(--border);
-  border-radius: var(--r8);
-  padding: 4px;
-  width: fit-content;
-  max-width: 100%;
-  align-items: center;
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  flex-wrap: wrap;
-}
-
-.svc-demo-btn {
-  padding: 6px 14px;
-  border-radius: 6px;
-  border: none;
-  font-size: 12px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all .18s;
-  font-family: var(--font-body);
-  white-space: nowrap;
-  touch-action: manipulation;
-}
-
 /* ─── ANIKA HERO ──────────────────────────────────────────── */
 .anika-hero {
   background: rgba(26, 18, 50, 0.7);
@@ -129,16 +100,9 @@
 .dti-fill {
   height: 100%;
   border-radius: 99px;
-  transition: width .45s ease, background .3s;
-}
-
-.dti-labels {
-  display: flex;
-  justify-content: space-between;
-  font-size: 10.5px;
-  color: var(--text2);
-  flex-wrap: wrap;
-  gap: 4px;
+  background: var(--green);
+  box-shadow: 0 0 8px rgba(16, 185, 129, 0.45);
+  transition: width .45s ease;
 }
 
 .dti-narrative {
@@ -187,13 +151,11 @@
 }
 
 @media (max-width: 400px) {
-  .svc-demo-bar   { width: 100%; justify-content: center; }
-  .metrics-grid   { gap: 8px; }
-  .metric-box     { padding: 10px 10px; }
-  .metric-val     { font-size: 15px; }
-  .metric-sub     { font-size: 10px; }
-  .ah-top         { padding: 14px; }
-  .ah-bottom      { padding: 12px 14px; }
-  .dti-narrative  { font-size: 11.5px; }
-  .dti-labels     { font-size: 9.5px; }
+  .metrics-grid  { gap: 8px; }
+  .metric-box    { padding: 10px; }
+  .metric-val    { font-size: 15px; }
+  .metric-sub    { font-size: 10px; }
+  .ah-top        { padding: 14px; }
+  .ah-bottom     { padding: 12px 14px; }
+  .dti-narrative { font-size: 11.5px; }
 }

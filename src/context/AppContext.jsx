@@ -23,7 +23,7 @@ const initialState = {
   relationshipStatus: 'single',
   dependants: 0,
   residency: 'citizen',
-  employmentType: 'full-time',
+  employmentTypes: ['full-time'],
   livingStatus: 'mortgage',
   incomeTypes: [],
   sharedExpenses: false,
@@ -122,6 +122,25 @@ export function AppProvider({ children }) {
     });
   }, []);
 
+  const toggleEmploymentType = useCallback((id) => {
+    setState(s => {
+      const current = s.employmentTypes;
+      let types;
+      if (id === 'not-employed') {
+        // "Not employed" is exclusive — selecting it clears everything else,
+        // deselecting it leaves an empty array
+        types = current.includes(id) ? [] : [id];
+      } else {
+        // Any other selection removes "not-employed" first, then toggles normally
+        const without = current.filter(t => t !== 'not-employed');
+        types = without.includes(id)
+          ? without.filter(t => t !== id)
+          : [...without, id];
+      }
+      return { ...s, employmentTypes: types };
+    });
+  }, []);
+
   const value = {
     state,
     updateState,
@@ -134,6 +153,7 @@ export function AppProvider({ children }) {
     toggleIncomeType,
     stepExpense,
     toggleDependantAge,
+    toggleEmploymentType,
   };
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;

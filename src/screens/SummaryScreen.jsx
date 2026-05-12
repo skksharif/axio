@@ -5,18 +5,14 @@ import { ScreenHeader } from '../components/common/ScreenHeader';
 import { BtnPrimary, BtnGhost, BtnRow } from '../components/common/Button';
 import { SnapCard } from '../components/ui/SnapCard';
 import { SvcPill } from '../components/common/Badge';
-import { SERVICEABILITY_DATA, SNAP_CARDS } from '../data/summaryData';
+import { SERVICEABILITY, SNAP_CARDS } from '../data/summaryData';
 import './SummaryScreen.css';
 
 export function SummaryScreen() {
-  const { state, updateState, next, prev } = useApp();
+  const { next, prev } = useApp();
   const [openSnap, setOpenSnap] = useState(null);
 
-  const svc = state.selectedServiceability || 'green';
-  const s = SERVICEABILITY_DATA[svc];
-
-  const setServiceability = (v) => updateState({ selectedServiceability: v });
-  const toggleSnap = (id) => setOpenSnap(prev => prev === id ? null : id);
+  const toggleSnap = (id) => setOpenSnap(p => p === id ? null : id);
 
   return (
     <div className="screen-enter">
@@ -27,23 +23,6 @@ export function SummaryScreen() {
         sub="Review your complete application before submission. Edit any section if needed."
       />
 
-      <div className="svc-demo-bar">
-        <div className="text-small text-border2" style={{ padding: '0 10px' }}>Demo:</div>
-        {['green', 'yellow', 'red'].map(v => (
-          <button
-            key={v}
-            className="svc-demo-btn"
-            style={{
-              background: svc === v ? 'var(--bg0)' : 'transparent',
-              color: v === 'green' ? 'var(--green)' : v === 'yellow' ? 'var(--yellow)' : 'var(--red)',
-            }}
-            onClick={() => setServiceability(v)}
-          >
-            {v.charAt(0).toUpperCase() + v.slice(1)}
-          </button>
-        ))}
-      </div>
-
       <div className="anika-hero">
         <div className="ah-top">
           <div className="ah-row">
@@ -51,11 +30,11 @@ export function SummaryScreen() {
               <div className="ai-orb-lg">AI</div>
               <div>
                 <div className="ah-title">Anika financial assessment</div>
-                <div className="ah-narrative" dangerouslySetInnerHTML={{ __html: s.narrative }} />
+                <div className="ah-narrative" dangerouslySetInnerHTML={{ __html: SERVICEABILITY.narrative }} />
               </div>
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 5, flexShrink: 0 }}>
-              <SvcPill variant={s.pillCls}>{s.pill}</SvcPill>
+              <SvcPill variant={SERVICEABILITY.pillCls}>{SERVICEABILITY.pill}</SvcPill>
               <div className="text-small text-border2">Serviceability status</div>
             </div>
           </div>
@@ -68,8 +47,8 @@ export function SummaryScreen() {
             </div>
             <div className="metric-box">
               <div className="metric-lbl">Monthly surplus</div>
-              <div className="metric-val" style={{ color: s.surplusColor }}>{s.surplus}</div>
-              <div className="metric-sub" style={{ color: s.surplusColor }}>After all commitments</div>
+              <div className="metric-val" style={{ color: 'var(--green)' }}>{SERVICEABILITY.surplus}</div>
+              <div className="metric-sub" style={{ color: 'var(--green)' }}>After all commitments</div>
             </div>
             <div className="metric-box">
               <div className="metric-lbl">Net assets</div>
@@ -78,8 +57,8 @@ export function SummaryScreen() {
             </div>
             <div className="metric-box">
               <div className="metric-lbl">Lender matches</div>
-              <div className="metric-val" style={{ color: s.matchColor }}>{s.matches}</div>
-              <div className="metric-sub" style={{ color: s.matchColor }}>From 45+ panel</div>
+              <div className="metric-val" style={{ color: 'var(--green)' }}>{SERVICEABILITY.matches}</div>
+              <div className="metric-sub" style={{ color: 'var(--green)' }}>From 45+ panel</div>
             </div>
           </div>
         </div>
@@ -88,18 +67,13 @@ export function SummaryScreen() {
           <div>
             <div className="flex-between" style={{ marginBottom: 8 }}>
               <span className="text-small text-border2">Debt-to-income ratio (DTI)</span>
-              <span className="text-strong" style={{ color: s.dtiColor }}>{s.dtiVal}</span>
+              <span className="text-strong" style={{ color: 'var(--green)' }}>{SERVICEABILITY.dtiVal}</span>
             </div>
             <div className="dti-track">
-              <div className="dti-fill" style={{ width: s.dtiFill, background: s.dtiColor }} />
-            </div>
-            <div className="dti-labels">
-              <span style={{ color: 'var(--green)' }}>0–50% Strong</span>
-              <span style={{ color: 'var(--yellow)' }}>50–65% Marginal</span>
-              <span style={{ color: 'var(--red)' }}>65%+ At risk</span>
+              <div className="dti-fill" style={{ width: SERVICEABILITY.dtiFill }} />
             </div>
           </div>
-          <div className="dti-narrative" dangerouslySetInnerHTML={{ __html: s.dtiNote }} />
+          <div className="dti-narrative" dangerouslySetInnerHTML={{ __html: SERVICEABILITY.dtiNote }} />
         </div>
       </div>
 

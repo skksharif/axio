@@ -1,4 +1,5 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Icon } from '../components/common/Icon';
 import { useApp } from '../context/AppContext';
@@ -46,10 +47,32 @@ const DOCUMENTS = [
     extracted: ['Property address', 'Owner name', 'Council valuation'],
   },
   {
-    id: 'rental_agreement', group: 'Property / Address',
-    title: 'Rental Agreement', subtitle: 'For customers currently renting',
-    icon: 'FileText', required: true, defaultStatus: 'not_started', stateKey: null,
+    id: 'lease_agreement', group: 'Rental Documents',
+    title: 'Lease Agreement', subtitle: 'Signed lease or rental contract from your landlord or agent',
+    icon: 'FileText', required: true, defaultStatus: 'not_started', stateKey: 'lease',
     extracted: ['Lease address', 'Rent amount', 'Lease term'],
+    rentalOnly: true,
+  },
+  {
+    id: 'rent_receipts', group: 'Rental Documents',
+    title: 'Rent Receipts', subtitle: 'Latest 3 months of rental payment receipts',
+    icon: 'Receipt', required: false, defaultStatus: 'not_started', stateKey: 'rent_receipts',
+    extracted: ['Payment amount', 'Payment dates', 'Landlord or agent'],
+    rentalOnly: true,
+  },
+  {
+    id: 'rental_ledger', group: 'Rental Documents',
+    title: 'Rental Ledger', subtitle: 'Agent-issued history of rental payments and arrears',
+    icon: 'List', required: false, defaultStatus: 'not_started', stateKey: 'rental_ledger',
+    extracted: ['Payment history', 'Arrears status', 'Bond details'],
+    rentalOnly: true,
+  },
+  {
+    id: 'tenancy_agreement', group: 'Rental Documents',
+    title: 'Tenancy Agreement', subtitle: 'Government-issued form — alternative to lease agreement',
+    icon: 'ClipboardList', required: false, defaultStatus: 'not_started', stateKey: null,
+    extracted: ['Tenancy address', 'Bond amount', 'Start date'],
+    rentalOnly: true,
   },
 ];
 
@@ -85,16 +108,8 @@ const FLOW_STEPS = [
   { id: 'intro',   title: 'Connect banks',    short: 'Why we need this',  stepIcon: 'Sparkles'     },
   { id: 'banks',   title: 'Choose banks',     short: 'Multiple banks',    stepIcon: 'Building2'    },
   { id: 'period',  title: 'Statement period', short: '3, 6 or 12 months', stepIcon: 'CalendarDays' },
-  { id: 'consent', title: 'Consent',          short: 'Your declaration',  stepIcon: 'Shield'       },
   { id: 'connect', title: 'Secure connect',   short: 'Bank redirect',     stepIcon: 'Lock'         },
   { id: 'review',  title: 'Review',           short: 'Anika summary',     stepIcon: 'BarChart2'    },
-];
-
-const CONSENT_ITEMS = [
-  { key: 'privacy',    label: 'I have read and understood the Privacy Consent.' },
-  { key: 'cdr',        label: 'I consent to share selected bank account and transaction data.' },
-  { key: 'assessment', label: 'I authorise Axio, Stoik and Anika AI to use this data for finance assessment.' },
-  { key: 'revoke',     label: 'I understand I can withdraw consent, subject to application requirements.' },
 ];
 
 const INTRO_BENEFITS = [
@@ -276,9 +291,165 @@ function PreviewPanel({ selectedDoc, onUpload }) {
   );
 }
 
+// ─── Secure Connect Modal ─────────────────────────────────────────────────────
+
+function SecureConnectModal({ bank, onClose, onConnect, onUpload }) {
+  const [crn, setCrn] = useState('');
+  const [password, setPassword] = useState('');
+  const [showPwd, setShowPwd] = useState(false);
+  const [consented, setConsented] = useState(false);
+
+  const canSubmit = crn.trim().length > 0 && password.trim().length > 0 && consented;
+
+  const handleConnect = () => {
+    if (canSubmit) onConnect();
+  };
+
+  // Lock body scroll while modal is open
+  useEffect(() => {
+    if (bank) document.body.style.overflow = 'hidden';
+    return () => { document.body.style.overflow = ''; };
+  }, [bank]);
+
+  return createPortal(
+    <AnimatePresence>
+      {bank && (
+        <motion.div
+          className="sc-modal-overlay"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.2 }}
+          onClick={onClose}
+        >
+          <motion.div
+            className="sc-modal"
+            style={{ x: '-50%' }}
+            initial={{ opacity: 0, scale: 0.94, y: -12 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.94, y: -12 }}
+            transition={{ type: 'spring', damping: 28, stiffness: 320 }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Close */}
+            <button type="button" className="sc-modal-close" onClick={onClose} aria-label="Close">
+              <Icon name="X" size={14} />
+            </button>
+
+            {/* Header */}
+            <div className="sc-modal-header">
+              <div className="sc-modal-lock-icon">
+                <Icon name="Lock" size={20} />
+              </div>
+              <div>
+                <div className="sc-modal-title">Secure Authentication</div>
+                <div className="sc-modal-sub">
+                  Enter your Customer Reference Number (CRN) and password to securely connect your account.
+                </div>
+              </div>
+            </div>
+
+            {/* Bank badge */}
+            <div className="sc-modal-bank-row">
+              <div className="sc-modal-bank-icon">
+                <Icon name={bank.icon} size={14} />
+              </div>
+              <span className="sc-modal-bank-name">{bank.name}</span>
+              <span className="sc-modal-bank-type">{bank.type} Bank</span>
+            </div>
+
+            {/* CRN */}
+            <div className="sc-modal-field">
+              <label className="sc-modal-label">Customer Reference Number (CRN)</label>
+              <input
+                className="sc-modal-input"
+                type="text"
+                placeholder="Enter your CRN"
+                value={crn}
+                onChange={(e) => setCrn(e.target.value)}
+                autoComplete="username"
+              />
+            </div>
+
+            {/* Password */}
+            <div className="sc-modal-field">
+              <label className="sc-modal-label">Password</label>
+              <div className="sc-modal-input-wrap">
+                <input
+                  className="sc-modal-input"
+                  type={showPwd ? 'text' : 'password'}
+                  placeholder="Enter your password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  autoComplete="current-password"
+                  onKeyDown={(e) => e.key === 'Enter' && handleConnect()}
+                />
+                <button
+                  type="button"
+                  className="sc-modal-pwd-toggle"
+                  onClick={() => setShowPwd((p) => !p)}
+                  aria-label={showPwd ? 'Hide password' : 'Show password'}
+                >
+                  <Icon name={showPwd ? 'EyeOff' : 'Eye'} size={14} />
+                </button>
+              </div>
+            </div>
+
+            {/* Encrypted notice */}
+            <div className="sc-modal-notice">
+              <Icon name="Lock" size={13} className="sc-modal-notice-icon" />
+              <div>
+                <div className="sc-modal-notice-title">Encrypted &amp; Read-Only Access</div>
+                <div className="sc-modal-notice-desc">
+                  Your banking credentials are encrypted during transmission. Stoik and Axio Finance
+                  do not store your login details.
+                </div>
+              </div>
+            </div>
+
+            {/* Consent */}
+            <label className="sc-modal-consent">
+              <input
+                type="checkbox"
+                className="sc-modal-checkbox"
+                checked={consented}
+                onChange={(e) => setConsented(e.target.checked)}
+              />
+              <span className="sc-modal-consent-text">
+                Consent to access financial data
+                <span className="sc-modal-consent-desc">
+                  By continuing, you authorise Stoik and Axio Finance to securely access your
+                  banking transaction history for assessment, verification, behavioural analysis,
+                  and lender matching.
+                </span>
+              </span>
+            </label>
+
+            {/* CTA */}
+            <div className="sc-modal-cta">
+              <button
+                type="button"
+                className="sc-modal-connect-btn"
+                onClick={handleConnect}
+                disabled={!canSubmit}
+              >
+                Connect Bank Securely
+              </button>
+              <button type="button" className="sc-modal-upload-btn" onClick={onUpload}>
+                Upload Bank Statements Instead
+              </button>
+            </div>
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>,
+    document.body
+  );
+}
+
 // ─── Bank statement sub-components ───────────────────────────────────────────
 
-function BankSummaryPanel({ selectedBanks, months, consentReady }) {
+function BankSummaryPanel({ selectedBanks, months }) {
   return (
     <div className="bank-summary-panel">
       <div className="bank-summary-header">
@@ -299,10 +470,6 @@ function BankSummaryPanel({ selectedBanks, months, consentReady }) {
           <div className="bank-summary-stat-label">Statement period</div>
           <div className="bank-summary-stat-value">{months} months</div>
         </div>
-        <div className={`bank-summary-stat ${consentReady ? 'green' : 'yellow'}`}>
-          <div className="bank-summary-stat-label">Consent status</div>
-          <div className="bank-summary-stat-value">{consentReady ? 'Ready' : 'Incomplete'}</div>
-        </div>
       </div>
       <div className="bank-summary-anika">
         <div className="bank-summary-anika-title">Anika AI will review:</div>
@@ -320,22 +487,16 @@ function BankFlowSection({ state, updateState }) {
   const [selectedBankIds, setSelectedBankIds] = useState(['cba', 'nab']);
   const [months, setMonths] = useState(6);
   const [bankSearch, setBankSearch] = useState('');
-  const [consent, setConsent] = useState({
-    privacy: false, cdr: false, assessment: false, revoke: false,
-  });
   const [connectedIds, setConnectedIds] = useState([]);
+  const [modalBank, setModalBank] = useState(null);
 
   const selectedBanks = BANK_ITEMS.filter((b) => selectedBankIds.includes(b.id));
-  const consentReady = Object.values(consent).every(Boolean);
   const filteredBanks = useMemo(
     () => BANK_ITEMS.filter((b) => b.name.toLowerCase().includes(bankSearch.toLowerCase())),
     [bankSearch]
   );
 
-  const canContinue =
-    (bankStep === 1 && selectedBankIds.length > 0) ||
-    (bankStep === 3 && consentReady) ||
-    (bankStep !== 1 && bankStep !== 3);
+  const canContinue = bankStep !== 1 || selectedBankIds.length > 0;
 
   const toggleBank = (id) =>
     setSelectedBankIds((prev) =>
@@ -558,41 +719,8 @@ function BankFlowSection({ state, updateState }) {
               </div>
             )}
 
-            {/* Step 3 — Consent */}
+            {/* Step 3 — Connect */}
             {bankStep === 3 && (
-              <div className="bank-step-body">
-                <div className="bank-consent-info">
-                  <div className="bank-consent-info-title">Your declaration</div>
-                  <p className="bank-consent-info-desc">
-                    You control which banks are shared, the period of data, and the purpose of
-                    access.
-                  </p>
-                </div>
-                <div className="bank-consent-items">
-                  {CONSENT_ITEMS.map((item) => (
-                    <label key={item.key} className="bank-consent-item">
-                      <input
-                        type="checkbox"
-                        checked={consent[item.key]}
-                        onChange={(e) =>
-                          setConsent((prev) => ({ ...prev, [item.key]: e.target.checked }))
-                        }
-                        className="bank-consent-checkbox"
-                      />
-                      <span className="bank-consent-label">{item.label}</span>
-                    </label>
-                  ))}
-                </div>
-                {!consentReady && (
-                  <div className="bank-warn">
-                    All declarations must be accepted before continuing.
-                  </div>
-                )}
-              </div>
-            )}
-
-            {/* Step 4 — Connect */}
-            {bankStep === 4 && (
               <div className="bank-step-body">
                 <div className="bank-connect-info">
                   <div className="bank-connect-info-title">Secure bank redirect</div>
@@ -620,7 +748,7 @@ function BankFlowSection({ state, updateState }) {
                         <button
                           type="button"
                           className={`bank-connect-btn${isConnected ? ' done' : ''}`}
-                          onClick={() => connectBank(bank.id)}
+                          onClick={() => !isConnected && setModalBank(bank)}
                         >
                           {isConnected ? (
                             <><Icon name="Check" size={12} /> Connected</>
@@ -653,8 +781,8 @@ function BankFlowSection({ state, updateState }) {
               </div>
             )}
 
-            {/* Step 5 — Review */}
-            {bankStep === 5 && (
+            {/* Step 4 — Review */}
+            {bankStep === 4 && (
               <div className="bank-step-body">
                 <div className="bank-review-hero">
                   <Icon name="CheckCircle2" size={18} className="bank-review-hero-icon" />
@@ -725,9 +853,22 @@ function BankFlowSection({ state, updateState }) {
         <BankSummaryPanel
           selectedBanks={selectedBanks}
           months={months}
-          consentReady={consentReady}
         />
       </div>
+
+      {/* Secure connect modal */}
+      <SecureConnectModal
+        bank={modalBank}
+        onClose={() => setModalBank(null)}
+        onConnect={() => {
+          if (modalBank) connectBank(modalBank.id);
+          setModalBank(null);
+        }}
+        onUpload={() => {
+          setModalBank(null);
+          handlePdfUpload();
+        }}
+      />
     </div>
   );
 }
@@ -739,6 +880,10 @@ export function DocumentsScreen() {
   const [selectedId, setSelectedId] = useState(DOCUMENTS[0].id);
   const [sheetDoc, setSheetDoc] = useState(null);
 
+  const requiresRentalDocs =
+    state.livingStatus === 'rent---agent' ||
+    state.livingStatus === 'rent---private';
+
   const markUpload = (docId) => {
     const doc = DOCUMENTS.find((d) => d.id === docId);
     if (doc?.stateKey) {
@@ -748,11 +893,13 @@ export function DocumentsScreen() {
 
   const computedDocs = useMemo(
     () =>
-      DOCUMENTS.map((doc) => ({
-        ...doc,
-        status: doc.stateKey && state.uploadedDocs?.[doc.stateKey] ? 'uploaded' : doc.defaultStatus,
-      })),
-    [state.uploadedDocs]
+      DOCUMENTS
+        .filter((doc) => !doc.rentalOnly || requiresRentalDocs)
+        .map((doc) => ({
+          ...doc,
+          status: doc.stateKey && state.uploadedDocs?.[doc.stateKey] ? 'uploaded' : doc.defaultStatus,
+        })),
+    [state.uploadedDocs, requiresRentalDocs]
   );
 
   const selectedDoc = computedDocs.find((d) => d.id === selectedId) || computedDocs[0];
@@ -805,6 +952,21 @@ export function DocumentsScreen() {
           </div>
         </div>
       </div>
+
+      {/* ── Rental docs contextual notice ── */}
+      {requiresRentalDocs && (
+        <div className="rental-docs-notice">
+          <Icon name="Home" size={15} className="rental-docs-notice-icon" />
+          <div>
+            <div className="rental-docs-notice-title">Rental documents required</div>
+            <div className="rental-docs-notice-desc">
+              Based on your living situation, lenders require proof of rental. Upload at least your
+              lease agreement. Accepted: lease agreement, rent receipts, rental ledger, or tenancy
+              agreement.
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* ── Document list + preview panel ── */}
       <div className="doc-main-grid">

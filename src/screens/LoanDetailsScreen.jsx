@@ -18,7 +18,7 @@ import { MARKETPLACE_CARS, MARKETPLACE_STATS } from '../data/productData';
 import { fmt, calcRepay, getRate, getRateLabel } from '../utils/format';
 import './LoanDetailsScreen.css';
 
-const LOAN_TERMS = [1, 2, 3, 5, 7];
+const LOAN_TERMS = [1, 2, 3, 4, 5, 6, 7];
 
 export function LoanDetailsScreen() {
   const { state, updateState, next, prev } = useApp();
@@ -82,11 +82,12 @@ function PersonalLoanDetails({ repay, rateLabel }) {
         <RangeSlider
           label="Loan amount"
           value={state.loanAmount}
-          displayValue={fmt(state.loanAmount)}
+          prefix="$"
           min={5000} max={80000} step={500}
           onChange={v => updateState({ loanAmount: v })}
           minLabel="$5,000" maxLabel="$80,000"
         />
+        <div className="divider" />
         <div className="fld">
           <label className="fl">Loan term</label>
           <Chips>
@@ -268,7 +269,7 @@ function CarLoanDetails({ repay, rateLabel }) {
 
       <Card>
         <CardTitle icon="DollarSign">Loan amount, deposit &amp; trade-in</CardTitle>
-        <RangeSlider label="Vehicle price / loan amount" value={state.loanAmount} displayValue={fmt(state.loanAmount)} min={5000} max={500000} step={1000} onChange={v => updateState({ loanAmount: v })} minLabel="$5,000" maxLabel="$500,000" />
+        <RangeSlider label="Vehicle price / loan amount" value={state.loanAmount} prefix="$" min={5000} max={500000} step={1000} onChange={v => updateState({ loanAmount: v })} minLabel="$5,000" maxLabel="$500,000" />
 
         <div className="divider" />
         <RangeSlider label="Cash deposit" value={state.deposit} displayValue={fmt(state.deposit)} min={0} max={200000} step={500} onChange={v => updateState({ deposit: v })} minLabel="$0" maxLabel="$200,000" />

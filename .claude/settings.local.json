@@ -8,7 +8,8 @@
       "Bash(node -e \"const {SelectionState}=require\\('./node_modules/react-day-picker'\\); console.log\\('SelectionState:', JSON.stringify\\(SelectionState,null,1\\)\\);\")",
       "Bash(node -e \"const p=require\\('./node_modules/react-day-picker/package.json'\\); console.log\\(p.exports ? JSON.stringify\\(Object.keys\\(p.exports\\)\\) : 'no exports field'\\);\")",
       "Bash(node -e \"const p=require\\('./node_modules/react-day-picker/package.json'\\); const styles=Object.entries\\(p.exports||{}\\).filter\\(\\([k]\\)=>k.includes\\('style'\\)||k.includes\\('css'\\)\\); console.log\\(JSON.stringify\\(styles\\)\\);\")",
-      "Bash(npx vite *)"
+      "Bash(npx vite *)",
+      "Bash(node -e \"const opts = ['Rent — agent','Rent — private']; opts.forEach\\(l => console.log\\(JSON.stringify\\(l\\), '->', JSON.stringify\\(l.toLowerCase\\(\\).replace\\(/ /g,'-'\\).replace\\(/—/g,'-'\\)\\)\\)\\)\")"
     ]
   }
 }

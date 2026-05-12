@@ -32,7 +32,7 @@
   /* ─── STATUS ──────────────────────────────────────────────── */
   --green:        #10B981;
   --greenbg:      rgba(16, 185, 129, .08);
-  --greenborder:  rgba(16, 185, 129, .22);
+  --greenborder:  rgba(16, 185, 129);
   --yellow:       #F59E0B;
   --yellowbg:     rgba(245, 158, 11, .08);
   --yellowborder: rgba(245, 158, 11, .22);

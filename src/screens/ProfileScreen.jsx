@@ -27,16 +27,17 @@ const RESIDENCY_OPTIONS = [
   { id: 'visa',    icon: 'Plane',         title: 'Visa holder' },
 ];
 const LIVING_OPTIONS = ['Mortgage','Owner','Rent — agent','Rent — private','Parents / family','Boarding'];
-const EMP_OPTIONS = ['Full-time','Part-time','Casual','Contract','Self-employed','Not employed'];
+const EMP_OPTIONS = ['Full-time','Part-time','Casual','Contract','Self-employed','Not employed','Other'];
 const DEPENDANT_AGES = ['0–2 years','3–5 years','6–12 years','13–17 years','18+ (still dependent)'];
 
 export function ProfileScreen() {
-  const { state, updateState, toggleDependantAge, next, prev } = useApp();
-  const [addrYrs, setAddrYrs] = useState('');
-  const [empYrs,  setEmpYrs]  = useState('');
-  const [dob,        setDob]        = useState(null);
-  const [visaExpiry, setVisaExpiry] = useState(null);
-  const [partnerDob, setPartnerDob] = useState(null);
+  const { state, updateState, toggleDependantAge, toggleEmploymentType, next, prev } = useApp();
+  const [addrYrs,      setAddrYrs]      = useState('');
+  const [empYrs,       setEmpYrs]       = useState('');
+  const [dob,          setDob]          = useState(null);
+  const [visaExpiry,   setVisaExpiry]   = useState(null);
+  const [partnerDob,   setPartnerDob]   = useState(null);
+  const [otherEmpText, setOtherEmpText] = useState('');
   const isCouple = state.relationshipStatus === 'married' || state.relationshipStatus === 'defacto';
   const initials = getInitials(state.firstName, state.lastName);
 
@@ -200,12 +201,24 @@ export function ProfileScreen() {
         <CardTitle icon="Briefcase">Employment</CardTitle>
         <div className="fld">
           <label className="fl">Employment type</label>
-          <Chips style={{ marginTop: 6 }}>
+          <div className="text-small text-border2" style={{ margin: '4px 0 10px' }}>Select all that apply.</div>
+          <Chips style={{ marginTop: 0 }}>
             {EMP_OPTIONS.map(e => {
               const id = e.toLowerCase().replace(/ /g,'-');
-              return <Chip key={id} selected={state.employmentType === id} onClick={() => updateState({ employmentType: id })}>{e}</Chip>;
+              return <Chip key={id} selected={state.employmentTypes.includes(id)} onClick={() => toggleEmploymentType(id)}>{e}</Chip>;
             })}
           </Chips>
+          {state.employmentTypes.includes('other') && (
+            <div className="fld" style={{ marginTop: 10, marginBottom: 0 }}>
+              <label className="fl">Describe your employment</label>
+              <input
+                className="inp"
+                placeholder="e.g. freelance photographer, board director"
+                value={otherEmpText}
+                onChange={e => setOtherEmpText(e.target.value)}
+              />
+            </div>
+          )}
         </div>
         <div className="g2">
           <div className="fld"><label className="fl">Employer / ABN</label><input className="inp" placeholder="⌕  Search employer or ABN" /></div>
