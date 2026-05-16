@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { Fragment, useMemo } from 'react';
 import { Check } from 'lucide-react';
 import { Icon } from '../common/Icon';
 import { useApp } from '../../context/AppContext';
@@ -13,16 +13,17 @@ export function Sidebar({ open, onClose }) {
 
   const groups = useMemo(() => {
     const result = [];
-    let lastGroup = '';
     SCREENS.forEach((s, i) => {
-      if (s.group !== lastGroup) {
-        result.push({ type: 'group', label: s.group });
-        lastGroup = s.group;
-      }
-      const isActive = i === currentScreen;
+      const isActive    = i === currentScreen;
       const isCompleted = completedScreens.includes(i);
-      const isLocked = i > currentScreen && !isCompleted;
-      result.push({ type: 'item', screen: s, index: i, isActive, isCompleted, isLocked });
+      const isLocked    = i > currentScreen && !isCompleted;
+      const item        = { screen: s, index: i, isActive, isCompleted, isLocked };
+      const last        = result[result.length - 1];
+      if (!last || last.label !== s.group) {
+        result.push({ label: s.group, items: [item] });
+      } else {
+        last.items.push(item);
+      }
     });
     return result;
   }, [currentScreen, completedScreens]);
@@ -39,6 +40,7 @@ export function Sidebar({ open, onClose }) {
       {open && <div className="sidebar-overlay" onClick={onClose} aria-hidden="true" />}
 
       <div className={`sidebar ${open ? 'mobile-open' : ''}`} role="navigation" aria-label="Journey navigation">
+
         <div className="sidebar-brand">
           <div className="brand-logo">
             <div className="brand-icon">Ax</div>
@@ -76,30 +78,48 @@ export function Sidebar({ open, onClose }) {
             <div className="sp-mark" style={{ left: '50%' }} />
             <div className="sp-mark" style={{ left: '75%' }} />
           </div>
-
         </div>
 
         <nav className="nav-list">
-          {groups.map((item, idx) =>
-            item.type === 'group' ? (
-              <div key={`group-${idx}`} className="nav-group-label">{item.label}</div>
-            ) : (
-              <div
-                key={item.index}
-                className={`nav-item${item.isActive ? ' active' : ''}${item.isCompleted ? ' completed' : ''}${item.isLocked ? ' locked' : ''}`}
-                onClick={() => handleNavClick(item)}
-                role="button"
-                tabIndex={item.isLocked ? -1 : 0}
-                onKeyDown={e => e.key === 'Enter' && handleNavClick(item)}
-              >
-                <div className="nav-num">
-                  {item.isCompleted ? <Check size={11} strokeWidth={2.5} /> : item.index + 1}
-                </div>
-                <span className="nav-label">{item.screen.label}</span>
-                <span className="nav-dot" />
+          {groups.map((group, gi) => (
+            <div key={gi} className="nav-group">
+              <div className="nav-group-header">
+                <span className="nav-group-label-text">{group.label}</span>
+                <span className="nav-group-rule" />
               </div>
-            )
-          )}
+
+              <div className="nav-group-flow">
+                {group.items.map((item, ii) => (
+                  <Fragment key={item.index}>
+                    <div
+                      className={`nav-item${item.isActive ? ' active' : ''}${item.isCompleted ? ' completed' : ''}${item.isLocked ? ' locked' : ''}`}
+                      onClick={() => handleNavClick(item)}
+                      role="button"
+                      tabIndex={item.isLocked ? -1 : 0}
+                      onKeyDown={e => e.key === 'Enter' && handleNavClick(item)}
+                    >
+                      <div className="nav-track">
+                        <div className="nav-ind">
+                          {item.isCompleted
+                            ? <Check size={10} strokeWidth={2.8} />
+                            : <span>{item.index + 1}</span>}
+                        </div>
+                      </div>
+                      <span className="nav-label">{item.screen.label}</span>
+                      <span className="nav-dot" />
+                    </div>
+
+                    {ii < group.items.length - 1 && (
+                      <div
+                        className={`nav-seg${item.isCompleted ? ' seg-done' : item.isActive ? ' seg-active' : ''}`}
+                        aria-hidden="true"
+                      />
+                    )}
+                  </Fragment>
+                ))}
+              </div>
+            </div>
+          ))}
         </nav>
 
         <div className="sidebar-trust">
