@@ -18,7 +18,7 @@ export function PrivacyScreen() {
   return (
     <div className="screen-enter">
       <ScreenHeader
-        eyebrow="Step 9 · Privacy & Consent"
+        eyebrow="Step 8 · Privacy & Consent"
         title="Privacy &"
         titleGradient="consent"
         sub={
@@ -66,7 +66,7 @@ export function PrivacyScreen() {
 
       <BtnRow>
         <BtnGhost onClick={prev}>← Back</BtnGhost>
-        <BtnPrimary onClick={next}>Submit application →</BtnPrimary>
+        <BtnPrimary onClick={next}>Continue to summary →</BtnPrimary>
       </BtnRow>
     </div>
   );

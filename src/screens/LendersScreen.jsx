@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { BarChart2, Sparkles, Building2 } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import { ScreenHeader } from '../components/common/ScreenHeader';
-import { BtnGhost, BtnRow } from '../components/common/Button';
+import { BtnPrimary, BtnGhost, BtnRow } from '../components/common/Button';
 import { AnikaPanel } from '../components/common/AnikaPanel';
 import { InfoBanner } from '../components/common/InfoBanner';
 import { LenderCard } from '../components/ui/LenderCard';
@@ -17,13 +17,13 @@ const FREQ_TABS = [
 ];
 
 export function LendersScreen() {
-  const { prev } = useApp();
+  const { next, prev } = useApp();
   const [frequency, setFrequency] = useState('monthly');
 
   return (
     <div className="screen-enter">
       <ScreenHeader
-        eyebrow="Step 11 · Lender Results"
+        eyebrow="Step 10 · Lender Results"
         title="Your lender"
         titleGradient="matches"
         sub={
@@ -54,7 +54,6 @@ export function LendersScreen() {
 
       {/* ── Frequency tab bar ── */}
       <div className="freq-bar">
-        <span className="freq-bar-label">Repayment frequency</span>
         <div className="freq-tabs">
           {FREQ_TABS.map(f => (
             <button
@@ -76,6 +75,7 @@ export function LendersScreen() {
 
       <BtnRow>
         <BtnGhost onClick={prev}>← Back</BtnGhost>
+        <BtnPrimary onClick={next}>Continue to account →</BtnPrimary>
       </BtnRow>
     </div>
   );

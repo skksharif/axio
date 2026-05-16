@@ -1,6 +1,9 @@
 .btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
   height: 46px;
-  padding: 0 28px;
+  padding: 0 26px;
   border-radius: var(--r12);
   border: none;
   background: var(--accentg);
@@ -8,20 +11,24 @@
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
-  transition: opacity .2s ease;
   font-family: var(--font-body);
   letter-spacing: -.1px;
   white-space: nowrap;
   touch-action: manipulation;
   -webkit-tap-highlight-color: transparent;
+  transition: opacity .2s ease, box-shadow .2s ease;
 }
-.btn-primary:hover  { opacity: 0.88; }
-.btn-primary:active { opacity: 0.78; }
-.btn-primary:disabled { opacity: .58; cursor: not-allowed; }
+.btn-primary:hover         { opacity: 0.90; box-shadow: 0 4px 18px rgba(139, 92, 246, 0.28); }
+.btn-primary:active        { opacity: 0.78; }
+.btn-primary:disabled      { opacity: .52; cursor: not-allowed; }
+.btn-primary:hover .btn-arr-r { transform: translateX(4px); }
 
 .btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
   height: 46px;
-  padding: 0 24px;
+  padding: 0 22px;
   border-radius: var(--r12);
   border: 1px solid var(--border2);
   background: rgba(30, 27, 75, 0.4);
@@ -29,13 +36,13 @@
   font-size: 14px;
   font-weight: 500;
   cursor: pointer;
-  transition: border-color .2s ease, color .2s ease, background .2s ease, box-shadow .2s ease;
   font-family: var(--font-body);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   white-space: nowrap;
   touch-action: manipulation;
   -webkit-tap-highlight-color: transparent;
+  transition: border-color .2s ease, color .2s ease, background .2s ease, box-shadow .2s ease;
 }
 .btn-ghost:hover {
   border-color: var(--hover);
@@ -43,8 +50,16 @@
   background: rgba(139, 92, 246, 0.08);
   box-shadow: 0 0 0 1px rgba(139, 92, 246, 0.14);
 }
-.btn-ghost:disabled { opacity: .58; cursor: not-allowed; }
+.btn-ghost:disabled        { opacity: .52; cursor: not-allowed; }
+.btn-ghost:hover .btn-arr-l { transform: translateX(-4px); }
 
+/* ─── Arrow icons ─────────────────────────────────────────── */
+.btn-arr {
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+}
+
+/* ─── Row container ───────────────────────────────────────── */
 .btn-row {
   display: flex;
   justify-content: space-between;
@@ -56,11 +71,9 @@
   flex-wrap: wrap;
 }
 
-/* ─── RESPONSIVE ─────────────────────────────────────────── */
+/* ─── Responsive ──────────────────────────────────────────── */
 @media (max-width: 480px) {
-  .btn-primary { padding: 0 20px; font-size: 13.5px; }
-  .btn-ghost   { padding: 0 18px; font-size: 13.5px; }
-
-  /* Primary button expands to fill remaining space in btn-row */
+  .btn-primary { padding: 0 18px; font-size: 13.5px; }
+  .btn-ghost   { padding: 0 16px; font-size: 13.5px; }
   .btn-row .btn-primary { flex: 1; }
 }

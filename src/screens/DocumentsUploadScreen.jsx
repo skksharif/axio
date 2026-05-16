@@ -384,7 +384,7 @@ export function DocumentsUploadScreen() {
   return (
     <div className="screen-enter">
       <ScreenHeader
-        eyebrow="Step 9 · Document uploads"
+        eyebrow="Step 12 · Document uploads"
         title="Upload your"
         titleGradient="documents"
         sub={
@@ -581,7 +581,7 @@ export function DocumentsUploadScreen() {
           disabled={isVisaHolder && !visaUploaded}
           style={isVisaHolder && !visaUploaded ? { opacity: 0.45, cursor: 'not-allowed' } : {}}
         >
-          Continue to privacy →
+          Continue to connect banks →
         </BtnPrimary>
       </BtnRow>
 
