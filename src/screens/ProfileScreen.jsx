@@ -4,7 +4,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Icon } from '../components/common/Icon';
 import { useApp } from '../context/AppContext';
 import { ScreenHeader } from '../components/common/ScreenHeader';
-import { AnikaStrip } from '../components/common/AnikaStrip';
 import { BtnPrimary, BtnGhost, BtnRow } from '../components/common/Button';
 import { Card, CardTitle } from '../components/common/Card';
 import { InfoBanner } from '../components/common/InfoBanner';

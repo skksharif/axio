@@ -3,7 +3,7 @@ import { Users, AlertTriangle } from 'lucide-react';
 import { Icon } from '../components/common/Icon';
 import { useApp } from '../context/AppContext';
 import { ScreenHeader } from '../components/common/ScreenHeader';
-import { AnikaStrip } from '../components/common/AnikaStrip';
+import { AnikaPanel } from '../components/common/AnikaPanel';
 import { BtnPrimary, BtnGhost, BtnRow } from '../components/common/Button';
 import { Card, CardTitle } from '../components/common/Card';
 import { InfoBanner } from '../components/common/InfoBanner';
@@ -87,9 +87,10 @@ export function ExpensesScreen() {
         </div>
       )}
 
-      <AnikaStrip>
-        <strong>Anika HEM benchmark:</strong> For a {isCouple ? 'couple' : 'single applicant'} in Sydney the minimum lender benchmark is <strong>{isCouple ? '$4,620' : '$3,840'}/mo</strong>. If declared expenses are lower, lenders apply the higher figure.
-      </AnikaStrip>
+      <AnikaPanel
+        message={`Lenders apply a minimum HEM benchmark based on your household type. For a ${isCouple ? 'couple' : 'single applicant'} in Sydney the minimum is ${isCouple ? '$4,620' : '$3,840'}/mo — if declared expenses fall below this, the higher figure is used in serviceability calculations.`}
+        thinkingMs={400}
+      />
 
       <Card>
         <CardTitle icon="Home">Essential Living Expenses</CardTitle>

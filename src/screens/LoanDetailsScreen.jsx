@@ -4,6 +4,7 @@ import { Icon } from '../components/common/Icon';
 import { useApp } from '../context/AppContext';
 import { ScreenHeader } from '../components/common/ScreenHeader';
 import { AnikaStrip } from '../components/common/AnikaStrip';
+import { AnikaPanel } from '../components/common/AnikaPanel';
 import { BtnPrimary, BtnGhost, BtnRow } from '../components/common/Button';
 import { Card, CardTitle } from '../components/common/Card';
 import { Badge } from '../components/common/Badge';
@@ -37,12 +38,16 @@ export function LoanDetailsScreen() {
         eyebrow={`Step 2 · ${isPersonal ? 'Personal Loan' : 'Car Loan'} Details`}
         title="Tell us about"
         titleGradient={isPersonal ? 'your loan' : 'your car loan'}
-        sub="Anika uses these details to run early lender signals and estimate your repayment."
+        sub="Tell us what you'll use the loan for to help us match you with the best lenders and products."
       />
 
-      <AnikaStrip>
-        <strong>Anika is running in the background.</strong> Your answers determine lender panel, indicative rates and approval probability. All matching is soft enquiry only — zero credit file impact.
-      </AnikaStrip>
+      <AnikaPanel
+        message={
+          isPersonal
+            ? "I'm reviewing your loan details in real time to match your profile against our full lender panel. Your purpose, amount and term shape your eligibility, indicative rate and approval probability — I'll surface your personalised results once we have a few more details."
+            : "I'm analysing your vehicle loan details as you go. Condition, purchase type and loan structure all influence which lenders are available to you, what rate you'll qualify for, and your approval likelihood. Everything runs as a soft check — no credit file impact."
+        }
+      />
 
       {isPersonal
         ? <PersonalLoanDetails repay={repay} rateLabel={rateLabel} />

@@ -1,6 +1,6 @@
 import { useApp } from '../context/AppContext';
 import { ScreenHeader } from '../components/common/ScreenHeader';
-import { AnikaStrip } from '../components/common/AnikaStrip';
+import { AnikaPanel } from '../components/common/AnikaPanel';
 import { BtnPrimary, BtnGhost, BtnRow } from '../components/common/Button';
 import { ALCard } from '../components/ui/ALCard';
 import { LIABILITY_TYPES } from '../data/liabilityTypes';
@@ -18,9 +18,10 @@ export function LiabilitiesScreen() {
         sub="Select all that apply. Any asset with finance attached is pre-linked below — no re-entry needed."
       />
 
-      <AnikaStrip>
-        <strong>Anika has pre-linked 1 liability</strong> from your assets — home loan auto-carried across. Select additional liability types and add details.
-      </AnikaStrip>
+      <AnikaPanel
+        message="I've pre-linked 1 liability from your assets — your home loan has been auto-carried across. Select any additional liability types below and add the details."
+        thinkingMs={400}
+      />
 
       <div className="al-grid">
         {LIABILITY_TYPES.map(l => (

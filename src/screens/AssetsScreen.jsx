@@ -1,6 +1,6 @@
 import { useApp } from '../context/AppContext';
 import { ScreenHeader } from '../components/common/ScreenHeader';
-import { AnikaStrip } from '../components/common/AnikaStrip';
+import { AnikaPanel } from '../components/common/AnikaPanel';
 import { BtnPrimary, BtnGhost, BtnRow } from '../components/common/Button';
 import { ALCard } from '../components/ui/ALCard';
 import { ASSET_TYPES } from '../data/assetTypes';
@@ -18,9 +18,10 @@ export function AssetsScreen() {
         sub="Select each asset type to expand and declare. Toggle finance on if the asset has an attached loan — it auto-links to liabilities."
       />
 
-      <AnikaStrip>
-        <strong>Anika tip:</strong> If any asset has a loan attached, switch on "Has finance?" — those details auto-link to your Liabilities section. No double entry needed.
-      </AnikaStrip>
+      <AnikaPanel
+        message="If any asset has an attached loan, enable 'Has finance?' — those details auto-link to your Liabilities section with no double entry required."
+        thinkingMs={400}
+      />
 
       <div className="al-grid">
         {ASSET_TYPES.map(a => (

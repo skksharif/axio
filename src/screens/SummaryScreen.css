@@ -1,18 +1,33 @@
 /* ─── ANIKA HERO ──────────────────────────────────────────── */
 .anika-hero {
-  background: rgba(26, 18, 50, 0.7);
-  border: 1px solid var(--glass-border);
-  border-radius: var(--r16);
+  background: linear-gradient(135deg, #140B2D 0%, #0F172A 100%);
+  border: 1px solid rgba(139, 92, 246, 0.30);
+  border-radius: 20px;
   margin-bottom: 16px;
   overflow: hidden;
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
-  box-shadow: var(--card-shadow);
+  box-shadow:
+    0 0 24px rgba(139, 92, 246, 0.14),
+    0 4px 20px rgba(0, 0, 0, 0.38),
+    inset 0 1px 0 rgba(167, 139, 250, 0.08);
+  position: relative;
+}
+
+.anika-hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 15%;
+  right: 15%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(167, 139, 250, 0.35), transparent);
+  pointer-events: none;
 }
 
 .ah-top {
-  padding: 22px 24px 18px;
-  border-bottom: 1px solid var(--border);
+  padding: 18px 20px 16px;
+  border-bottom: 1px solid rgba(139, 92, 246, 0.14);
 }
 
 .ah-row {
@@ -20,30 +35,31 @@
   justify-content: space-between;
   align-items: flex-start;
   gap: 16px;
-  margin-bottom: 18px;
+  margin-bottom: 16px;
 }
 
 .ah-left {
   display: flex;
   align-items: flex-start;
-  gap: 14px;
+  gap: 12px;
   flex: 1;
   min-width: 0;
 }
 
 .ah-title {
-  font-size: 11px;
+  font-size: 10.5px;
   font-weight: 700;
-  color: var(--text2);
+  color: #A78BFA;
   text-transform: uppercase;
   letter-spacing: .6px;
-  margin-bottom: 6px;
+  margin-bottom: 5px;
 }
 
 .ah-narrative {
-  font-size: 13.5px;
-  color: var(--text1);
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.78);
   line-height: 1.65;
+  font-family: var(--font-ai);
 }
 
 /* ─── METRICS ─────────────────────────────────────────────── */
@@ -83,10 +99,10 @@
 
 /* ─── DTI SECTION ─────────────────────────────────────────── */
 .ah-bottom {
-  padding: 18px 24px;
+  padding: 16px 20px;
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 12px;
 }
 
 .dti-track {

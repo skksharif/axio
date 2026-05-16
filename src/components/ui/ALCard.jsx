@@ -14,7 +14,7 @@ export function ALCard({ id, icon, title, desc, hasFin, on, onToggle, isLinked, 
   };
 
   return (
-    <div className={`al-card ${on ? 'on' : ''} ${isLinked ? 'green-card' : ''}`}>
+    <div className={`al-card ${on ? 'on' : ''}`}>
       <div className="al-head" onClick={onToggle}>
         <div>
           <div className="al-icon-box"><Icon name={icon} size={20} /></div>
@@ -23,7 +23,7 @@ export function ALCard({ id, icon, title, desc, hasFin, on, onToggle, isLinked, 
           {on && <div className="al-meta">1 item declared</div>}
           {linkedMeta && <div className="al-meta">{linkedMeta}</div>}
         </div>
-        <div className="al-check" style={isLinked ? { background: 'var(--green)', borderColor: 'var(--green)' } : {}}>
+        <div className="al-check">
           <Check size={13} strokeWidth={2.5} />
         </div>
       </div>
@@ -67,7 +67,7 @@ function LinkedEntry() {
         <div className="al-field"><label>Current balance</label><input value="$410,000" readOnly style={{ color: 'var(--text2)' }} /></div>
         <div className="al-field"><label>Interest rate</label><input value="6.24%" readOnly style={{ color: 'var(--text2)' }} /></div>
         <div className="al-field"><label>Monthly repayment</label><input value="$2,650" readOnly style={{ color: 'var(--text2)' }} /></div>
-        <div className="al-field"><label>Linked asset</label><input value="Real-estate: Main home" readOnly style={{ color: 'var(--green)' }} /></div>
+        <div className="al-field"><label>Linked asset</label><input value="Real-estate: Main home" readOnly style={{ color: 'var(--hover)' }} /></div>
       </div>
       <div className="text-small text-border2" style={{ marginTop: 8 }}>To edit, update in Assets section.</div>
     </div>

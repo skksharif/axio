@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Icon } from '../components/common/Icon';
 import { useApp } from '../context/AppContext';
 import { ScreenHeader } from '../components/common/ScreenHeader';
+import { AnikaPanel } from '../components/common/AnikaPanel';
 import { BtnPrimary, BtnGhost, BtnRow } from '../components/common/Button';
 import { INCOME_DOC_MAP } from '../data/incomeDocMap';
 import { INCOME_TYPES } from '../data/incomeTypes';
@@ -369,17 +370,10 @@ export function DocumentsUploadScreen() {
         sub="Take a photo, upload a screenshot, image or PDF. Anika AI checks quality and reads key details automatically."
       />
 
-      {/* ── Anika info banner ── */}
-      <div className="doc-anika-banner">
-        <Icon name="Lock" size={15} className="doc-anika-icon" />
-        <div>
-          <div className="doc-anika-title">Simple, secure and AI-assisted</div>
-          <div className="doc-anika-desc">
-            Take a photo, upload a screenshot, image or PDF. Anika checks quality, reads key details
-            and tells you if anything needs fixing.
-          </div>
-        </div>
-      </div>
+      <AnikaPanel
+        message="Upload your supporting documents and I'll check quality, extract key details, and flag anything that needs attention before submission."
+        thinkingMs={400}
+      />
 
       {/* ── Document progress tracker ── */}
       <div className="doc-progress-card">
