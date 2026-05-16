@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { AlertTriangle, Sparkles } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Icon } from '../components/common/Icon';
 import { useApp } from '../context/AppContext';
 import { ScreenHeader } from '../components/common/ScreenHeader';
@@ -27,17 +28,89 @@ const RESIDENCY_OPTIONS = [
   { id: 'visa',    icon: 'Plane',         title: 'Visa holder' },
 ];
 const LIVING_OPTIONS = ['Mortgage','Owner','Rent — agent','Rent — private','Parents / family','Boarding'];
-const EMP_OPTIONS = ['Full-time','Part-time','Casual','Contract','Self-employed','Not employed','Other'];
+const EMP_OPTIONS    = ['Full-time','Part-time','Casual','Contract','Self-employed','Not employed','Other'];
 const DEPENDANT_AGES = ['0–2 years','3–5 years','6–12 years','13–17 years','18+ (still dependent)'];
 
+const EMP_META = {
+  'full-time':     { label: 'Full-time Employment',  icon: 'Briefcase'  },
+  'part-time':     { label: 'Part-time Employment',  icon: 'Clock'      },
+  'casual':        { label: 'Casual Employment',     icon: 'CalendarDays' },
+  'contract':      { label: 'Contract Employment',   icon: 'FileText'   },
+  'self-employed': { label: 'Self-employed',          icon: 'Building2'  },
+  'other':         { label: 'Other Employment',      icon: 'HelpCircle' },
+};
+
+const EMPTY_EMP = { employer: '', phone: '', years: '', months: '' };
+
+/* ─── Per-type employment detail block ───────────────────────── */
+function EmploymentBlock({ typeId, label, icon, details, onUpdate, otherText, setOtherText }) {
+  const isLast = typeId !== 'other'; // fld margin-bottom handled by block padding
+  return (
+    <motion.div
+      className="emp-block"
+      initial={{ opacity: 0, y: -10 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -8 }}
+      transition={{ duration: 0.24, ease: 'easeOut' }}
+    >
+      <div className="emp-block-header">
+        <div className="emp-block-icon">
+          <Icon name={icon} size={15} />
+        </div>
+        <span className="emp-block-title">{label}</span>
+      </div>
+
+      <div className="g2">
+        <div className="fld">
+          <label className="fl">Employer / ABN</label>
+          <input className="inp" placeholder="⌕  Search employer or ABN"
+            value={details.employer}
+            onChange={e => onUpdate('employer', e.target.value)} />
+        </div>
+        <div className="fld">
+          <label className="fl">Employer phone</label>
+          <input className="inp" placeholder="02 0000 0000"
+            value={details.phone}
+            onChange={e => onUpdate('phone', e.target.value)} />
+        </div>
+        <div className="fld" style={{ marginBottom: typeId === 'other' ? undefined : 0 }}>
+          <label className="fl">Years in role</label>
+          <input className="inp" type="number" min="0" placeholder="Years"
+            value={details.years}
+            onChange={e => onUpdate('years', e.target.value)} />
+        </div>
+        <div className="fld" style={{ marginBottom: typeId === 'other' ? undefined : 0 }}>
+          <label className="fl">Months (0–11)</label>
+          <input className="inp" type="number" min="0" max="11" placeholder="Months"
+            value={details.months}
+            onChange={e => onUpdate('months', e.target.value)} />
+        </div>
+      </div>
+
+      {typeId === 'other' && (
+        <div className="fld" style={{ marginBottom: 0 }}>
+          <label className="fl">Describe your employment</label>
+          <input className="inp"
+            placeholder="e.g. freelance photographer, board director"
+            value={otherText}
+            onChange={e => setOtherText(e.target.value)} />
+        </div>
+      )}
+    </motion.div>
+  );
+}
+
+/* ─── Main screen ─────────────────────────────────────────────── */
 export function ProfileScreen() {
   const { state, updateState, toggleDependantAge, toggleEmploymentType, next, prev } = useApp();
+
   const [addrYrs,      setAddrYrs]      = useState('');
-  const [empYrs,       setEmpYrs]       = useState('');
   const [dob,          setDob]          = useState(null);
   const [visaExpiry,   setVisaExpiry]   = useState(null);
   const [partnerDob,   setPartnerDob]   = useState(null);
   const [otherEmpText, setOtherEmpText] = useState('');
+  const [empDetails,   setEmpDetails]   = useState({});
+
   const isCouple = state.relationshipStatus === 'married' || state.relationshipStatus === 'defacto';
   const initials = getInitials(state.firstName, state.lastName);
 
@@ -45,10 +118,24 @@ export function ProfileScreen() {
     setAddrYrs(yrs);
     updateState({ addressHistoryUnder3: yrs && Number(yrs) < 3 });
   };
-  const checkEmp = (yrs) => {
-    setEmpYrs(yrs);
-    updateState({ employmentHistoryUnder3: yrs && Number(yrs) < 3 });
+
+  const updateEmpDetail = (typeId, field, value) => {
+    setEmpDetails(prev => ({
+      ...prev,
+      [typeId]: { ...EMPTY_EMP, ...prev[typeId], [field]: value },
+    }));
   };
+
+  const getEmpDetails = (typeId) => ({ ...EMPTY_EMP, ...empDetails[typeId] });
+
+  // "not-employed" is exclusive and needs no employer form
+  const activeEmpTypes = state.employmentTypes.filter(t => t !== 'not-employed');
+
+  // Show previous-employment panel if ANY active type has < 3 years entered
+  const needsPrevEmp = activeEmpTypes.some(t => {
+    const yrs = getEmpDetails(t).years;
+    return yrs !== '' && Number(yrs) < 3;
+  });
 
   return (
     <div className="screen-enter">
@@ -59,15 +146,20 @@ export function ProfileScreen() {
         sub="Your personal details, relationship status and household makeup. Previous address and employment are requested automatically when current history is under 3 years."
       />
 
+      {/* ── Personal information ─────────────────────────────── */}
       <Card>
         <CardTitle icon="User">Personal information</CardTitle>
         <div className="flex-between" style={{ gap: 20, marginBottom: 22, paddingBottom: 20, borderBottom: '1px solid var(--border)' }}>
           <div className="profile-avatar">{initials}</div>
           <div>
             <div className="text-strong">
-              {state.firstName || state.lastName ? `${state.firstName} ${state.lastName}`.trim() : 'Your name'}
+              {state.firstName || state.lastName
+                ? `${state.firstName} ${state.lastName}`.trim()
+                : 'Your name'}
             </div>
-            <div className="text-small text-border2" style={{ marginTop: 3 }}>Personal loan applicant · Axio Finance</div>
+            <div className="text-small text-border2" style={{ marginTop: 3 }}>
+              Personal loan applicant · Axio Finance
+            </div>
           </div>
         </div>
         <div className="g2">
@@ -82,6 +174,7 @@ export function ProfileScreen() {
         </div>
       </Card>
 
+      {/* ── Residency ─────────────────────────────────────────── */}
       <Card>
         <CardTitle icon="Globe">Residency status</CardTitle>
         <ChoiceGrid cols={3}>
@@ -99,8 +192,11 @@ export function ProfileScreen() {
             <div className="fld"><label className="fl">Visa class</label>
               <select className="sel">
                 <option value="">Select…</option>
-                <option>482 — Temporary Skill Shortage</option><option>485 — Temporary Graduate</option>
-                <option>500 — Student</option><option>820 — Partner (temporary)</option><option>Other visa class</option>
+                <option>482 — Temporary Skill Shortage</option>
+                <option>485 — Temporary Graduate</option>
+                <option>500 — Student</option>
+                <option>820 — Partner (temporary)</option>
+                <option>Other visa class</option>
               </select>
             </div>
             <div className="fld"><label className="fl">Visa subclass number</label><input className="inp" placeholder="e.g. 482" /></div>
@@ -112,6 +208,7 @@ export function ProfileScreen() {
         )}
       </Card>
 
+      {/* ── Relationship & household ──────────────────────────── */}
       <Card>
         <CardTitle icon="Users">Relationship &amp; household</CardTitle>
         <div className="fld">
@@ -167,12 +264,13 @@ export function ProfileScreen() {
         </div>
       </Card>
 
+      {/* ── Residential history ───────────────────────────────── */}
       <Card>
         <CardTitle icon="Home">Residential history</CardTitle>
         <div className="fld"><label className="fl">Current address</label><input className="inp" placeholder="⌕  Search address" /></div>
         <div className="fld">
           <label className="fl">Living situation</label>
-          <Chips style={{ marginTop: 6 }}>
+          <Chips className="chips-grid" style={{ marginTop: 8 }}>
             {LIVING_OPTIONS.map(l => {
               const id = l.toLowerCase().replace(/ /g,'-').replace(/—/g,'-');
               return <Chip key={id} selected={state.livingStatus === id} onClick={() => updateState({ livingStatus: id })}>{l}</Chip>;
@@ -197,39 +295,48 @@ export function ProfileScreen() {
         )}
       </Card>
 
+      {/* ── Employment ────────────────────────────────────────── */}
       <Card>
         <CardTitle icon="Briefcase">Employment</CardTitle>
+
         <div className="fld">
           <label className="fl">Employment type</label>
           <div className="text-small text-border2" style={{ margin: '4px 0 10px' }}>Select all that apply.</div>
-          <Chips style={{ marginTop: 0 }}>
+          <Chips className="chips-grid">
             {EMP_OPTIONS.map(e => {
               const id = e.toLowerCase().replace(/ /g,'-');
-              return <Chip key={id} selected={state.employmentTypes.includes(id)} onClick={() => toggleEmploymentType(id)}>{e}</Chip>;
+              return (
+                <Chip key={id} selected={state.employmentTypes.includes(id)} onClick={() => toggleEmploymentType(id)}>
+                  {e}
+                </Chip>
+              );
             })}
           </Chips>
-          {state.employmentTypes.includes('other') && (
-            <div className="fld" style={{ marginTop: 10, marginBottom: 0 }}>
-              <label className="fl">Describe your employment</label>
-              <input
-                className="inp"
-                placeholder="e.g. freelance photographer, board director"
-                value={otherEmpText}
-                onChange={e => setOtherEmpText(e.target.value)}
-              />
+          {activeEmpTypes.length > 1 && (
+            <div className="emp-count-badge">
+              <Icon name="Layers" size={11} />
+              {activeEmpTypes.length} employment types selected
             </div>
           )}
         </div>
-        <div className="g2">
-          <div className="fld"><label className="fl">Employer / ABN</label><input className="inp" placeholder="⌕  Search employer or ABN" /></div>
-          <div className="fld"><label className="fl">Employer phone</label><input className="inp" placeholder="02 0000 0000" /></div>
-        </div>
-        <div className="g2">
-          <div className="fld"><label className="fl">Years in role</label><input className="inp" type="number" min="0" placeholder="Years" value={empYrs} onChange={e => checkEmp(e.target.value)} /></div>
-          <div className="fld"><label className="fl">Months (0–11)</label><input className="inp" type="number" min="0" max="11" placeholder="Months" /></div>
-        </div>
-        {state.employmentHistoryUnder3 && (
-          <div className="cond-panel show">
+
+        <AnimatePresence initial={false}>
+          {activeEmpTypes.map(typeId => (
+            <EmploymentBlock
+              key={typeId}
+              typeId={typeId}
+              label={EMP_META[typeId]?.label ?? typeId}
+              icon={EMP_META[typeId]?.icon ?? 'Briefcase'}
+              details={getEmpDetails(typeId)}
+              onUpdate={(field, value) => updateEmpDetail(typeId, field, value)}
+              otherText={otherEmpText}
+              setOtherText={setOtherEmpText}
+            />
+          ))}
+        </AnimatePresence>
+
+        {needsPrevEmp && (
+          <div className="cond-panel show" style={{ marginTop: 14 }}>
             <div className="cond-head" style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
               <AlertTriangle size={13} /> Previous employment needed — current role under 3 years
             </div>
@@ -239,7 +346,8 @@ export function ProfileScreen() {
             </div>
           </div>
         )}
-        <div className="text-small text-border2" style={{ marginTop: 12, display: 'flex', alignItems: 'center', gap: 5 }}>
+
+        <div className="text-small text-border2" style={{ marginTop: 14, display: 'flex', alignItems: 'center', gap: 5 }}>
           <Sparkles size={10} /> Anika will never contact your employer without your explicit consent.
         </div>
       </Card>
