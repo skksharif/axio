@@ -1,18 +1,26 @@
-import { useState } from 'react';
-import { Check, Sparkles, Link, ChevronDown } from 'lucide-react';
+import { useState, useRef } from 'react';
+import { Check, Sparkles, Link, ChevronDown, Trash2, Plus } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Icon } from '../common/Icon';
 import { ToggleSwitch } from '../forms/ToggleSwitch';
 import './ALCard.css';
 
-export function ALCard({ id, icon, title, desc, hasFin, on, onToggle, isLinked, linkedMeta, isRealEstate, isLiability, children }) {
-  const [finOpen, setFinOpen] = useState(false);
-  const [finNote, setFinNote] = useState(false);
+const EASE = [0.25, 0.46, 0.45, 0.94];
 
-  const handleFinToggle = () => {
-    setFinOpen(p => !p);
-    setFinNote(p => !p);
+export function ALCard({
+  id, icon, title, desc, hasFin, on, onToggle,
+  isLinked, linkedMeta, isRealEstate, isLiability,
+  onFinanceLink, children,
+}) {
+  const nextItemId = useRef(2);
+  const [itemIds, setItemIds] = useState([1]);
+
+  const addItem = () => {
+    const newId = nextItemId.current++;
+    setItemIds(p => [...p, newId]);
   };
+
+  const removeItem = (itemId) => setItemIds(p => p.filter(x => x !== itemId));
 
   return (
     <div className={`al-card ${on ? 'on' : ''}`}>
@@ -22,8 +30,14 @@ export function ALCard({ id, icon, title, desc, hasFin, on, onToggle, isLinked, 
           <div className="al-head-info">
             <div className="al-title">{title}</div>
             <div className="al-desc">{desc}</div>
-            {on && <div className="al-meta">1 item declared</div>}
-            {on && linkedMeta && <div className="al-meta al-meta-linked">{linkedMeta}</div>}
+            {on && (
+              <div className="al-meta">
+                {itemIds.length} item{itemIds.length !== 1 ? 's' : ''} declared
+              </div>
+            )}
+            {on && linkedMeta && (
+              <div className="al-meta al-meta-linked">{linkedMeta}</div>
+            )}
           </div>
         </div>
         <div className="al-head-actions">
@@ -41,28 +55,53 @@ export function ALCard({ id, icon, title, desc, hasFin, on, onToggle, isLinked, 
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }}
+            transition={{ duration: 0.3, ease: EASE }}
             style={{ overflow: 'hidden' }}
           >
             <div className="al-body">
               {isLinked ? (
                 <LinkedEntry />
-              ) : id === 'creditcard' ? (
-                <CreditCardEntry title={title} />
-              ) : isLiability ? (
-                <LiabilityEntry title={title} />
               ) : (
-                <DefaultEntry
-                  title={title}
-                  isRealEstate={isRealEstate}
-                  hasFin={hasFin}
-                  finOpen={finOpen}
-                  finNote={finNote}
-                  onFinToggle={handleFinToggle}
-                />
-              )}
-              {!isLinked && (
-                <button className="add-entry-btn">+ Add another {title.toLowerCase()}</button>
+                <>
+                  <AnimatePresence initial={false}>
+                    {itemIds.map((itemId, idx) => {
+                      const entryProps = {
+                        num: idx + 1,
+                        canRemove: itemIds.length > 1,
+                        onRemove: () => removeItem(itemId),
+                      };
+                      return (
+                        <motion.div
+                          key={itemId}
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: 'auto', opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          transition={{ duration: 0.25, ease: EASE }}
+                          style={{ overflow: 'hidden' }}
+                        >
+                          {id === 'creditcard' ? (
+                            <CreditCardEntry {...entryProps} />
+                          ) : isLiability ? (
+                            <LiabilityEntry title={title} {...entryProps} />
+                          ) : (
+                            <DefaultEntry
+                              title={title}
+                              isRealEstate={isRealEstate}
+                              hasFin={hasFin}
+                              onFinanceLink={idx === 0 ? onFinanceLink : undefined}
+                              {...entryProps}
+                            />
+                          )}
+                        </motion.div>
+                      );
+                    })}
+                  </AnimatePresence>
+
+                  <button className="add-entry-btn" type="button" onClick={addItem}>
+                    <Plus size={13} />
+                    Add another {title.toLowerCase()}
+                  </button>
+                </>
               )}
               {children}
             </div>
@@ -73,6 +112,29 @@ export function ALCard({ id, icon, title, desc, hasFin, on, onToggle, isLinked, 
   );
 }
 
+/* ─── Shared entry header ─────────────────────────────────────── */
+function EntryHeader({ label, canRemove, onRemove }) {
+  return (
+    <div className="flex-between" style={{ marginBottom: 10 }}>
+      <span className="text-strong" style={{ fontSize: 12.5 }}>{label}</span>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 7 }}>
+        <span className="badge badge-blue">$0</span>
+        {canRemove && (
+          <button
+            className="remove-entry-btn"
+            type="button"
+            title="Remove"
+            onClick={e => { e.stopPropagation(); onRemove(); }}
+          >
+            <Trash2 size={11} />
+          </button>
+        )}
+      </div>
+    </div>
+  );
+}
+
+/* ─── Linked (read-only, auto-populated from real-estate) ──────── */
 function LinkedEntry() {
   return (
     <div className="al-entry">
@@ -88,26 +150,25 @@ function LinkedEntry() {
         <div className="al-field"><label>Monthly repayment</label><input value="$2,650" readOnly style={{ color: 'var(--text2)' }} /></div>
         <div className="al-field"><label>Linked asset</label><input value="Real-estate: Main home" readOnly style={{ color: 'var(--hover)' }} /></div>
       </div>
-      <div className="text-small text-border2" style={{ marginTop: 8 }}>To edit, update in Assets section.</div>
+      <div className="text-small text-border2" style={{ marginTop: 8 }}>
+        To edit these details, update them in the Assets section.
+      </div>
     </div>
   );
 }
 
-function CreditCardEntry({ title }) {
+/* ─── Credit card entry ──────────────────────────────────────── */
+function CreditCardEntry({ num, canRemove, onRemove }) {
   const [cardNum, setCardNum] = useState('');
 
   const handleCardNum = (e) => {
     const digits = e.target.value.replace(/\D/g, '').slice(0, 16);
-    const groups = digits.match(/.{1,4}/g) || [];
-    setCardNum(groups.join(' '));
+    setCardNum((digits.match(/.{1,4}/g) || []).join(' '));
   };
 
   return (
     <div className="al-entry">
-      <div className="flex-between" style={{ marginBottom: 10 }}>
-        <span className="text-strong" style={{ fontSize: 12.5 }}>{title} 1</span>
-        <span className="badge badge-blue">$0</span>
-      </div>
+      <EntryHeader label={`Credit card ${num}`} canRemove={canRemove} onRemove={onRemove} />
       <div className="al-fields">
         <div className="al-field" style={{ gridColumn: 'span 2' }}>
           <label>Credit Card Number</label>
@@ -136,13 +197,11 @@ function CreditCardEntry({ title }) {
   );
 }
 
-function LiabilityEntry({ title }) {
+/* ─── Generic liability entry ────────────────────────────────── */
+function LiabilityEntry({ title, num, canRemove, onRemove }) {
   return (
     <div className="al-entry">
-      <div className="flex-between" style={{ marginBottom: 10 }}>
-        <span className="text-strong" style={{ fontSize: 12.5 }}>{title} 1</span>
-        <span className="badge badge-blue">$0</span>
-      </div>
+      <EntryHeader label={`${title} ${num}`} canRemove={canRemove} onRemove={onRemove} />
       <div className="al-fields">
         <div className="al-field">
           <label>Lender</label>
@@ -158,10 +217,10 @@ function LiabilityEntry({ title }) {
         </div>
         <div className="al-field">
           <label>Interest Rate</label>
-          <input placeholder="e.g. 6.99" />
+          <input placeholder="e.g. 6.99%" />
         </div>
         <div className="al-field" style={{ gridColumn: 'span 2' }}>
-          <label>Repayments</label>
+          <label>Monthly Repayments</label>
           <input placeholder="$0" />
         </div>
       </div>
@@ -169,15 +228,24 @@ function LiabilityEntry({ title }) {
   );
 }
 
-function DefaultEntry({ title, isRealEstate, hasFin, finOpen, finNote, onFinToggle }) {
+/* ─── Default asset entry (savings, real-estate, vehicles…) ───── */
+function DefaultEntry({ title, isRealEstate, hasFin, num, canRemove, onRemove, onFinanceLink }) {
+  const [finOpen, setFinOpen] = useState(false);
+
+  const handleFinToggle = () => {
+    const next = !finOpen;
+    setFinOpen(next);
+    onFinanceLink?.(next);
+  };
+
   return (
     <div className="al-entry">
-      <div className="flex-between" style={{ marginBottom: 10 }}>
-        <span className="text-strong" style={{ fontSize: 12.5 }}>{title} 1</span>
-        <span className="badge badge-blue">$0</span>
-      </div>
+      <EntryHeader label={`${title} ${num}`} canRemove={canRemove} onRemove={onRemove} />
       <div className="al-fields">
-        <div className="al-field"><label>Description</label><input placeholder="Description" /></div>
+        <div className="al-field">
+          <label>Description</label>
+          <input placeholder="Description" />
+        </div>
         <div className="al-field">
           <label>{isRealEstate ? 'Market value' : 'Current value'}</label>
           <input placeholder="$0" />
@@ -185,34 +253,53 @@ function DefaultEntry({ title, isRealEstate, hasFin, finOpen, finNote, onFinTogg
         {isRealEstate && (
           <>
             <div className="al-field" style={{ gridColumn: 'span 2' }}>
-              <label>Address</label><input placeholder="⌕ Search address" />
+              <label>Address</label>
+              <input placeholder="⌕ Search address" />
             </div>
             <div className="al-field">
               <label>Property use</label>
-              <select><option>Owner occupied</option><option>Investment</option></select>
+              <select>
+                <option>Owner occupied</option>
+                <option>Investment</option>
+              </select>
             </div>
           </>
         )}
       </div>
+
       {hasFin && (
         <>
           <div className="fin-toggle-row">
             <span className="fin-toggle-lbl">Has finance attached?</span>
-            <ToggleSwitch on={finOpen} onToggle={onFinToggle} />
+            <ToggleSwitch on={finOpen} onToggle={handleFinToggle} />
           </div>
-          {finOpen && (
-            <div className="fin-body open">
-              <div className="al-field"><label>Lender</label><input placeholder="e.g. CBA" /></div>
-              <div className="al-field"><label>Original amount</label><input placeholder="$0" /></div>
-              <div className="al-field"><label>Current balance</label><input placeholder="$0" /></div>
-              <div className="al-field"><label>Interest rate %</label><input placeholder="e.g. 6.24" /></div>
-              <div className="al-field"><label>Monthly repayment</label><input placeholder="$0" /></div>
-              <div className="al-field"><label>Loan type</label><select><option>P&I</option><option>Interest only</option></select></div>
-            </div>
-          )}
-          {finNote && (
-            <div className="fin-note"><Link size={10} /> Auto-linked to Liabilities section</div>
-          )}
+          <AnimatePresence initial={false}>
+            {finOpen && (
+              <motion.div
+                key="fin"
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: 'auto', opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                transition={{ duration: 0.22, ease: EASE }}
+                style={{ overflow: 'hidden' }}
+              >
+                <div className="fin-body">
+                  <div className="al-field"><label>Lender</label><input placeholder="e.g. CBA" /></div>
+                  <div className="al-field"><label>Original amount</label><input placeholder="$0" /></div>
+                  <div className="al-field"><label>Current balance</label><input placeholder="$0" /></div>
+                  <div className="al-field"><label>Interest rate %</label><input placeholder="e.g. 6.24" /></div>
+                  <div className="al-field"><label>Monthly repayment</label><input placeholder="$0" /></div>
+                  <div className="al-field">
+                    <label>Loan type</label>
+                    <select><option>P&I</option><option>Interest only</option></select>
+                  </div>
+                </div>
+                <div className="fin-note">
+                  <Link size={10} /> Auto-linked to Liabilities section
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </>
       )}
     </div>

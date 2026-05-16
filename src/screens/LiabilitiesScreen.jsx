@@ -26,20 +26,23 @@ export function LiabilitiesScreen() {
       <div className="al-cols">
         {[0, 1].map(col => (
           <div key={col} className="al-col">
-            {LIABILITY_TYPES.filter((_, i) => i % 2 === col).map(l => (
-              <ALCard
-                key={l.id}
-                id={l.id}
-                icon={l.icon}
-                title={l.title}
-                desc={l.desc}
-                on={!!state.liabilities[l.id]}
-                onToggle={() => toggleLiability(l.id)}
-                isLinked={l.linked}
-                linkedMeta={l.linked ? 'Auto-linked from Real-estate · $410,000' : null}
-                isLiability={!l.linked}
-              />
-            ))}
+            {LIABILITY_TYPES.filter((_, i) => i % 2 === col).map(l => {
+              const isLinked = !!(l.linked && state.realEstateFinance);
+              return (
+                <ALCard
+                  key={l.id}
+                  id={l.id}
+                  icon={l.icon}
+                  title={l.title}
+                  desc={l.desc}
+                  on={!!state.liabilities[l.id]}
+                  onToggle={() => toggleLiability(l.id)}
+                  isLinked={isLinked}
+                  linkedMeta={isLinked ? 'Auto-linked from Real-estate · $410,000' : null}
+                  isLiability={!isLinked}
+                />
+              );
+            })}
           </div>
         ))}
       </div>

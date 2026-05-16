@@ -38,6 +38,7 @@ const initialState = {
   uploadedDocs: {},
   assets: {},
   liabilities: {},
+  realEstateFinance: false,
   expenses: initialExpenses,
   addressHistoryUnder3: false,
   employmentHistoryUnder3: false,
@@ -86,6 +87,10 @@ export function AppProvider({ children }) {
 
   const toggleLiability = useCallback((id) => {
     setState(s => ({ ...s, liabilities: { ...s.liabilities, [id]: !s.liabilities[id] } }));
+  }, []);
+
+  const linkRealEstateFinance = useCallback((linked) => {
+    setState(s => ({ ...s, realEstateFinance: linked }));
   }, []);
 
   const toggleConsent = useCallback((idx) => {
@@ -149,6 +154,7 @@ export function AppProvider({ children }) {
     prev,
     toggleAsset,
     toggleLiability,
+    linkRealEstateFinance,
     toggleConsent,
     toggleIncomeType,
     stepExpense,

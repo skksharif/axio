@@ -7,7 +7,7 @@ import { ASSET_TYPES } from '../data/assetTypes';
 import '../components/ui/ALCard.css';
 
 export function AssetsScreen() {
-  const { state, toggleAsset, next, prev } = useApp();
+  const { state, toggleAsset, linkRealEstateFinance, next, prev } = useApp();
 
   return (
     <div className="screen-enter">
@@ -37,6 +37,7 @@ export function AssetsScreen() {
                 on={!!state.assets[a.id]}
                 onToggle={() => toggleAsset(a.id)}
                 isRealEstate={a.id === 'realestate'}
+                onFinanceLink={a.id === 'realestate' ? linkRealEstateFinance : undefined}
               />
             ))}
           </div>
