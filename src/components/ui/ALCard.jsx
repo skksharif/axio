@@ -10,7 +10,7 @@ const EASE = [0.25, 0.46, 0.45, 0.94];
 export function ALCard({
   id, icon, title, desc, hasFin, on, onToggle,
   isLinked, linkedMeta, isRealEstate, isLiability,
-  onFinanceLink, children,
+  onFinanceLink, addLabel, addDesc, children,
 }) {
   const nextItemId = useRef(2);
   const [itemIds, setItemIds] = useState([1]);
@@ -98,8 +98,13 @@ export function ALCard({
                   </AnimatePresence>
 
                   <button className="add-entry-btn" type="button" onClick={addItem}>
-                    <Plus size={13} />
-                    Add another {title.toLowerCase()}
+                    <div className="add-entry-icon">
+                      <Plus size={14} strokeWidth={2.5} />
+                    </div>
+                    <div className="add-entry-text">
+                      <div className="add-entry-label">Add another {addLabel ?? title.toLowerCase()}</div>
+                      {addDesc && <div className="add-entry-sub">{addDesc}</div>}
+                    </div>
                   </button>
                 </>
               )}
@@ -160,6 +165,7 @@ function LinkedEntry() {
 /* ─── Credit card entry ──────────────────────────────────────── */
 function CreditCardEntry({ num, canRemove, onRemove }) {
   const [cardNum, setCardNum] = useState('');
+  const [consolidate, setConsolidate] = useState(false);
 
   const handleCardNum = (e) => {
     const digits = e.target.value.replace(/\D/g, '').slice(0, 16);
@@ -193,12 +199,18 @@ function CreditCardEntry({ num, canRemove, onRemove }) {
           <input placeholder="$0" />
         </div>
       </div>
+      <div className="fin-toggle-row">
+        <span className="fin-toggle-lbl">Consolidate this debt?</span>
+        <ToggleSwitch on={consolidate} onToggle={() => setConsolidate(c => !c)} />
+      </div>
     </div>
   );
 }
 
 /* ─── Generic liability entry ────────────────────────────────── */
 function LiabilityEntry({ title, num, canRemove, onRemove }) {
+  const [consolidate, setConsolidate] = useState(false);
+
   return (
     <div className="al-entry">
       <EntryHeader label={`${title} ${num}`} canRemove={canRemove} onRemove={onRemove} />
@@ -223,6 +235,10 @@ function LiabilityEntry({ title, num, canRemove, onRemove }) {
           <label>Monthly Repayments</label>
           <input placeholder="$0" />
         </div>
+      </div>
+      <div className="fin-toggle-row">
+        <span className="fin-toggle-lbl">Consolidate this debt?</span>
+        <ToggleSwitch on={consolidate} onToggle={() => setConsolidate(c => !c)} />
       </div>
     </div>
   );

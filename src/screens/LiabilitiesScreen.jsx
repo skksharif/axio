@@ -40,6 +40,8 @@ export function LiabilitiesScreen() {
                   isLinked={isLinked}
                   linkedMeta={isLinked ? 'Auto-linked from Real-estate · $410,000' : null}
                   isLiability={!isLinked}
+                  addLabel={l.addLabel}
+                  addDesc={l.addDesc}
                 />
               );
             })}

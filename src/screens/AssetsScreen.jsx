@@ -38,6 +38,8 @@ export function AssetsScreen() {
                 onToggle={() => toggleAsset(a.id)}
                 isRealEstate={a.id === 'realestate'}
                 onFinanceLink={a.id === 'realestate' ? linkRealEstateFinance : undefined}
+                addLabel={a.addLabel}
+                addDesc={a.addDesc}
               />
             ))}
           </div>
