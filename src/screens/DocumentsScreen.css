@@ -1276,6 +1276,50 @@
   }
 }
 
+/* ─── Document progress card ────────────────────────────────────── */
+.doc-progress-card {
+  background: rgba(23, 16, 47, 0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--r16);
+  padding: 14px 18px;
+  margin-bottom: 14px;
+  box-shadow: var(--card-shadow);
+}
+
+/* ─── Income types hint banner ──────────────────────────────────── */
+.doc-income-banner {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  background: rgba(109, 40, 217, 0.07);
+  border: 1px solid rgba(139, 92, 246, 0.22);
+  border-left: 3px solid rgba(139, 92, 246, 0.55);
+  border-radius: var(--r16);
+  padding: 14px 16px;
+  margin-bottom: 14px;
+}
+
+.doc-income-banner-icon {
+  color: var(--hover);
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.doc-income-banner-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text0);
+  margin-bottom: 4px;
+}
+
+.doc-income-banner-desc {
+  font-size: 12px;
+  color: var(--text2);
+  line-height: 1.6;
+}
+
 /* ─── Document list column ──────────────────────────────────────── */
 .doc-list-col {
   display: flex;
@@ -1286,6 +1330,7 @@
 
 .doc-group-section {
   margin-bottom: 14px;
+  overflow: hidden;
 }
 
 .doc-group-section:last-child {
@@ -1300,6 +1345,25 @@
   margin-bottom: 8px;
 }
 
+.doc-group-header-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.doc-group-icon {
+  width: 24px;
+  height: 24px;
+  min-width: 24px;
+  border-radius: var(--r8);
+  background: rgba(109, 40, 217, 0.18);
+  border: 1px solid rgba(139, 92, 246, 0.28);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--hover);
+}
+
 .doc-group-title {
   font-size: 13.5px;
   font-weight: 700;
@@ -1310,6 +1374,13 @@
   font-size: 11px;
   font-weight: 600;
   color: var(--text2);
+}
+
+.doc-group-helper {
+  font-size: 11.5px;
+  color: var(--text2);
+  line-height: 1.55;
+  margin: 0 2px 10px;
 }
 
 .doc-group-cards {

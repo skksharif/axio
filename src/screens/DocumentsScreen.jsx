@@ -5,74 +5,70 @@ import { Icon } from '../components/common/Icon';
 import { useApp } from '../context/AppContext';
 import { ScreenHeader } from '../components/common/ScreenHeader';
 import { BtnPrimary, BtnGhost, BtnRow } from '../components/common/Button';
+import { INCOME_DOC_MAP } from '../data/incomeDocMap';
 import './DocumentsScreen.css';
 
-// ─── Document upload data ─────────────────────────────────────────────────────
+// ─── Static document data (always shown) ─────────────────────────────────────
 
-const DOCUMENTS = [
+const STATIC_DOCS = [
   {
-    id: 'driver_front', group: 'Identity',
+    id: 'driver_front', groupLabel: 'Identity', groupIcon: 'Shield',
     title: 'Driver Licence Front', subtitle: 'Capture the front side of your licence',
-    icon: 'Wallet', required: true, defaultStatus: 'not_started', stateKey: 'licence',
+    icon: 'Wallet', required: true, stateKey: 'licence',
     extracted: ['Full name', 'Date of birth', 'Licence number'],
   },
   {
-    id: 'driver_back', group: 'Identity',
+    id: 'driver_back', groupLabel: 'Identity', groupIcon: 'Shield',
     title: 'Driver Licence Back', subtitle: 'Capture the back side for address check',
-    icon: 'Wallet', required: true, defaultStatus: 'not_started', stateKey: 'licence',
+    icon: 'Wallet', required: true, stateKey: 'licence',
     extracted: ['Residential address', 'Card number', 'Expiry date'],
   },
   {
-    id: 'passport', group: 'Identity',
+    id: 'passport', groupLabel: 'Identity', groupIcon: 'Shield',
     title: 'Passport', subtitle: 'Photo page or PDF copy accepted',
-    icon: 'BookMarked', required: false, defaultStatus: 'not_started', stateKey: null,
+    icon: 'BookMarked', required: false, stateKey: null,
     extracted: ['Passport number', 'Country', 'Expiry date'],
   },
   {
-    id: 'medicare', group: 'Identity',
+    id: 'medicare', groupLabel: 'Identity', groupIcon: 'Shield',
     title: 'Medicare Card', subtitle: 'Used as supporting identity verification',
-    icon: 'Shield', required: true, defaultStatus: 'not_started', stateKey: 'medicare',
+    icon: 'Shield', required: true, stateKey: 'medicare',
     extracted: ['Medicare number', 'Reference number', 'Expiry'],
   },
   {
-    id: 'payslips', group: 'Income',
-    title: 'Payslips', subtitle: 'Upload your latest 2 payslips',
-    icon: 'Upload', required: true, defaultStatus: 'not_started', stateKey: 'payslips',
-    extracted: ['Employer', 'Gross income', 'Pay cycle', 'YTD income'],
-  },
-  {
-    id: 'rate_notice', group: 'Property / Address',
+    id: 'rate_notice', groupLabel: 'Property', groupIcon: 'Home',
     title: 'Rate Notice', subtitle: 'For property owners or investment property',
-    icon: 'Home', required: false, defaultStatus: 'not_started', stateKey: 'rates',
+    icon: 'Home', required: false, stateKey: 'rates',
     extracted: ['Property address', 'Owner name', 'Council valuation'],
   },
+];
+
+// ─── Housing docs (shown when living situation is renting) ────────────────────
+
+const HOUSING_DOCS = [
   {
-    id: 'lease_agreement', group: 'Rental Documents',
+    id: 'renter_lease', groupLabel: 'Housing Documents', groupIcon: 'Key',
     title: 'Lease Agreement', subtitle: 'Signed lease or rental contract from your landlord or agent',
-    icon: 'FileText', required: true, defaultStatus: 'not_started', stateKey: 'lease',
+    icon: 'FileText', required: true, stateKey: 'lease',
     extracted: ['Lease address', 'Rent amount', 'Lease term'],
-    rentalOnly: true,
   },
   {
-    id: 'rent_receipts', group: 'Rental Documents',
+    id: 'rent_receipts', groupLabel: 'Housing Documents', groupIcon: 'Key',
     title: 'Rent Receipts', subtitle: 'Latest 3 months of rental payment receipts',
-    icon: 'Receipt', required: false, defaultStatus: 'not_started', stateKey: 'rent_receipts',
+    icon: 'Receipt', required: false, stateKey: 'rent_receipts',
     extracted: ['Payment amount', 'Payment dates', 'Landlord or agent'],
-    rentalOnly: true,
   },
   {
-    id: 'rental_ledger', group: 'Rental Documents',
+    id: 'rental_ledger', groupLabel: 'Housing Documents', groupIcon: 'Key',
     title: 'Rental Ledger', subtitle: 'Agent-issued history of rental payments and arrears',
-    icon: 'List', required: false, defaultStatus: 'not_started', stateKey: 'rental_ledger',
+    icon: 'List', required: false, stateKey: 'rental_ledger',
     extracted: ['Payment history', 'Arrears status', 'Bond details'],
-    rentalOnly: true,
   },
   {
-    id: 'tenancy_agreement', group: 'Rental Documents',
+    id: 'tenancy_agreement', groupLabel: 'Housing Documents', groupIcon: 'Key',
     title: 'Tenancy Agreement', subtitle: 'Government-issued form — alternative to lease agreement',
-    icon: 'ClipboardList', required: false, defaultStatus: 'not_started', stateKey: null,
+    icon: 'ClipboardList', required: false, stateKey: null,
     extracted: ['Tenancy address', 'Bond amount', 'Start date'],
-    rentalOnly: true,
   },
 ];
 
@@ -143,6 +139,11 @@ function DocumentCard({ doc, selected, onClick }) {
       type="button"
       onClick={onClick}
       whileTap={{ scale: 0.987 }}
+      initial={{ opacity: 0, y: -6 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, scale: 0.96 }}
+      transition={{ duration: 0.2, ease: 'easeOut' }}
+      layout
       className={`doc-upload-card status-${doc.status.replace('_', '-')}${selected ? ' selected' : ''}`}
     >
       <div className="doc-card-inner">
@@ -877,47 +878,69 @@ function BankFlowSection({ state, updateState }) {
 
 export function DocumentsScreen() {
   const { state, updateState, next, prev } = useApp();
-  const [selectedId, setSelectedId] = useState(DOCUMENTS[0].id);
+  const [selectedId, setSelectedId] = useState(null);
   const [sheetDoc, setSheetDoc] = useState(null);
 
   const requiresRentalDocs =
     state.livingStatus === 'rent---agent' ||
     state.livingStatus === 'rent---private';
 
+  const groups = useMemo(() => {
+    const map = new Map();
+    const seen = new Set();
+
+    const push = (groupLabel, groupIcon, doc) => {
+      if (seen.has(doc.id)) return;
+      seen.add(doc.id);
+      if (!map.has(groupLabel)) map.set(groupLabel, { icon: groupIcon, docs: [] });
+      map.get(groupLabel).docs.push({
+        ...doc,
+        status: doc.stateKey && state.uploadedDocs?.[doc.stateKey] ? 'uploaded' : 'not_started',
+      });
+    };
+
+    STATIC_DOCS.forEach((d) => push(d.groupLabel, d.groupIcon, d));
+
+    (state.incomeTypes ?? []).forEach((typeId) => {
+      const entry = INCOME_DOC_MAP[typeId];
+      if (!entry) return;
+      entry.docs.forEach((d) => push('Income Documents', 'Briefcase', d));
+    });
+
+    if (requiresRentalDocs) {
+      HOUSING_DOCS.forEach((d) => push(d.groupLabel, d.groupIcon, d));
+    }
+
+    return map;
+  }, [state.incomeTypes, state.uploadedDocs, requiresRentalDocs]);
+
+  const allDocs = useMemo(() => [...groups.values()].flatMap((g) => g.docs), [groups]);
+
+  const selectedDoc = allDocs.find((d) => d.id === selectedId) ?? allDocs[0];
+
+  const progress = useMemo(() => {
+    const required = allDocs.filter((d) => d.required);
+    const done = required.filter((d) => d.status === 'uploaded' || d.status === 'verified');
+    return {
+      total: required.length,
+      done: done.length,
+      pct: required.length > 0 ? Math.round((done.length / required.length) * 100) : 0,
+    };
+  }, [allDocs]);
+
   const markUpload = (docId) => {
-    const doc = DOCUMENTS.find((d) => d.id === docId);
+    const doc = allDocs.find((d) => d.id === docId);
     if (doc?.stateKey) {
       updateState({ uploadedDocs: { ...state.uploadedDocs, [doc.stateKey]: true } });
     }
   };
 
-  const computedDocs = useMemo(
-    () =>
-      DOCUMENTS
-        .filter((doc) => !doc.rentalOnly || requiresRentalDocs)
-        .map((doc) => ({
-          ...doc,
-          status: doc.stateKey && state.uploadedDocs?.[doc.stateKey] ? 'uploaded' : doc.defaultStatus,
-        })),
-    [state.uploadedDocs, requiresRentalDocs]
-  );
-
-  const selectedDoc = computedDocs.find((d) => d.id === selectedId) || computedDocs[0];
-
-  const groups = useMemo(
-    () =>
-      computedDocs.reduce((acc, doc) => {
-        if (!acc[doc.group]) acc[doc.group] = [];
-        acc[doc.group].push(doc);
-        return acc;
-      }, {}),
-    [computedDocs]
-  );
-
   const handleDocClick = (doc) => {
     setSelectedId(doc.id);
     setSheetDoc(doc);
   };
+
+  const hasIncomeTypes = (state.incomeTypes ?? []).length > 0;
 
   return (
     <div className="screen-enter">
@@ -953,6 +976,37 @@ export function DocumentsScreen() {
         </div>
       </div>
 
+      {/* ── Document progress tracker ── */}
+      <div className="doc-progress-card">
+        <div className="doc-progress-row">
+          <span className="doc-progress-label">
+            {progress.done} of {progress.total} required documents uploaded
+          </span>
+          <span className="doc-progress-pct">{progress.pct}%</span>
+        </div>
+        <div className="doc-progress-track">
+          <motion.div
+            className="doc-progress-fill"
+            animate={{ width: `${progress.pct}%` }}
+            transition={{ duration: 0.45, ease: 'easeOut' }}
+          />
+        </div>
+      </div>
+
+      {/* ── No income types selected hint ── */}
+      {!hasIncomeTypes && (
+        <div className="doc-income-banner">
+          <Icon name="Info" size={15} className="doc-income-banner-icon" />
+          <div>
+            <div className="doc-income-banner-title">Income documents will appear here</div>
+            <div className="doc-income-banner-desc">
+              Return to the Income step and select your income sources. Required upload documents
+              will be generated automatically based on your selection.
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* ── Rental docs contextual notice ── */}
       {requiresRentalDocs && (
         <div className="rental-docs-notice">
@@ -971,24 +1025,48 @@ export function DocumentsScreen() {
       {/* ── Document list + preview panel ── */}
       <div className="doc-main-grid">
         <div className="doc-list-col">
-          {Object.entries(groups).map(([group, docs]) => (
-            <section key={group} className="doc-group-section">
-              <div className="doc-group-header">
-                <span className="doc-group-title">{group}</span>
-                <span className="doc-group-count">{docs.length} items</span>
-              </div>
-              <div className="doc-group-cards">
-                {docs.map((doc) => (
-                  <DocumentCard
-                    key={doc.id}
-                    doc={doc}
-                    selected={doc.id === selectedId}
-                    onClick={() => handleDocClick(doc)}
-                  />
-                ))}
-              </div>
-            </section>
-          ))}
+          <AnimatePresence mode="popLayout" initial={false}>
+            {[...groups.entries()].map(([label, group]) => (
+              <motion.section
+                key={label}
+                className="doc-group-section"
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -8 }}
+                transition={{ duration: 0.25, ease: 'easeOut' }}
+                layout
+              >
+                <div className="doc-group-header">
+                  <div className="doc-group-header-left">
+                    <div className="doc-group-icon">
+                      <Icon name={group.icon} size={13} />
+                    </div>
+                    <span className="doc-group-title">{label}</span>
+                  </div>
+                  <span className="doc-group-count">
+                    {group.docs.length} item{group.docs.length !== 1 ? 's' : ''}
+                  </span>
+                </div>
+                {label === 'Income Documents' && (
+                  <p className="doc-group-helper">
+                    Required documents are generated automatically from your selected income sources.
+                  </p>
+                )}
+                <div className="doc-group-cards">
+                  <AnimatePresence initial={false}>
+                    {group.docs.map((doc) => (
+                      <DocumentCard
+                        key={doc.id}
+                        doc={doc}
+                        selected={doc.id === selectedDoc?.id}
+                        onClick={() => handleDocClick(doc)}
+                      />
+                    ))}
+                  </AnimatePresence>
+                </div>
+              </motion.section>
+            ))}
+          </AnimatePresence>
         </div>
 
         <PreviewPanel selectedDoc={selectedDoc} onUpload={markUpload} />
