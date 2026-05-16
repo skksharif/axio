@@ -23,19 +23,23 @@ export function AssetsScreen() {
         thinkingMs={400}
       />
 
-      <div className="al-grid">
-        {ASSET_TYPES.map(a => (
-          <ALCard
-            key={a.id}
-            id={a.id}
-            icon={a.icon}
-            title={a.title}
-            desc={a.desc}
-            hasFin={a.hasFin}
-            on={!!state.assets[a.id]}
-            onToggle={() => toggleAsset(a.id)}
-            isRealEstate={a.id === 'realestate'}
-          />
+      <div className="al-cols">
+        {[0, 1].map(col => (
+          <div key={col} className="al-col">
+            {ASSET_TYPES.filter((_, i) => i % 2 === col).map(a => (
+              <ALCard
+                key={a.id}
+                id={a.id}
+                icon={a.icon}
+                title={a.title}
+                desc={a.desc}
+                hasFin={a.hasFin}
+                on={!!state.assets[a.id]}
+                onToggle={() => toggleAsset(a.id)}
+                isRealEstate={a.id === 'realestate'}
+              />
+            ))}
+          </div>
         ))}
       </div>
 

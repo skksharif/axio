@@ -17,16 +17,18 @@ export function ALCard({ id, icon, title, desc, hasFin, on, onToggle, isLinked, 
   return (
     <div className={`al-card ${on ? 'on' : ''}`}>
       <div className="al-head" onClick={onToggle}>
-        <div>
-          <div className="al-icon-box"><Icon name={icon} size={18} /></div>
-          <div className="al-title">{title}</div>
-          <div className="al-desc">{desc}</div>
-          {on && <div className="al-meta">1 item declared</div>}
-          {linkedMeta && <div className="al-meta">{linkedMeta}</div>}
+        <div className="al-head-left">
+          <div className="al-icon-box"><Icon name={icon} size={17} /></div>
+          <div className="al-head-info">
+            <div className="al-title">{title}</div>
+            <div className="al-desc">{desc}</div>
+            {on && <div className="al-meta">1 item declared</div>}
+            {linkedMeta && <div className="al-meta al-meta-linked">{linkedMeta}</div>}
+          </div>
         </div>
         <div className="al-head-actions">
           <div className="al-check">
-            <Check size={12} strokeWidth={2.5} />
+            <Check size={11} strokeWidth={2.8} />
           </div>
           <ChevronDown size={13} className="al-chevron" />
         </div>
@@ -39,7 +41,7 @@ export function ALCard({ id, icon, title, desc, hasFin, on, onToggle, isLinked, 
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.26, ease: [0.4, 0, 0.2, 1] }}
+            transition={{ duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }}
             style={{ overflow: 'hidden' }}
           >
             <div className="al-body">

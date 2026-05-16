@@ -1,4 +1,22 @@
-/* ─── GRID: align-items:start is the key fix — prevents equal-height row stretching ─── */
+/* ─── MASONRY COLUMNS ───────────────────────────────────────────
+ *  Two independent flex stacks. Each column grows on its own —
+ *  expanding a card in col 1 never shifts col 2's cards.
+ * ────────────────────────────────────────────────────────────── */
+.al-cols {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  align-items: start;    /* columns anchor at the top, don't stretch */
+}
+
+.al-col {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+}
+
+/* ─── LEGACY GRID (AssetsScreen) ────────────────────────────── */
 .al-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -6,114 +24,201 @@
   align-items: start;
 }
 
+/* ─── CARD SHELL ────────────────────────────────────────────── */
 .al-card {
   border-radius: var(--r16);
   border: 1px solid var(--glass-border);
-  background: rgba(23, 16, 47, 0.7);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  background: rgba(23, 16, 47, 0.72);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
   overflow: hidden;
+  /* height grows with content — never set an explicit height */
   transition: border-color .22s, box-shadow .22s, transform .22s;
 }
+
 .al-card:not(.on):hover {
-  border-color: rgba(139, 92, 246, 0.3);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.28);
+  border-color: rgba(139, 92, 246, 0.32);
+  box-shadow: 0 4px 22px rgba(0, 0, 0, 0.28), var(--glow-sm);
   transform: translateY(-1px);
 }
+
 .al-card.on {
-  border-color: rgba(139, 92, 246, 0.5);
-  background: rgba(109, 40, 217, 0.1);
-  box-shadow: 0 0 0 1px rgba(139, 92, 246, 0.2), var(--glow-sm);
+  border-color: rgba(139, 92, 246, 0.48);
+  background: rgba(109, 40, 217, 0.09);
+  /* left accent bar signals active state without disrupting layout */
+  box-shadow:
+    inset 3px 0 0 rgba(167, 100, 255, 0.75),
+    0 0 0 1px rgba(139, 92, 246, 0.16),
+    var(--glow-sm);
 }
 
-/* ─── HEAD ─── */
+/* ─── HEAD ──────────────────────────────────────────────────── */
 .al-head {
-  padding: 12px 14px;
+  padding: 14px 15px;
   cursor: pointer;
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  gap: 10px;
+  gap: 12px;
   transition: background .18s;
 }
-.al-head:hover { background: rgba(139, 92, 246, 0.06); }
+.al-head:hover { background: rgba(139, 92, 246, 0.05); }
 
+/* Horizontal: icon sits left of title+desc block */
+.al-head-left {
+  display: flex;
+  align-items: flex-start;
+  gap: 11px;
+  flex: 1;
+  min-width: 0;
+}
+
+.al-head-info {
+  flex: 1;
+  min-width: 0;
+}
+
+/* ─── ICON BOX ──────────────────────────────────────────────── */
+.al-icon-box {
+  width: 34px;
+  height: 34px;
+  background: rgba(30, 27, 75, 0.85);
+  border: 1px solid var(--border);
+  border-radius: var(--r8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 1px;   /* align with first line of text */
+  color: var(--text1);
+  transition: background .2s, border-color .2s, color .2s, box-shadow .2s;
+}
+.al-card.on .al-icon-box {
+  background: rgba(109, 40, 217, 0.2);
+  border-color: rgba(139, 92, 246, 0.38);
+  color: var(--hover);
+  box-shadow: 0 0 10px rgba(109, 40, 217, 0.18);
+}
+
+/* ─── TYPOGRAPHY ────────────────────────────────────────────── */
+.al-title {
+  font-family: var(--font-display);
+  font-size: 13.5px;
+  font-weight: 700;
+  margin-bottom: 3px;
+  color: var(--text0);
+  line-height: 1.22;
+}
+.al-card.on .al-title { color: #fff; }
+
+.al-desc {
+  font-size: 11.5px;
+  color: var(--text2);
+  line-height: 1.4;
+}
+
+.al-meta {
+  font-size: 11px;
+  color: var(--hover);
+  margin-top: 5px;
+  font-weight: 500;
+}
+
+.al-meta-linked {
+  color: var(--hover);
+  opacity: 0.85;
+}
+
+/* ─── HEAD ACTIONS (check + chevron) ────────────────────────── */
 .al-head-actions {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 8px;
+  gap: 7px;
   flex-shrink: 0;
-  padding-top: 2px;
+  padding-top: 1px;
 }
 
 .al-chevron {
   color: var(--text2);
-  transition: transform 0.26s cubic-bezier(0.4, 0, 0.2, 1), color 0.18s;
+  transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), color 0.18s;
 }
 .al-card.on .al-chevron {
   transform: rotate(180deg);
   color: var(--hover);
 }
 
-.al-icon-box {
-  font-size: 18px; width: 34px; height: 34px;
-  background: rgba(30, 27, 75, 0.8);
-  border: 1px solid var(--border);
-  border-radius: var(--r8);
-  display: flex; align-items: center; justify-content: center;
-  flex-shrink: 0; margin-bottom: 8px;
-}
-.al-title { font-family: var(--font-display); font-size: 13px; font-weight: 700; margin-bottom: 3px; }
-.al-desc  { font-size: 11px; color: var(--text1); line-height: 1.4; }
-.al-meta  { font-size: 11px; color: var(--hover); margin-top: 6px; }
-
 .al-check {
-  width: 20px; height: 20px; min-width: 20px;
+  width: 20px;
+  height: 20px;
+  min-width: 20px;
   border-radius: 50%;
-  border: 1.5px solid rgba(167, 139, 250, 0.3);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 10px; color: transparent; flex-shrink: 0;
-  transition: background .18s ease, border-color .18s ease, color .18s ease, box-shadow .18s ease;
-  background: rgba(30, 27, 75, 0.5);
+  border: 1.5px solid rgba(167, 139, 250, 0.28);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: transparent;
+  flex-shrink: 0;
+  background: rgba(30, 27, 75, 0.55);
+  transition: background .2s, border-color .2s, color .2s, box-shadow .2s;
 }
 .al-card.on .al-check {
   background: var(--accentg);
   border-color: transparent;
   color: #fff;
-  box-shadow: 0 0 10px rgba(139, 92, 246, 0.22);
+  box-shadow:
+    0 0 8px rgba(196, 148, 255, 0.6),
+    0 0 18px rgba(139, 92, 246, 0.28);
 }
 
-/* ─── BODY (animated via framer-motion, overflow:hidden set inline) ─── */
+/* ─── BODY (height animated by framer-motion, overflow hidden inline) */
 .al-body {
   border-top: 1px solid var(--border);
-  padding: 12px 14px;
+  padding: 12px 15px;
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
+
+/* ─── ENTRY FORM ────────────────────────────────────────────── */
 .al-entry {
   background: rgba(30, 27, 75, 0.55);
   border: 1px solid var(--border);
   border-radius: var(--r8);
   padding: 12px;
 }
+
 .al-field label {
-  display: block; font-size: 10px; color: var(--text2);
-  font-weight: 600; margin-bottom: 4px;
-  text-transform: uppercase; letter-spacing: .4px;
+  display: block;
+  font-size: 10px;
+  color: var(--text2);
+  font-weight: 600;
+  margin-bottom: 4px;
+  text-transform: uppercase;
+  letter-spacing: .4px;
 }
-.al-field input, .al-field select {
-  width: 100%; height: 36px;
-  background: rgba(30, 27, 75, 0.7);
-  border: 1px solid var(--border); border-radius: 6px;
-  color: var(--text0); font-size: 12.5px; padding: 0 10px;
-  outline: none; font-family: var(--font-body);
-  transition: border-color .2s;
+
+.al-field input,
+.al-field select {
+  width: 100%;
+  height: 36px;
+  background: rgba(30, 27, 75, 0.75);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text0);
+  font-size: 12.5px;
+  padding: 0 10px;
+  outline: none;
+  font-family: var(--font-body);
+  transition: border-color .2s, box-shadow .2s;
 }
 .al-field input:focus,
-.al-field select:focus { border-color: var(--hover); }
+.al-field select:focus {
+  border-color: var(--hover);
+  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.12);
+}
 .al-field input::placeholder { color: var(--text2); }
+
 .al-fields { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
 
 .cc-num-input {
@@ -121,12 +226,18 @@
   letter-spacing: 0.12em;
 }
 
+/* ─── ADD ANOTHER ───────────────────────────────────────────── */
 .add-entry-btn {
-  height: 34px; border-radius: 6px;
-  border: 1px dashed rgba(167, 139, 250, 0.25);
+  height: 34px;
+  border-radius: 6px;
+  border: 1px dashed rgba(167, 139, 250, 0.22);
   background: transparent;
-  color: var(--text2); font-size: 12px; cursor: pointer;
-  width: 100%; transition: border-color .18s ease, color .18s ease, background .18s ease;
+  color: var(--text2);
+  font-size: 12px;
+  cursor: pointer;
+  width: 100%;
+  font-family: var(--font-body);
+  transition: border-color .18s, color .18s, background .18s;
 }
 .add-entry-btn:hover {
   border-color: var(--hover);
@@ -134,27 +245,48 @@
   background: rgba(139, 92, 246, 0.06);
 }
 
+/* ─── FINANCE TOGGLE (AssetsScreen) ────────────────────────── */
 .fin-toggle-row {
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 10px 0; border-top: 1px solid var(--border); margin-top: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-top: 1px solid var(--border);
+  margin-top: 10px;
 }
 .fin-toggle-lbl { font-size: 12px; color: var(--text1); }
 .fin-body { display: none; margin-top: 10px; }
 .fin-body.open { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
 .fin-note {
-  font-size: 11px; color: var(--hover); margin-top: 6px;
-  display: flex; align-items: center; gap: 5px;
+  font-size: 11px;
+  color: var(--hover);
+  margin-top: 6px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
 }
 
+/* ─── LINKED PILL ───────────────────────────────────────────── */
 .linked-pill {
-  display: inline-flex; align-items: center; gap: 4px;
-  background: rgba(139, 92, 246, 0.12); border: 1px solid rgba(139, 92, 246, 0.3);
-  border-radius: 20px; color: var(--hover);
-  font-size: 10.5px; font-weight: 700; padding: 2px 8px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(139, 92, 246, 0.12);
+  border: 1px solid rgba(139, 92, 246, 0.28);
+  border-radius: 20px;
+  color: var(--hover);
+  font-size: 10.5px;
+  font-weight: 700;
+  padding: 2px 8px;
 }
 
-/* ─── TOTALS ─── */
-.totals-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 18px; }
+/* ─── TOTALS STRIP ──────────────────────────────────────────── */
+.totals-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-top: 18px;
+}
 .tot-box {
   background: rgba(23, 16, 47, 0.75);
   border: 1px solid var(--glass-border);
@@ -163,21 +295,26 @@
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
 }
-.tot-box.hl     { background: var(--greenbg);           border-color: var(--greenborder); }
-.tot-box.red    { background: var(--redbg);             border-color: var(--redborder); }
-.tot-box.blue   { background: rgba(139, 92, 246, 0.1);  border-color: rgba(139, 92, 246, 0.25); }
-.tot-box.yellow { background: var(--yellowbg);          border-color: var(--yellowborder); }
+.tot-box.hl     { background: var(--greenbg);            border-color: rgba(16, 185, 129, 0.3); }
+.tot-box.red    { background: var(--redbg);              border-color: var(--redborder); }
+.tot-box.blue   { background: rgba(139, 92, 246, 0.1);   border-color: rgba(139, 92, 246, 0.25); }
+.tot-box.yellow { background: var(--yellowbg);           border-color: var(--yellowborder); }
 .tot-lbl {
-  font-size: 11px; color: var(--text2); margin-bottom: 4px;
-  font-weight: 600; text-transform: uppercase; letter-spacing: .4px;
+  font-size: 10.5px;
+  color: var(--text2);
+  margin-bottom: 4px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .4px;
 }
 .tot-val { font-family: var(--font-display); font-size: 20px; font-weight: 800; }
 .tot-box.hl   .tot-val { color: var(--green); }
 .tot-box.red  .tot-val { color: var(--red); }
 .tot-box.blue .tot-val { color: var(--hover); }
 
-/* ─── RESPONSIVE ─── */
+/* ─── RESPONSIVE ────────────────────────────────────────────── */
 @media (max-width: 900px) {
+  .al-cols    { grid-template-columns: 1fr; }
   .al-grid    { grid-template-columns: 1fr; }
   .totals-row { grid-template-columns: repeat(3, 1fr); }
 }
