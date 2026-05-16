@@ -85,8 +85,9 @@
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  gap: 6px;
+  gap: 4px;
   flex-shrink: 0;
+  width: 176px;
 }
 
 .er-share { font-size: 11px; color: var(--green); font-weight: 600; }
@@ -123,6 +124,8 @@
   letter-spacing: -.4px;
 }
 
+.expense-row .stepper { width: 100%; }
+
 /* ─── RESPONSIVE ─────────────────────────────────────────── */
 @media (max-width: 580px) {
   /* Stack expense rows: label on top, stepper on bottom */
@@ -148,11 +151,12 @@
     gap: 8px;
   }
 
+  .er-right { width: 100%; }
+
   /* Stepper fills the full row width */
   .expense-row .stepper {
     flex: 1;
     min-width: 0;
-    height: 44px;
   }
 
   /* Value cell expands to fill space between buttons */

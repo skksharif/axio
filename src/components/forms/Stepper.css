@@ -21,8 +21,9 @@
   height: 100%;
   background: transparent;
   border: none;
-  color: var(--text1);
+  color: var(--text2);
   font-size: 20px;
+  line-height: 1;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -36,24 +37,31 @@
   background: rgba(139, 92, 246, 0.15);
   color: var(--text0);
 }
+.st-btn:active {
+  background: rgba(139, 92, 246, 0.25);
+}
 
 .st-val {
-  min-width: 72px;
+  min-width: 96px;
   text-align: center;
   font-size: 14px;
   font-weight: 700;
   font-family: var(--font-display);
   color: var(--text0);
   white-space: nowrap;
+  border-left: 1px solid var(--border);
+  border-right: 1px solid var(--border);
 }
 
 /* ─── Editable input mode ───────────────────────────────────── */
 .st-input {
   flex: 1;
-  min-width: 72px;
+  min-width: 96px;
   height: 100%;
   background: transparent;
   border: none;
+  border-left: 1px solid var(--border);
+  border-right: 1px solid var(--border);
   outline: none;
   color: var(--text0);
   font-size: 14px;
