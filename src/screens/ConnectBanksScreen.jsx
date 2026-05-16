@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
+import { Landmark, Sparkles } from 'lucide-react';
 import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Icon } from '../components/common/Icon';
@@ -279,7 +280,18 @@ export function ConnectBanksScreen() {
         eyebrow="Step 8 · Connect banks"
         title="Secure bank"
         titleGradient="connection"
-        sub="Connect your bank accounts so Anika AI can verify income and prepare your lender assessment."
+        sub={
+          <>
+            <span style={{ display: 'flex', alignItems: 'flex-start', gap: 7, marginBottom: 7 }}>
+              <Landmark size={13} style={{ color: 'var(--hover)', flexShrink: 0, marginTop: 5 }} />
+              <span>Connect your bank accounts securely.</span>
+            </span>
+            <span style={{ display: 'flex', alignItems: 'flex-start', gap: 7 }}>
+              <Sparkles size={13} style={{ color: 'var(--hover)', flexShrink: 0, marginTop: 5 }} />
+              <span>Anika AI verifies your income and prepares your lender assessment automatically.</span>
+            </span>
+          </>
+        }
       />
 
       {/* ── Connected state ── */}

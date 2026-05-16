@@ -2,7 +2,7 @@ import { useState, useRef } from 'react';
 import { useApp } from '../context/AppContext';
 import { ScreenHeader } from '../components/common/ScreenHeader';
 import { BtnGhost, BtnRow } from '../components/common/Button';
-import { Eye, EyeOff, ShieldCheck, Lock, Smartphone, Mail } from 'lucide-react';
+import { Eye, EyeOff, ShieldCheck, Lock, Smartphone, Mail, Save, Activity } from 'lucide-react';
 import './CreateAccount.css';
 
 export function CreateAccount() {
@@ -42,7 +42,18 @@ export function CreateAccount() {
         eyebrow="Step 12 · Account creation"
         title="Create your"
         titleGradient="account"
-        sub="Save your application and track your loan progress anytime."
+        sub={
+          <>
+            <span style={{ display: 'flex', alignItems: 'flex-start', gap: 7, marginBottom: 7 }}>
+              <Save size={13} style={{ color: 'var(--hover)', flexShrink: 0, marginTop: 5 }} />
+              <span>Save your application securely.</span>
+            </span>
+            <span style={{ display: 'flex', alignItems: 'flex-start', gap: 7 }}>
+              <Activity size={13} style={{ color: 'rgba(16,185,129,0.85)', flexShrink: 0, marginTop: 5 }} />
+              <span>Track your loan progress anytime.</span>
+            </span>
+          </>
+        }
       />
 
       <div className="ca-grid">

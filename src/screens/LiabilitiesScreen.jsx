@@ -1,3 +1,4 @@
+import { ListChecks, Link2, Sparkles } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import { ScreenHeader } from '../components/common/ScreenHeader';
 import { AnikaPanel } from '../components/common/AnikaPanel';
@@ -15,7 +16,22 @@ export function LiabilitiesScreen() {
         eyebrow="Step 6 · Liabilities"
         title="Your"
         titleGradient="liabilities"
-        sub="Select all that apply. Any asset with finance attached is pre-linked below — no re-entry needed."
+        sub={
+          <>
+            <span style={{ display: 'flex', alignItems: 'flex-start', gap: 7, marginBottom: 7 }}>
+              <ListChecks size={13} style={{ color: 'var(--hover)', flexShrink: 0, marginTop: 5 }} />
+              <span>Select applicable liabilities.</span>
+            </span>
+            <span style={{ display: 'flex', alignItems: 'flex-start', gap: 7, marginBottom: 7 }}>
+              <Link2 size={13} style={{ color: 'rgba(16,185,129,0.85)', flexShrink: 0, marginTop: 5 }} />
+              <span>Financed assets are already listed.</span>
+            </span>
+            <span style={{ display: 'flex', alignItems: 'flex-start', gap: 7 }}>
+              <Sparkles size={13} style={{ color: 'var(--hover)', flexShrink: 0, marginTop: 5 }} />
+              <span>Your liabilities help Anika AI understand your existing financial commitments and borrowing capacity.</span>
+            </span>
+          </>
+        }
       />
 
       <AnikaPanel

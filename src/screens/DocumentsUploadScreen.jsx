@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react';
+import { Upload, Sparkles } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Icon } from '../components/common/Icon';
 import { useApp } from '../context/AppContext';
@@ -386,7 +387,18 @@ export function DocumentsUploadScreen() {
         eyebrow="Step 9 · Document uploads"
         title="Upload your"
         titleGradient="documents"
-        sub="Take a photo, upload a screenshot, image or PDF. Anika AI checks quality and reads key details automatically."
+        sub={
+          <>
+            <span style={{ display: 'flex', alignItems: 'flex-start', gap: 7, marginBottom: 7 }}>
+              <Upload size={13} style={{ color: 'var(--hover)', flexShrink: 0, marginTop: 5 }} />
+              <span>Take a photo, upload a screenshot, image or PDF.</span>
+            </span>
+            <span style={{ display: 'flex', alignItems: 'flex-start', gap: 7 }}>
+              <Sparkles size={13} style={{ color: 'var(--hover)', flexShrink: 0, marginTop: 5 }} />
+              <span>Anika AI checks quality and reads key details automatically.</span>
+            </span>
+          </>
+        }
       />
 
       <AnikaPanel

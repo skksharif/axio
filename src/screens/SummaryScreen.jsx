@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ShieldCheck } from 'lucide-react';
+import { ShieldCheck, ClipboardList, Pencil } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import { ScreenHeader } from '../components/common/ScreenHeader';
 import { BtnPrimary, BtnGhost, BtnRow } from '../components/common/Button';
@@ -20,7 +20,18 @@ export function SummaryScreen() {
         eyebrow="Step 10 · Final Summary"
         title="Application"
         titleGradient="summary"
-        sub="Review your complete application before submission. Edit any section if needed."
+        sub={
+          <>
+            <span style={{ display: 'flex', alignItems: 'flex-start', gap: 7, marginBottom: 7 }}>
+              <ClipboardList size={13} style={{ color: 'rgba(16,185,129,0.85)', flexShrink: 0, marginTop: 5 }} />
+              <span>Review your complete application before submission.</span>
+            </span>
+            <span style={{ display: 'flex', alignItems: 'flex-start', gap: 7 }}>
+              <Pencil size={13} style={{ color: 'var(--hover)', flexShrink: 0, marginTop: 5 }} />
+              <span>Edit any section if needed.</span>
+            </span>
+          </>
+        }
       />
 
       <div className="anika-hero">

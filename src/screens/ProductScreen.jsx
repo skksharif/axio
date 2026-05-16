@@ -1,4 +1,4 @@
-import { ShieldCheck } from 'lucide-react';
+import { ShieldCheck, Building2, BadgeCheck, Target } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Icon } from '../components/common/Icon';
 import { useApp } from '../context/AppContext';
@@ -18,7 +18,26 @@ export function ProductScreen() {
         eyebrow="Axio Finance · No broker bias · Soft check only"
         title="Finance for the"
         titleGradient="new generation"
-        sub="Compare 45+ lenders in under 2 minutes. No credit file impact. No broker pressure. Just the right deal for you."
+        sub={
+          <>
+            <span style={{ display: 'flex', alignItems: 'flex-start', gap: 7, marginBottom: 7 }}>
+              <Building2 size={13} style={{ color: 'var(--hover)', flexShrink: 0, marginTop: 5 }} />
+              <span>Compare 45+ lenders in under 2 minutes.</span>
+            </span>
+            <span style={{ display: 'flex', alignItems: 'flex-start', gap: 7, marginBottom: 7 }}>
+              <ShieldCheck size={13} style={{ color: 'rgba(16,185,129,0.85)', flexShrink: 0, marginTop: 5 }} />
+              <span>No credit file impact.</span>
+            </span>
+            <span style={{ display: 'flex', alignItems: 'flex-start', gap: 7, marginBottom: 7 }}>
+              <BadgeCheck size={13} style={{ color: 'var(--hover)', flexShrink: 0, marginTop: 5 }} />
+              <span>No broker pressure.</span>
+            </span>
+            <span style={{ display: 'flex', alignItems: 'flex-start', gap: 7 }}>
+              <Target size={13} style={{ color: 'rgba(16,185,129,0.85)', flexShrink: 0, marginTop: 5 }} />
+              <span>Just the right deal for you.</span>
+            </span>
+          </>
+        }
       />
 
       <div className="trust-strip">

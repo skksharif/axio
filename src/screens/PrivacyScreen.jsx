@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ChevronDown, Check } from 'lucide-react';
+import { ChevronDown, Check, FileText, Send } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import { ScreenHeader } from '../components/common/ScreenHeader';
 import { BtnPrimary, BtnGhost, BtnRow } from '../components/common/Button';
@@ -21,7 +21,18 @@ export function PrivacyScreen() {
         eyebrow="Step 9 · Privacy & Consent"
         title="Privacy &"
         titleGradient="consent"
-        sub="Please read and confirm before we submit your application to lenders."
+        sub={
+          <>
+            <span style={{ display: 'flex', alignItems: 'flex-start', gap: 7, marginBottom: 7 }}>
+              <FileText size={13} style={{ color: 'var(--hover)', flexShrink: 0, marginTop: 5 }} />
+              <span>Please read and confirm the privacy disclosures below.</span>
+            </span>
+            <span style={{ display: 'flex', alignItems: 'flex-start', gap: 7 }}>
+              <Send size={13} style={{ color: 'var(--hover)', flexShrink: 0, marginTop: 5 }} />
+              <span>Your application will be submitted to matched lenders upon confirmation.</span>
+            </span>
+          </>
+        }
       />
 
       <Card>

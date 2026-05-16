@@ -94,6 +94,40 @@
   display: flex; justify-content: space-between; align-items: center; gap: 14px;
 }
 
+/* ─── Loan amount & term guidance ──────────────────────────────── */
+.amount-term-guide {
+  padding-left: 48px; /* aligns with CardTitle text, past icon box */
+  margin-top: -4px;
+  margin-bottom: 18px;
+}
+
+.amount-term-body {
+  font-size: 13.5px;
+  color: var(--text1);
+  line-height: 1.55;
+  margin: 0 0 9px 0;
+}
+
+.amount-term-hint {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  font-size: 12px;
+  color: rgba(167, 139, 250, 0.72);
+  line-height: 1.5;
+}
+
+.amount-term-hint svg {
+  flex-shrink: 0;
+  margin-top: 1px;
+  color: var(--hover);
+  opacity: 0.8;
+}
+
+@media (max-width: 480px) {
+  .amount-term-guide { padding-left: 0; }
+}
+
 .loan-term-helper {
   margin-top: 8px;
   font-size: 11.5px;

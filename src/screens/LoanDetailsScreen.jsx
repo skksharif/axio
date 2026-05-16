@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Sparkles, RefreshCw, AlertTriangle } from 'lucide-react';
+import { Sparkles, RefreshCw, AlertTriangle, Target, Building2 } from 'lucide-react';
 import { Icon } from '../components/common/Icon';
 import { useApp } from '../context/AppContext';
 import { ScreenHeader } from '../components/common/ScreenHeader';
@@ -37,7 +37,18 @@ export function LoanDetailsScreen() {
         eyebrow={`Step 2 · ${isPersonal ? 'Personal Loan' : 'Car Loan'} Details`}
         title="Tell us about"
         titleGradient={isPersonal ? 'your loan' : 'your car loan'}
-        sub="Tell us what you'll use the loan for to help us match you with the best lenders and products."
+        sub={
+          <>
+            <span style={{ display: 'flex', alignItems: 'flex-start', gap: 7, marginBottom: 7 }}>
+              <Target size={13} style={{ color: 'var(--hover)', flexShrink: 0, marginTop: 5 }} />
+              <span>Tell us what you'll use the loan for.</span>
+            </span>
+            <span style={{ display: 'flex', alignItems: 'flex-start', gap: 7 }}>
+              <Building2 size={13} style={{ color: 'var(--hover)', flexShrink: 0, marginTop: 5 }} />
+              <span>We'll match you with the best lenders and products for your profile.</span>
+            </span>
+          </>
+        }
       />
 
       <AnikaPanel
@@ -85,6 +96,15 @@ function PersonalLoanDetails({ repay, rateLabel }) {
 
       <Card>
         <CardTitle icon="DollarSign">Loan amount &amp; term</CardTitle>
+        <div className="amount-term-guide">
+          <p className="amount-term-body">
+            Choose how much you would like to borrow and how long you would like to repay the loan over.
+          </p>
+          <div className="amount-term-hint">
+            <Icon name="Info" size={12} />
+            Longer terms may lower repayments, while shorter terms may reduce total interest.
+          </div>
+        </div>
         <RangeSlider
           label="Loan amount"
           value={state.loanAmount}

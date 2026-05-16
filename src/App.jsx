@@ -3,36 +3,39 @@ import { useApp } from './context/AppContext';
 import { Sidebar } from './components/layout/Sidebar';
 import { TopBar } from './components/layout/TopBar';
 
-const ProductScreen     = lazy(() => import('./screens/ProductScreen').then(m => ({ default: m.ProductScreen })));
-const LoanDetailsScreen = lazy(() => import('./screens/LoanDetailsScreen').then(m => ({ default: m.LoanDetailsScreen })));
-const ProfileScreen     = lazy(() => import('./screens/ProfileScreen').then(m => ({ default: m.ProfileScreen })));
-const IncomeScreen      = lazy(() => import('./screens/IncomeScreen').then(m => ({ default: m.IncomeScreen })));
-const AssetsScreen      = lazy(() => import('./screens/AssetsScreen').then(m => ({ default: m.AssetsScreen })));
-const LiabilitiesScreen = lazy(() => import('./screens/LiabilitiesScreen').then(m => ({ default: m.LiabilitiesScreen })));
-const ExpensesScreen    = lazy(() => import('./screens/ExpensesScreen').then(m => ({ default: m.ExpensesScreen })));
-const ConnectBanksScreen    = lazy(() => import('./screens/ConnectBanksScreen').then(m => ({ default: m.ConnectBanksScreen })));
-const DocumentsUploadScreen = lazy(() => import('./screens/DocumentsUploadScreen').then(m => ({ default: m.DocumentsUploadScreen })));
-const PrivacyScreen     = lazy(() => import('./screens/PrivacyScreen').then(m => ({ default: m.PrivacyScreen })));
-const SummaryScreen     = lazy(() => import('./screens/SummaryScreen').then(m => ({ default: m.SummaryScreen })));
-const LendersScreen     = lazy(() => import('./screens/LendersScreen').then(m => ({ default: m.LendersScreen })));
-const CreateAccount     = lazy(() => import('./screens/CreateAccount').then(m => ({ default: m.CreateAccount })));
-const DashboardScreen   = lazy(() => import('./screens/DashboardScreen').then(m => ({ default: m.DashboardScreen })));
+const ProductScreen            = lazy(() => import('./screens/ProductScreen').then(m => ({ default: m.ProductScreen })));
+const LoanDetailsScreen        = lazy(() => import('./screens/LoanDetailsScreen').then(m => ({ default: m.LoanDetailsScreen })));
+const ProfileScreen            = lazy(() => import('./screens/ProfileScreen').then(m => ({ default: m.ProfileScreen })));
+const IncomeScreen             = lazy(() => import('./screens/IncomeScreen').then(m => ({ default: m.IncomeScreen })));
+const AssetsScreen             = lazy(() => import('./screens/AssetsScreen').then(m => ({ default: m.AssetsScreen })));
+const LiabilitiesScreen        = lazy(() => import('./screens/LiabilitiesScreen').then(m => ({ default: m.LiabilitiesScreen })));
+const ExpensesScreen           = lazy(() => import('./screens/ExpensesScreen').then(m => ({ default: m.ExpensesScreen })));
+const PrivacyScreen            = lazy(() => import('./screens/PrivacyScreen').then(m => ({ default: m.PrivacyScreen })));
+const SummaryScreen            = lazy(() => import('./screens/SummaryScreen').then(m => ({ default: m.SummaryScreen })));
+const LendersScreen            = lazy(() => import('./screens/LendersScreen').then(m => ({ default: m.LendersScreen })));
+const CreateAccount            = lazy(() => import('./screens/CreateAccount').then(m => ({ default: m.CreateAccount })));
+const DocumentsUploadScreen    = lazy(() => import('./screens/DocumentsUploadScreen').then(m => ({ default: m.DocumentsUploadScreen })));
+const ConnectBanksScreen       = lazy(() => import('./screens/ConnectBanksScreen').then(m => ({ default: m.ConnectBanksScreen })));
+const VerificationStatusScreen = lazy(() => import('./screens/VerificationStatusScreen').then(m => ({ default: m.VerificationStatusScreen })));
+const DashboardScreen          = lazy(() => import('./screens/DashboardScreen').then(m => ({ default: m.DashboardScreen })));
 
+// Order MUST match screens.js exactly (index → component)
 const SCREEN_COMPONENTS = [
-  ProductScreen,
-  LoanDetailsScreen,
-  ProfileScreen,
-  IncomeScreen,
-  AssetsScreen,
-  LiabilitiesScreen,
-  ExpensesScreen,
-  ConnectBanksScreen,
-  DocumentsUploadScreen,
-  PrivacyScreen,
-  SummaryScreen,
-  LendersScreen,
-  CreateAccount,
-  DashboardScreen,
+  ProductScreen,            // 0
+  LoanDetailsScreen,        // 1
+  ProfileScreen,            // 2
+  IncomeScreen,             // 3
+  AssetsScreen,             // 4
+  LiabilitiesScreen,        // 5
+  ExpensesScreen,           // 6
+  PrivacyScreen,            // 7
+  SummaryScreen,            // 8
+  LendersScreen,            // 9
+  CreateAccount,            // 10
+  DocumentsUploadScreen,    // 11
+  ConnectBanksScreen,       // 12
+  VerificationStatusScreen, // 13
+  DashboardScreen,          // 14
 ];
 
 function ScreenFallback() {

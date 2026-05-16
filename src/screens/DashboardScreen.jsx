@@ -1,4 +1,4 @@
-import { FileText, Building2, CreditCard } from 'lucide-react';
+import { FileText, Building2, CreditCard, Activity, Layers } from 'lucide-react';
 import { Icon } from '../components/common/Icon';
 import { useApp } from '../context/AppContext';
 import { ScreenHeader } from '../components/common/ScreenHeader';
@@ -46,7 +46,22 @@ export function DashboardScreen() {
         eyebrow="Dashboard · Welcome back"
         title="Your"
         titleGradient="portal"
-        sub="Track your application, manage documents and explore more products — all in one place."
+        sub={
+          <>
+            <span style={{ display: 'flex', alignItems: 'flex-start', gap: 7, marginBottom: 7 }}>
+              <Activity size={13} style={{ color: 'var(--hover)', flexShrink: 0, marginTop: 5 }} />
+              <span>Track your application progress in real time.</span>
+            </span>
+            <span style={{ display: 'flex', alignItems: 'flex-start', gap: 7, marginBottom: 7 }}>
+              <FileText size={13} style={{ color: 'var(--hover)', flexShrink: 0, marginTop: 5 }} />
+              <span>Manage documents and review your submission.</span>
+            </span>
+            <span style={{ display: 'flex', alignItems: 'flex-start', gap: 7 }}>
+              <Layers size={13} style={{ color: 'var(--hover)', flexShrink: 0, marginTop: 5 }} />
+              <span>Explore more products — all from one place.</span>
+            </span>
+          </>
+        }
       />
 
       <div className="card dash-hero-card" style={{ marginBottom: 20 }}>

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { BarChart2, Sparkles, Building2 } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import { ScreenHeader } from '../components/common/ScreenHeader';
 import { BtnGhost, BtnRow } from '../components/common/Button';
@@ -25,7 +26,22 @@ export function LendersScreen() {
         eyebrow="Step 11 · Lender Results"
         title="Your lender"
         titleGradient="matches"
-        sub="Ranked by approval probability. Powered by Anika AI."
+        sub={
+          <>
+            <span style={{ display: 'flex', alignItems: 'flex-start', gap: 7, marginBottom: 7 }}>
+              <BarChart2 size={13} style={{ color: 'var(--hover)', flexShrink: 0, marginTop: 5 }} />
+              <span>Results ranked by approval probability based on your profile.</span>
+            </span>
+            <span style={{ display: 'flex', alignItems: 'flex-start', gap: 7, marginBottom: 7 }}>
+              <Sparkles size={13} style={{ color: 'var(--hover)', flexShrink: 0, marginTop: 5 }} />
+              <span>Powered by Anika AI — no credit file impact.</span>
+            </span>
+            <span style={{ display: 'flex', alignItems: 'flex-start', gap: 7 }}>
+              <Building2 size={13} style={{ color: 'rgba(16,185,129,0.85)', flexShrink: 0, marginTop: 5 }} />
+              <span>Select a lender to review rates, fees and repayment options.</span>
+            </span>
+          </>
+        }
       />
 
       <AnikaPanel
