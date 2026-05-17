@@ -10,6 +10,13 @@ import '../components/ui/ALCard.css';
 export function LiabilitiesScreen() {
   const { state, toggleLiability, next, prev } = useApp();
 
+  const realEstateLinks = Object.values(state.realEstateLinks || {});
+  const hasLinkedRealEstate = realEstateLinks.length > 0;
+
+  const anikaMessage = hasLinkedRealEstate
+    ? `I've pre-linked ${realEstateLinks.length} real estate ${realEstateLinks.length === 1 ? 'liability' : 'liabilities'} from your assets — auto-carried across. Select any additional liability types below.`
+    : "Select applicable liabilities. If you have financed assets, enable 'Has finance?' in Assets to auto-link them here.";
+
   return (
     <div className="screen-enter">
       <ScreenHeader
@@ -34,16 +41,17 @@ export function LiabilitiesScreen() {
         }
       />
 
-      <AnikaPanel
-        message="I've pre-linked 1 liability from your assets — your home loan has been auto-carried across. Select any additional liability types below and add the details."
-        thinkingMs={400}
-      />
+      <AnikaPanel message={anikaMessage} thinkingMs={400} />
 
       <div className="al-cols">
         {[0, 1].map(col => (
           <div key={col} className="al-col">
             {LIABILITY_TYPES.filter((_, i) => i % 2 === col).map(l => {
-              const isLinked = !!(l.linked && state.realEstateFinance);
+              const linkedItems = l.linked ? realEstateLinks : [];
+              const isLinked = linkedItems.length > 0;
+              const linkedMeta = isLinked
+                ? `Auto-linked · ${linkedItems.length} propert${linkedItems.length !== 1 ? 'ies' : 'y'}`
+                : null;
               return (
                 <ALCard
                   key={l.id}
@@ -51,10 +59,11 @@ export function LiabilitiesScreen() {
                   icon={l.icon}
                   title={l.title}
                   desc={l.desc}
-                  on={!!state.liabilities[l.id]}
-                  onToggle={() => toggleLiability(l.id)}
+                  on={isLinked || !!state.liabilities[l.id]}
+                  onToggle={isLinked ? undefined : () => toggleLiability(l.id)}
                   isLinked={isLinked}
-                  linkedMeta={isLinked ? 'Auto-linked from Real-estate · $410,000' : null}
+                  linkedItems={linkedItems}
+                  linkedMeta={linkedMeta}
                   isLiability={!isLinked}
                   addLabel={l.addLabel}
                   addDesc={l.addDesc}
@@ -69,7 +78,9 @@ export function LiabilitiesScreen() {
         <div className="tot-box hl">
           <div className="tot-lbl">Monthly commitments</div>
           <div className="tot-val">$2,650</div>
-          <div className="text-small" style={{ color: 'rgba(15,224,133,.6)', marginTop: 3 }}>Home loan pre-linked</div>
+          <div className="text-small" style={{ color: 'rgba(15,224,133,.6)', marginTop: 3 }}>
+            {hasLinkedRealEstate ? 'Real estate pre-linked' : 'None declared'}
+          </div>
         </div>
         <div className="tot-box red">
           <div className="tot-lbl">Total outstanding</div>
@@ -77,7 +88,7 @@ export function LiabilitiesScreen() {
         </div>
         <div className="tot-box blue">
           <div className="tot-lbl">Types declared</div>
-          <div className="tot-val">1</div>
+          <div className="tot-val">{hasLinkedRealEstate ? 1 : 0}</div>
         </div>
       </div>
 

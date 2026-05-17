@@ -38,7 +38,7 @@ const initialState = {
   uploadedDocs: {},
   assets: {},
   liabilities: {},
-  realEstateFinance: false,
+  realEstateLinks: {},
   expenses: initialExpenses,
   addressHistoryUnder3: false,
   employmentHistoryUnder3: false,
@@ -89,8 +89,22 @@ export function AppProvider({ children }) {
     setState(s => ({ ...s, liabilities: { ...s.liabilities, [id]: !s.liabilities[id] } }));
   }, []);
 
-  const linkRealEstateFinance = useCallback((linked) => {
-    setState(s => ({ ...s, realEstateFinance: linked }));
+  const setRealEstateLink = useCallback((itemId, data) => {
+    setState(s => ({
+      ...s,
+      realEstateLinks: { ...s.realEstateLinks, [itemId]: { id: itemId, ...data } },
+    }));
+  }, []);
+
+  const removeRealEstateLink = useCallback((itemId) => {
+    setState(s => {
+      const { [itemId]: _removed, ...rest } = s.realEstateLinks;
+      return { ...s, realEstateLinks: rest };
+    });
+  }, []);
+
+  const clearRealEstateLinks = useCallback(() => {
+    setState(s => ({ ...s, realEstateLinks: {} }));
   }, []);
 
   const toggleConsent = useCallback((idx) => {
@@ -132,11 +146,8 @@ export function AppProvider({ children }) {
       const current = s.employmentTypes;
       let types;
       if (id === 'not-employed') {
-        // "Not employed" is exclusive — selecting it clears everything else,
-        // deselecting it leaves an empty array
         types = current.includes(id) ? [] : [id];
       } else {
-        // Any other selection removes "not-employed" first, then toggles normally
         const without = current.filter(t => t !== 'not-employed');
         types = without.includes(id)
           ? without.filter(t => t !== id)
@@ -154,7 +165,9 @@ export function AppProvider({ children }) {
     prev,
     toggleAsset,
     toggleLiability,
-    linkRealEstateFinance,
+    setRealEstateLink,
+    removeRealEstateLink,
+    clearRealEstateLinks,
     toggleConsent,
     toggleIncomeType,
     stepExpense,

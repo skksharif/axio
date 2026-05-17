@@ -253,6 +253,100 @@
   letter-spacing: 0.12em;
 }
 
+/* ─── CUSTOM PROPERTY TYPE SELECT ──────────────────────────── */
+.al-select-wrap {
+  position: relative;
+}
+
+.al-select-trigger {
+  width: 100%;
+  height: 36px;
+  background: rgba(30, 27, 75, 0.75);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text0);
+  font-size: 12.5px;
+  padding: 0 10px;
+  outline: none;
+  font-family: var(--font-body);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  text-align: left;
+  transition: border-color .2s, box-shadow .2s;
+}
+
+.al-select-trigger:not(.has-value) span {
+  color: var(--text2);
+}
+
+.al-select-trigger:hover,
+.al-select-trigger.open {
+  border-color: var(--hover);
+  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.12);
+}
+
+.al-select-chevron {
+  flex-shrink: 0;
+  color: var(--text2);
+  transition: transform 0.2s ease, color 0.2s;
+}
+
+.al-select-trigger.open .al-select-chevron {
+  transform: rotate(180deg);
+  color: var(--hover);
+}
+
+.al-select-menu {
+  position: absolute;
+  top: calc(100% + 5px);
+  left: 0;
+  right: 0;
+  background: rgba(16, 10, 40, 0.97);
+  border: 1px solid rgba(139, 92, 246, 0.28);
+  border-radius: 8px;
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.45),
+    0 0 0 1px rgba(139, 92, 246, 0.06);
+  z-index: 200;
+  padding: 4px;
+  overflow: hidden;
+}
+
+.al-select-option {
+  width: 100%;
+  height: 34px;
+  background: transparent;
+  border: none;
+  border-radius: 5px;
+  color: var(--text1);
+  font-size: 12.5px;
+  font-family: var(--font-body);
+  padding: 0 10px;
+  cursor: pointer;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  transition: background .14s, color .14s;
+}
+
+.al-select-option:hover {
+  background: rgba(139, 92, 246, 0.12);
+  color: var(--text0);
+}
+
+.al-select-option.selected {
+  color: var(--hover);
+  background: rgba(139, 92, 246, 0.09);
+  font-weight: 600;
+}
+
 /* ─── ADD ANOTHER ───────────────────────────────────────────── */
 .add-entry-btn {
   width: 100%;
@@ -405,6 +499,21 @@
   display: flex;
   align-items: center;
   gap: 5px;
+}
+
+/* ─── LINKED ENTRY ──────────────────────────────────────────── */
+.al-entry-linked {
+  border-color: rgba(139, 92, 246, 0.28);
+  background: rgba(109, 40, 217, 0.06);
+}
+
+.linked-entry-note {
+  font-size: 11px;
+  color: var(--text2);
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid var(--border);
+  font-style: italic;
 }
 
 /* ─── LINKED PILL ───────────────────────────────────────────── */

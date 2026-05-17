@@ -1,5 +1,5 @@
 import { useState, useRef } from 'react';
-import { Check, Sparkles, Link, ChevronDown, Trash2, Plus } from 'lucide-react';
+import { Check, Link, ChevronDown, Trash2, Plus } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Icon } from '../common/Icon';
 import { ToggleSwitch } from '../forms/ToggleSwitch';
@@ -7,10 +7,76 @@ import './ALCard.css';
 
 const EASE = [0.25, 0.46, 0.45, 0.94];
 
+const PROPERTY_TYPES = [
+  { value: 'owner-occupied',      label: 'Owner - Occupied'   },
+  { value: 'investment-property', label: 'Investment Property' },
+  { value: 'vacant-land',         label: 'Vacant Land'        },
+];
+
+const PROPERTY_TYPE_LABELS = Object.fromEntries(PROPERTY_TYPES.map(p => [p.value, p.label]));
+
+function PropertyTypeSelect({ value, onChange }) {
+  const [open, setOpen] = useState(false);
+  const ref = useRef(null);
+
+  // Click-outside handler
+  const handleMouseDown = (e) => {
+    if (ref.current && !ref.current.contains(e.target)) setOpen(false);
+  };
+
+  // Attach/detach via inline event delegation on the wrapper
+  const selected = PROPERTY_TYPES.find(o => o.value === value);
+
+  return (
+    <div
+      className="al-select-wrap"
+      ref={ref}
+      onBlur={(e) => { if (!ref.current?.contains(e.relatedTarget)) setOpen(false); }}
+    >
+      <button
+        type="button"
+        className={`al-select-trigger${open ? ' open' : ''}${value ? ' has-value' : ''}`}
+        onClick={() => setOpen(p => !p)}
+        onMouseDown={(e) => e.stopPropagation()}
+      >
+        <span>{selected?.label ?? 'Select property type'}</span>
+        <ChevronDown size={13} className="al-select-chevron" strokeWidth={2} />
+      </button>
+
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            className="al-select-menu"
+            initial={{ opacity: 0, y: -6, scaleY: 0.92 }}
+            animate={{ opacity: 1, y: 0,  scaleY: 1    }}
+            exit={{ opacity: 0, y: -4,    scaleY: 0.94 }}
+            transition={{ duration: 0.16, ease: EASE }}
+            style={{ transformOrigin: 'top' }}
+            onMouseDown={(e) => e.stopPropagation()}
+          >
+            {PROPERTY_TYPES.map(opt => (
+              <button
+                key={opt.value}
+                type="button"
+                className={`al-select-option${value === opt.value ? ' selected' : ''}`}
+                onClick={() => { onChange(opt.value); setOpen(false); }}
+              >
+                <span>{opt.label}</span>
+                {value === opt.value && <Check size={11} strokeWidth={2.5} />}
+              </button>
+            ))}
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
+
 export function ALCard({
   id, icon, title, desc, hasFin, on, onToggle,
-  isLinked, linkedMeta, isRealEstate, isLiability,
+  isLinked, linkedItems, linkedMeta, isRealEstate, isLiability,
   onFinanceLink, addLabel, addDesc, children,
+  onRealEstateChange,
 }) {
   const nextItemId = useRef(2);
   const [itemIds, setItemIds] = useState([1]);
@@ -20,11 +86,16 @@ export function ALCard({
     setItemIds(p => [...p, newId]);
   };
 
-  const removeItem = (itemId) => setItemIds(p => p.filter(x => x !== itemId));
+  const removeItem = (itemId) => {
+    setItemIds(p => p.filter(x => x !== itemId));
+    onRealEstateChange?.(itemId, null);
+  };
+
+  const displayCount = isLinked ? (linkedItems?.length || 0) : itemIds.length;
 
   return (
     <div className={`al-card ${on ? 'on' : ''}`}>
-      <div className="al-head" onClick={onToggle}>
+      <div className="al-head" onClick={onToggle} style={isLinked && !onToggle ? { cursor: 'default' } : undefined}>
         <div className="al-head-left">
           <div className="al-icon-box"><Icon name={icon} size={17} /></div>
           <div className="al-head-info">
@@ -32,7 +103,7 @@ export function ALCard({
             <div className="al-desc">{desc}</div>
             {on && (
               <div className="al-meta">
-                {itemIds.length} item{itemIds.length !== 1 ? 's' : ''} declared
+                {displayCount} item{displayCount !== 1 ? 's' : ''} declared
               </div>
             )}
             {on && linkedMeta && (
@@ -60,7 +131,9 @@ export function ALCard({
           >
             <div className="al-body">
               {isLinked ? (
-                <LinkedEntry />
+                (linkedItems || []).map(item => (
+                  <LinkedEntry key={item.id} data={item} />
+                ))
               ) : (
                 <>
                   <AnimatePresence initial={false}>
@@ -89,6 +162,7 @@ export function ALCard({
                               isRealEstate={isRealEstate}
                               hasFin={hasFin}
                               onFinanceLink={idx === 0 ? onFinanceLink : undefined}
+                              onDataChange={isRealEstate ? (data) => onRealEstateChange?.(itemId, data) : undefined}
                               {...entryProps}
                             />
                           )}
@@ -139,23 +213,43 @@ function EntryHeader({ label, canRemove, onRemove }) {
   );
 }
 
-/* ─── Linked (read-only, auto-populated from real-estate) ──────── */
-function LinkedEntry() {
+/* ─── Linked entry — dynamically populated from real-estate asset ─ */
+function LinkedEntry({ data }) {
+  const propLabel = PROPERTY_TYPE_LABELS[data?.propertyType] || data?.propertyType || 'Property';
+
   return (
-    <div className="al-entry">
+    <div className="al-entry al-entry-linked">
       <div className="flex-between" style={{ marginBottom: 10 }}>
-        <span className="text-strong" style={{ fontSize: 12.5 }}>Main home · CBA</span>
-        <span className="linked-pill"><Sparkles size={10} /> From assets</span>
+        <span className="text-strong" style={{ fontSize: 12.5 }}>{propLabel} Loan</span>
+        <span className="linked-pill"><Link size={10} strokeWidth={2.5} /> From Assets</span>
       </div>
       <div className="al-fields">
-        <div className="al-field"><label>Lender</label><input value="CBA" readOnly style={{ color: 'var(--text2)' }} /></div>
-        <div className="al-field"><label>Original amount</label><input value="$520,000" readOnly style={{ color: 'var(--text2)' }} /></div>
-        <div className="al-field"><label>Current balance</label><input value="$410,000" readOnly style={{ color: 'var(--text2)' }} /></div>
-        <div className="al-field"><label>Interest rate</label><input value="6.24%" readOnly style={{ color: 'var(--text2)' }} /></div>
-        <div className="al-field"><label>Monthly repayment</label><input value="$2,650" readOnly style={{ color: 'var(--text2)' }} /></div>
-        <div className="al-field"><label>Linked asset</label><input value="Real-estate: Main home" readOnly style={{ color: 'var(--hover)' }} /></div>
+        <div className="al-field">
+          <label>Lender</label>
+          <input value={data?.lender || '—'} readOnly style={{ color: 'var(--text2)' }} />
+        </div>
+        <div className="al-field">
+          <label>Original amount</label>
+          <input value={data?.originalAmount || '—'} readOnly style={{ color: 'var(--text2)' }} />
+        </div>
+        <div className="al-field">
+          <label>Current balance</label>
+          <input value={data?.currentBalance || '—'} readOnly style={{ color: 'var(--text2)' }} />
+        </div>
+        <div className="al-field">
+          <label>Interest rate</label>
+          <input value={data?.interestRate || '—'} readOnly style={{ color: 'var(--text2)' }} />
+        </div>
+        <div className="al-field">
+          <label>Monthly repayment</label>
+          <input value={data?.monthlyRepayment || '—'} readOnly style={{ color: 'var(--text2)' }} />
+        </div>
+        <div className="al-field">
+          <label>Linked asset</label>
+          <input value={`Real-estate: ${propLabel}`} readOnly style={{ color: 'var(--hover)' }} />
+        </div>
       </div>
-      <div className="text-small text-border2" style={{ marginTop: 8 }}>
+      <div className="linked-entry-note">
         To edit these details, update them in the Assets section.
       </div>
     </div>
@@ -244,14 +338,44 @@ function LiabilityEntry({ title, num, canRemove, onRemove }) {
   );
 }
 
-/* ─── Default asset entry (savings, real-estate, vehicles…) ───── */
-function DefaultEntry({ title, isRealEstate, hasFin, num, canRemove, onRemove, onFinanceLink }) {
+/* ─── Default asset entry — real-estate entries are fully controlled ─ */
+function DefaultEntry({ title, isRealEstate, hasFin, num, canRemove, onRemove, onFinanceLink, onDataChange }) {
   const [finOpen, setFinOpen] = useState(false);
+  const [propType, setPropType] = useState('');
+  const [address, setAddress] = useState('');
+  const [lender, setLender] = useState('');
+  const [originalAmount, setOriginalAmount] = useState('');
+  const [currentBalance, setCurrentBalance] = useState('');
+  const [interestRate, setInterestRate] = useState('');
+  const [monthlyRepayment, setMonthlyRepayment] = useState('');
+  const [loanType, setLoanType] = useState('P&I');
+
+  // Reports current state to parent; patch overrides one field with its NEW value
+  // before the setState call has been processed.
+  const notify = (patch = {}, open = finOpen) => {
+    if (!isRealEstate) return;
+    if (open) {
+      onDataChange?.({
+        propertyType: propType,
+        address,
+        lender,
+        originalAmount,
+        currentBalance,
+        interestRate,
+        monthlyRepayment,
+        loanType,
+        ...patch,
+      });
+    } else {
+      onDataChange?.(null);
+    }
+  };
 
   const handleFinToggle = () => {
     const next = !finOpen;
     setFinOpen(next);
     onFinanceLink?.(next);
+    notify({}, next);
   };
 
   return (
@@ -259,27 +383,34 @@ function DefaultEntry({ title, isRealEstate, hasFin, num, canRemove, onRemove, o
       <EntryHeader label={`${title} ${num}`} canRemove={canRemove} onRemove={onRemove} />
       <div className="al-fields">
         <div className="al-field">
-          <label>Description</label>
-          <input placeholder="Description" />
+          {isRealEstate ? (
+            <>
+              <label>Property Type</label>
+              <PropertyTypeSelect
+                value={propType}
+                onChange={val => { setPropType(val); notify({ propertyType: val }); }}
+              />
+            </>
+          ) : (
+            <>
+              <label>Description</label>
+              <input placeholder="Description" />
+            </>
+          )}
         </div>
         <div className="al-field">
           <label>{isRealEstate ? 'Market value' : 'Current value'}</label>
           <input placeholder="$0" />
         </div>
         {isRealEstate && (
-          <>
-            <div className="al-field" style={{ gridColumn: 'span 2' }}>
-              <label>Address</label>
-              <input placeholder="⌕ Search address" />
-            </div>
-            <div className="al-field">
-              <label>Property use</label>
-              <select>
-                <option>Owner occupied</option>
-                <option>Investment</option>
-              </select>
-            </div>
-          </>
+          <div className="al-field" style={{ gridColumn: 'span 2' }}>
+            <label>Address</label>
+            <input
+              placeholder="⌕ Search address"
+              value={address}
+              onChange={e => { const v = e.target.value; setAddress(v); notify({ address: v }); }}
+            />
+          </div>
         )}
       </div>
 
@@ -300,18 +431,59 @@ function DefaultEntry({ title, isRealEstate, hasFin, num, canRemove, onRemove, o
                 style={{ overflow: 'hidden' }}
               >
                 <div className="fin-body">
-                  <div className="al-field"><label>Lender</label><input placeholder="e.g. CBA" /></div>
-                  <div className="al-field"><label>Original amount</label><input placeholder="$0" /></div>
-                  <div className="al-field"><label>Current balance</label><input placeholder="$0" /></div>
-                  <div className="al-field"><label>Interest rate %</label><input placeholder="e.g. 6.24" /></div>
-                  <div className="al-field"><label>Monthly repayment</label><input placeholder="$0" /></div>
+                  <div className="al-field">
+                    <label>Lender</label>
+                    <input
+                      placeholder="e.g. CBA"
+                      value={lender}
+                      onChange={e => { const v = e.target.value; setLender(v); notify({ lender: v }); }}
+                    />
+                  </div>
+                  <div className="al-field">
+                    <label>Original amount</label>
+                    <input
+                      placeholder="$0"
+                      value={originalAmount}
+                      onChange={e => { const v = e.target.value; setOriginalAmount(v); notify({ originalAmount: v }); }}
+                    />
+                  </div>
+                  <div className="al-field">
+                    <label>Current balance</label>
+                    <input
+                      placeholder="$0"
+                      value={currentBalance}
+                      onChange={e => { const v = e.target.value; setCurrentBalance(v); notify({ currentBalance: v }); }}
+                    />
+                  </div>
+                  <div className="al-field">
+                    <label>Interest rate %</label>
+                    <input
+                      placeholder="e.g. 6.24"
+                      value={interestRate}
+                      onChange={e => { const v = e.target.value; setInterestRate(v); notify({ interestRate: v }); }}
+                    />
+                  </div>
+                  <div className="al-field">
+                    <label>Monthly repayment</label>
+                    <input
+                      placeholder="$0"
+                      value={monthlyRepayment}
+                      onChange={e => { const v = e.target.value; setMonthlyRepayment(v); notify({ monthlyRepayment: v }); }}
+                    />
+                  </div>
                   <div className="al-field">
                     <label>Loan type</label>
-                    <select><option>P&I</option><option>Interest only</option></select>
+                    <select
+                      value={loanType}
+                      onChange={e => { const v = e.target.value; setLoanType(v); notify({ loanType: v }); }}
+                    >
+                      <option value="P&I">P&I</option>
+                      <option value="Interest only">Interest only</option>
+                    </select>
                   </div>
                 </div>
                 <div className="fin-note">
-                  <Link size={10} /> Auto-linked to Liabilities section
+                  <Link size={10} strokeWidth={2.5} /> Auto-linked to Liabilities section
                 </div>
               </motion.div>
             )}

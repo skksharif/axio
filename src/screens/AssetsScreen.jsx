@@ -1,3 +1,4 @@
+import { useCallback } from 'react';
 import { LayoutGrid, Sparkles } from 'lucide-react';
 import { useApp } from "../context/AppContext";
 import { ScreenHeader } from "../components/common/ScreenHeader";
@@ -8,7 +9,17 @@ import { ASSET_TYPES } from "../data/assetTypes";
 import "../components/ui/ALCard.css";
 
 export function AssetsScreen() {
-  const { state, toggleAsset, linkRealEstateFinance, next, prev } = useApp();
+  const { state, toggleAsset, setRealEstateLink, removeRealEstateLink, clearRealEstateLinks, next, prev } = useApp();
+
+  const handleToggleRealEstate = useCallback(() => {
+    if (state.assets.realestate) clearRealEstateLinks();
+    toggleAsset('realestate');
+  }, [state.assets.realestate, toggleAsset, clearRealEstateLinks]);
+
+  const handleRealEstateChange = useCallback((itemId, data) => {
+    if (data) setRealEstateLink(itemId, data);
+    else removeRealEstateLink(itemId);
+  }, [setRealEstateLink, removeRealEstateLink]);
 
   return (
     <div className="screen-enter">
@@ -47,11 +58,9 @@ export function AssetsScreen() {
                 desc={a.desc}
                 hasFin={a.hasFin}
                 on={!!state.assets[a.id]}
-                onToggle={() => toggleAsset(a.id)}
-                isRealEstate={a.id === "realestate"}
-                onFinanceLink={
-                  a.id === "realestate" ? linkRealEstateFinance : undefined
-                }
+                onToggle={a.id === 'realestate' ? handleToggleRealEstate : () => toggleAsset(a.id)}
+                isRealEstate={a.id === 'realestate'}
+                onRealEstateChange={a.id === 'realestate' ? handleRealEstateChange : undefined}
                 addLabel={a.addLabel}
                 addDesc={a.addDesc}
               />

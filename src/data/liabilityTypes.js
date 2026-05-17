@@ -1,10 +1,10 @@
 export const LIABILITY_TYPES = [
   {
     id: 'homeloan',
-    icon: 'Home',
-    title: 'Home loan',
+    icon: 'Building2',
+    title: 'Real Estate',
     desc: 'Mortgage or property-secured lending',
-    addLabel: 'home loan',
+    addLabel: 'real estate loan',
     addDesc: 'Mortgages across multiple lenders or properties',
     linked: true,
   },
