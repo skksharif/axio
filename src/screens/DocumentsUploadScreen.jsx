@@ -389,12 +389,12 @@ export function DocumentsUploadScreen() {
         titleGradient="documents"
         sub={
           <>
-            <span style={{ display: 'flex', alignItems: 'flex-start', gap: 7, marginBottom: 7 }}>
-              <Upload size={13} style={{ color: 'var(--hover)', flexShrink: 0, marginTop: 5 }} />
+            <span className="sh-sub-row">
+              <Upload size={13} style={{ color: 'var(--hover)' }} />
               <span>Take a photo, upload a screenshot, image or PDF.</span>
             </span>
-            <span style={{ display: 'flex', alignItems: 'flex-start', gap: 7 }}>
-              <Sparkles size={13} style={{ color: 'var(--hover)', flexShrink: 0, marginTop: 5 }} />
+            <span className="sh-sub-row">
+              <Sparkles size={13} style={{ color: 'var(--hover)' }} />
               <span>Anika AI checks quality and reads key details automatically.</span>
             </span>
           </>

@@ -30,12 +30,12 @@ export function SummaryScreen() {
         titleGradient="summary"
         sub={
           <>
-            <span style={{ display: 'flex', alignItems: 'flex-start', gap: 7, marginBottom: 7 }}>
-              <ClipboardList size={13} style={{ color: 'rgba(16,185,129,0.85)', flexShrink: 0, marginTop: 5 }} />
+            <span className="sh-sub-row">
+              <ClipboardList size={13} style={{ color: 'rgba(16,185,129,0.85)' }} />
               <span>Review your complete application before submission.</span>
             </span>
-            <span style={{ display: 'flex', alignItems: 'flex-start', gap: 7 }}>
-              <Pencil size={13} style={{ color: 'var(--hover)', flexShrink: 0, marginTop: 5 }} />
+            <span className="sh-sub-row">
+              <Pencil size={13} style={{ color: 'var(--hover)' }} />
               <span>Edit any section if needed.</span>
             </span>
           </>

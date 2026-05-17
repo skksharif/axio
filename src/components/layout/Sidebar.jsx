@@ -1,4 +1,4 @@
-import { Fragment, useMemo } from 'react';
+import { Fragment, useMemo, useRef, useEffect } from 'react';
 import { Check } from 'lucide-react';
 import { Icon } from '../common/Icon';
 import { useApp } from '../../context/AppContext';
@@ -10,6 +10,43 @@ export function Sidebar({ open, onClose }) {
   const { currentScreen, completedScreens } = state;
 
   const pct = ((currentScreen + 1) / SCREENS.length) * 100;
+
+  const navListRef  = useRef(null);
+  const activeItemRef = useRef(null);
+
+  // Auto-scroll the nav-list so the active item stays comfortably in view.
+  // Fires on every screen change AND when the mobile sidebar is opened.
+  useEffect(() => {
+    const el   = activeItemRef.current;
+    const list = navListRef.current;
+    if (!el || !list) return;
+
+    // Small delay lets React flush the DOM and framer-motion settle before
+    // we read getBoundingClientRect, preventing a one-frame stale read.
+    const id = setTimeout(() => {
+      const elRect   = el.getBoundingClientRect();
+      const listRect = list.getBoundingClientRect();
+      const listH    = list.clientHeight;
+      const elH      = el.offsetHeight;
+      const buffer   = 56; // px of breathing room at top & bottom
+
+      const topOk = elRect.top    >= listRect.top    + buffer;
+      const botOk = elRect.bottom <= listRect.bottom - buffer;
+
+      if (!topOk || !botOk) {
+        // Center the element within the visible list area.
+        const currentOffset = elRect.top - listRect.top;         // visual px from list top
+        const idealOffset   = (listH - elH) / 2;                 // where we want it
+        const delta         = currentOffset - idealOffset;
+        list.scrollTo({
+          top: Math.max(0, list.scrollTop + delta),
+          behavior: 'smooth',
+        });
+      }
+    }, 60);
+
+    return () => clearTimeout(id);
+  }, [currentScreen, open]);
 
   const groups = useMemo(() => {
     const result = [];
@@ -80,7 +117,7 @@ export function Sidebar({ open, onClose }) {
           </div>
         </div>
 
-        <nav className="nav-list">
+        <nav className="nav-list" ref={navListRef}>
           {groups.map((group, gi) => (
             <div key={gi} className="nav-group">
               <div className="nav-group-header">
@@ -92,11 +129,13 @@ export function Sidebar({ open, onClose }) {
                 {group.items.map((item, ii) => (
                   <Fragment key={item.index}>
                     <div
+                      ref={item.isActive ? activeItemRef : undefined}
                       className={`nav-item${item.isActive ? ' active' : ''}${item.isCompleted ? ' completed' : ''}${item.isLocked ? ' locked' : ''}`}
                       onClick={() => handleNavClick(item)}
                       role="button"
                       tabIndex={item.isLocked ? -1 : 0}
                       onKeyDown={e => e.key === 'Enter' && handleNavClick(item)}
+                      aria-current={item.isActive ? 'step' : undefined}
                     >
                       <div className="nav-track">
                         <div className="nav-ind">

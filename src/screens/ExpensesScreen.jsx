@@ -45,12 +45,12 @@ export function ExpensesScreen() {
         titleGradient="living expenses"
         sub={
           <>
-            <span style={{ display: 'flex', alignItems: 'flex-start', gap: 7, marginBottom: 7 }}>
-              <Sparkles size={13} style={{ color: 'var(--hover)', flexShrink: 0, marginTop: 5 }} />
+            <span className="sh-sub-row">
+              <Sparkles size={13} style={{ color: 'var(--hover)' }} />
               <span>Based on your profile, Anika AI has automatically estimated your essential living expenses.</span>
             </span>
-            <span style={{ display: 'flex', alignItems: 'flex-start', gap: 7 }}>
-              <SlidersHorizontal size={13} style={{ color: 'var(--hover)', flexShrink: 0, marginTop: 5 }} />
+            <span className="sh-sub-row">
+              <SlidersHorizontal size={13} style={{ color: 'var(--hover)' }} />
               <span>Please review and adjust where required, and add any non-essential expenses that apply.</span>
             </span>
           </>

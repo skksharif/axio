@@ -39,12 +39,12 @@ export function LoanDetailsScreen() {
         titleGradient={isPersonal ? 'your loan' : 'your car loan'}
         sub={
           <>
-            <span style={{ display: 'flex', alignItems: 'flex-start', gap: 7, marginBottom: 7 }}>
-              <Target size={13} style={{ color: 'var(--hover)', flexShrink: 0, marginTop: 5 }} />
+            <span className="sh-sub-row">
+              <Target size={13} style={{ color: 'var(--hover)' }} />
               <span>Tell us what you'll use the loan for.</span>
             </span>
-            <span style={{ display: 'flex', alignItems: 'flex-start', gap: 7 }}>
-              <Building2 size={13} style={{ color: 'var(--hover)', flexShrink: 0, marginTop: 5 }} />
+            <span className="sh-sub-row">
+              <Building2 size={13} style={{ color: 'var(--hover)' }} />
               <span>We'll match you with the best lenders and products for your profile.</span>
             </span>
           </>

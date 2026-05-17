@@ -41,6 +41,14 @@
   max-width: 640px;
 }
 
+.sh-sub-row {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-bottom: 7px;
+}
+.sh-sub-row:last-child { margin-bottom: 0; }
+
 /* ─── RESPONSIVE ─────────────────────────────────────────── */
 @media (max-width: 520px) {
   .screen-header  { margin-bottom: 20px; }

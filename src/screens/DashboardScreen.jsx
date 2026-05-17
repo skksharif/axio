@@ -48,16 +48,16 @@ export function DashboardScreen() {
         titleGradient="portal"
         sub={
           <>
-            <span style={{ display: 'flex', alignItems: 'flex-start', gap: 7, marginBottom: 7 }}>
-              <Activity size={13} style={{ color: 'var(--hover)', flexShrink: 0, marginTop: 5 }} />
+            <span className="sh-sub-row">
+              <Activity size={13} style={{ color: 'var(--hover)' }} />
               <span>Track your application progress in real time.</span>
             </span>
-            <span style={{ display: 'flex', alignItems: 'flex-start', gap: 7, marginBottom: 7 }}>
-              <FileText size={13} style={{ color: 'var(--hover)', flexShrink: 0, marginTop: 5 }} />
+            <span className="sh-sub-row">
+              <FileText size={13} style={{ color: 'var(--hover)' }} />
               <span>Manage documents and review your submission.</span>
             </span>
-            <span style={{ display: 'flex', alignItems: 'flex-start', gap: 7 }}>
-              <Layers size={13} style={{ color: 'var(--hover)', flexShrink: 0, marginTop: 5 }} />
+            <span className="sh-sub-row">
+              <Layers size={13} style={{ color: 'var(--hover)' }} />
               <span>Explore more products — all from one place.</span>
             </span>
           </>

@@ -20,20 +20,20 @@ export function ProductScreen() {
         titleGradient="new generation"
         sub={
           <>
-            <span style={{ display: 'flex', alignItems: 'flex-start', gap: 7, marginBottom: 7 }}>
-              <Building2 size={13} style={{ color: 'var(--hover)', flexShrink: 0, marginTop: 5 }} />
+            <span className="sh-sub-row">
+              <Building2 size={13} style={{ color: 'var(--hover)' }} />
               <span>Compare 45+ lenders in under 2 minutes.</span>
             </span>
-            <span style={{ display: 'flex', alignItems: 'flex-start', gap: 7, marginBottom: 7 }}>
-              <ShieldCheck size={13} style={{ color: 'rgba(16,185,129,0.85)', flexShrink: 0, marginTop: 5 }} />
+            <span className="sh-sub-row">
+              <ShieldCheck size={13} style={{ color: 'rgba(16,185,129,0.85)' }} />
               <span>No credit file impact.</span>
             </span>
-            <span style={{ display: 'flex', alignItems: 'flex-start', gap: 7, marginBottom: 7 }}>
-              <BadgeCheck size={13} style={{ color: 'var(--hover)', flexShrink: 0, marginTop: 5 }} />
+            <span className="sh-sub-row">
+              <BadgeCheck size={13} style={{ color: 'var(--hover)' }} />
               <span>No broker pressure.</span>
             </span>
-            <span style={{ display: 'flex', alignItems: 'flex-start', gap: 7 }}>
-              <Target size={13} style={{ color: 'rgba(16,185,129,0.85)', flexShrink: 0, marginTop: 5 }} />
+            <span className="sh-sub-row">
+              <Target size={13} style={{ color: 'rgba(16,185,129,0.85)' }} />
               <span>Just the right deal for you.</span>
             </span>
           </>

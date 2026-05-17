@@ -22,16 +22,16 @@ export function IncomeScreen() {
         titleGradient="Income"
         sub={
           <>
-            <span style={{ display: 'flex', alignItems: 'flex-start', gap: 7, marginBottom: 7 }}>
-              <Wallet size={13} style={{ color: 'var(--hover)', flexShrink: 0, marginTop: 5 }} />
+            <span className="sh-sub-row">
+              <Wallet size={13} style={{ color: 'var(--hover)' }} />
               <span>Select all income sources that apply — you can choose multiple types.</span>
             </span>
-            <span style={{ display: 'flex', alignItems: 'flex-start', gap: 7, marginBottom: 7 }}>
-              <Sparkles size={13} style={{ color: 'var(--hover)', flexShrink: 0, marginTop: 5 }} />
+            <span className="sh-sub-row">
+              <Sparkles size={13} style={{ color: 'var(--hover)' }} />
               <span>Anika AI annualises each source automatically.</span>
             </span>
-            <span style={{ display: 'flex', alignItems: 'flex-start', gap: 7 }}>
-              <FileCheck size={13} style={{ color: 'rgba(16,185,129,0.85)', flexShrink: 0, marginTop: 5 }} />
+            <span className="sh-sub-row">
+              <FileCheck size={13} style={{ color: 'rgba(16,185,129,0.85)' }} />
               <span>Supporting documents will be required to verify your selections.</span>
             </span>
           </>

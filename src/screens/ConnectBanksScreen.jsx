@@ -282,12 +282,12 @@ export function ConnectBanksScreen() {
         titleGradient="connection"
         sub={
           <>
-            <span style={{ display: 'flex', alignItems: 'flex-start', gap: 7, marginBottom: 7 }}>
-              <Landmark size={13} style={{ color: 'var(--hover)', flexShrink: 0, marginTop: 5 }} />
+            <span className="sh-sub-row">
+              <Landmark size={13} style={{ color: 'var(--hover)' }} />
               <span>Connect your bank accounts securely.</span>
             </span>
-            <span style={{ display: 'flex', alignItems: 'flex-start', gap: 7 }}>
-              <Sparkles size={13} style={{ color: 'var(--hover)', flexShrink: 0, marginTop: 5 }} />
+            <span className="sh-sub-row">
+              <Sparkles size={13} style={{ color: 'var(--hover)' }} />
               <span>Anika AI verifies your income and prepares your lender assessment automatically.</span>
             </span>
           </>

@@ -23,12 +23,12 @@ export function PrivacyScreen() {
         titleGradient="consent"
         sub={
           <>
-            <span style={{ display: 'flex', alignItems: 'flex-start', gap: 7, marginBottom: 7 }}>
-              <FileText size={13} style={{ color: 'var(--hover)', flexShrink: 0, marginTop: 5 }} />
+            <span className="sh-sub-row">
+              <FileText size={13} style={{ color: 'var(--hover)' }} />
               <span>Please read and confirm the privacy disclosures below.</span>
             </span>
-            <span style={{ display: 'flex', alignItems: 'flex-start', gap: 7 }}>
-              <Send size={13} style={{ color: 'var(--hover)', flexShrink: 0, marginTop: 5 }} />
+            <span className="sh-sub-row">
+              <Send size={13} style={{ color: 'var(--hover)' }} />
               <span>Your application will be submitted to matched lenders upon confirmation.</span>
             </span>
           </>

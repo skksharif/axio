@@ -147,8 +147,8 @@ export function ProfileScreen() {
             <span style={{ display: 'block' }}>
               Tell us about yourself, your relationship status, and household situation so Anika AI can match you with suitable lenders and loan options.
             </span>
-            <span style={{ display: 'flex', alignItems: 'flex-start', gap: 6, marginTop: 9 }}>
-              <AlertTriangle size={13} style={{ color: 'rgba(251, 191, 36, 0.85)', flexShrink: 0, marginTop: 5 }} />
+            <span className="sh-sub-row" style={{ marginTop: 9 }}>
+              <AlertTriangle size={13} style={{ color: 'rgba(251, 191, 36, 0.85)' }} />
               <span>
                 Please ensure your information is accurate and matches your{' '}
                 <strong style={{ fontWeight: 600, color: 'rgba(196, 148, 255, 0.85)' }}>government-issued document</strong>.

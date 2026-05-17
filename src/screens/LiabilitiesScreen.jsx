@@ -25,16 +25,16 @@ export function LiabilitiesScreen() {
         titleGradient="liabilities"
         sub={
           <>
-            <span style={{ display: 'flex', alignItems: 'flex-start', gap: 7, marginBottom: 7 }}>
-              <ListChecks size={13} style={{ color: 'var(--hover)', flexShrink: 0, marginTop: 5 }} />
+            <span className="sh-sub-row">
+              <ListChecks size={13} style={{ color: 'var(--hover)' }} />
               <span>Select applicable liabilities.</span>
             </span>
-            <span style={{ display: 'flex', alignItems: 'flex-start', gap: 7, marginBottom: 7 }}>
-              <Link2 size={13} style={{ color: 'rgba(16,185,129,0.85)', flexShrink: 0, marginTop: 5 }} />
+            <span className="sh-sub-row">
+              <Link2 size={13} style={{ color: 'rgba(16,185,129,0.85)' }} />
               <span>Financed assets are already listed.</span>
             </span>
-            <span style={{ display: 'flex', alignItems: 'flex-start', gap: 7 }}>
-              <Sparkles size={13} style={{ color: 'var(--hover)', flexShrink: 0, marginTop: 5 }} />
+            <span className="sh-sub-row">
+              <Sparkles size={13} style={{ color: 'var(--hover)' }} />
               <span>Your liabilities help Anika AI understand your existing financial commitments and borrowing capacity.</span>
             </span>
           </>

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { BarChart2, Sparkles, Building2 } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import { ScreenHeader } from '../components/common/ScreenHeader';
-import { BtnPrimary, BtnGhost, BtnRow } from '../components/common/Button';
+import { BtnGhost, BtnRow } from '../components/common/Button';
 import { AnikaPanel } from '../components/common/AnikaPanel';
 import { InfoBanner } from '../components/common/InfoBanner';
 import { LenderCard } from '../components/ui/LenderCard';
@@ -28,16 +28,16 @@ export function LendersScreen() {
         titleGradient="matches"
         sub={
           <>
-            <span style={{ display: 'flex', alignItems: 'flex-start', gap: 7, marginBottom: 7 }}>
-              <BarChart2 size={13} style={{ color: 'var(--hover)', flexShrink: 0, marginTop: 5 }} />
+            <span className="sh-sub-row">
+              <BarChart2 size={13} style={{ color: 'var(--hover)' }} />
               <span>Results ranked by approval probability based on your profile.</span>
             </span>
-            <span style={{ display: 'flex', alignItems: 'flex-start', gap: 7, marginBottom: 7 }}>
-              <Sparkles size={13} style={{ color: 'var(--hover)', flexShrink: 0, marginTop: 5 }} />
+            <span className="sh-sub-row">
+              <Sparkles size={13} style={{ color: 'var(--hover)' }} />
               <span>Powered by Anika AI — no credit file impact.</span>
             </span>
-            <span style={{ display: 'flex', alignItems: 'flex-start', gap: 7 }}>
-              <Building2 size={13} style={{ color: 'rgba(16,185,129,0.85)', flexShrink: 0, marginTop: 5 }} />
+            <span className="sh-sub-row">
+              <Building2 size={13} style={{ color: 'rgba(16,185,129,0.85)' }} />
               <span>Select a lender to review rates, fees and repayment options.</span>
             </span>
           </>
@@ -75,7 +75,6 @@ export function LendersScreen() {
 
       <BtnRow>
         <BtnGhost onClick={prev}>← Back</BtnGhost>
-        <BtnPrimary onClick={next}>Continue to account →</BtnPrimary>
       </BtnRow>
     </div>
   );

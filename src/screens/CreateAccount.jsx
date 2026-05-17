@@ -44,12 +44,12 @@ export function CreateAccount() {
         titleGradient="account"
         sub={
           <>
-            <span style={{ display: 'flex', alignItems: 'flex-start', gap: 7, marginBottom: 7 }}>
-              <Save size={13} style={{ color: 'var(--hover)', flexShrink: 0, marginTop: 5 }} />
+            <span className="sh-sub-row">
+              <Save size={13} style={{ color: 'var(--hover)' }} />
               <span>Save your application securely.</span>
             </span>
-            <span style={{ display: 'flex', alignItems: 'flex-start', gap: 7 }}>
-              <Activity size={13} style={{ color: 'rgba(16,185,129,0.85)', flexShrink: 0, marginTop: 5 }} />
+            <span className="sh-sub-row">
+              <Activity size={13} style={{ color: 'rgba(16,185,129,0.85)' }} />
               <span>Track your loan progress anytime.</span>
             </span>
           </>

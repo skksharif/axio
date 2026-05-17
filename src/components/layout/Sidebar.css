@@ -349,16 +349,31 @@
     inset 0 1px 0 rgba(255, 255, 255, 0.03);
 }
 
+@keyframes nav-active-pulse {
+  0%, 100% {
+    box-shadow:
+      inset 3px 0 0 rgba(196, 148, 255, 1),
+      0 0 0 1px rgba(139, 92, 246, 0.10),
+      0 0 18px rgba(109, 40, 217, 0.28),
+      0 0 36px rgba(109, 40, 217, 0.12),
+      0 4px 14px rgba(0, 0, 0, 0.28),
+      inset 0 1px 0 rgba(255, 255, 255, 0.07);
+  }
+  50% {
+    box-shadow:
+      inset 3px 0 0 rgba(216, 180, 255, 1),
+      0 0 0 1px rgba(167, 139, 250, 0.16),
+      0 0 24px rgba(109, 40, 217, 0.38),
+      0 0 48px rgba(109, 40, 217, 0.18),
+      0 4px 14px rgba(0, 0, 0, 0.28),
+      inset 0 1px 0 rgba(255, 255, 255, 0.09);
+  }
+}
+
 .nav-item.active {
-  background: rgba(126, 34, 206, 0.24);
-  border-color: rgba(139, 92, 246, 0.42);
-  box-shadow:
-    inset 2.5px 0 0 rgba(167, 100, 255, 1),
-    0 0 0 1px rgba(139, 92, 246, 0.08),
-    0 0 16px rgba(109, 40, 217, 0.24),
-    0 0 32px rgba(109, 40, 217, 0.1),
-    0 4px 14px rgba(0, 0, 0, 0.28),
-    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  background: rgba(126, 34, 206, 0.28);
+  border-color: rgba(167, 139, 250, 0.52);
+  animation: nav-active-pulse 2.8s ease-in-out infinite;
 }
 
 .nav-item.locked {
@@ -440,6 +455,11 @@
 }
 
 /* ─── Active indicator dot (trailing) ───────────────────────── */
+@keyframes nav-dot-pulse {
+  0%, 100% { opacity: 1; box-shadow: 0 0 6px rgba(196, 148, 255, 0.9), 0 0 12px rgba(139, 92, 246, 0.55); }
+  50%       { opacity: 0.7; box-shadow: 0 0 10px rgba(196, 148, 255, 1), 0 0 20px rgba(139, 92, 246, 0.75); }
+}
+
 .nav-dot {
   width: 5px;
   height: 5px;
@@ -447,14 +467,12 @@
   background: var(--hover);
   opacity: 0;
   flex-shrink: 0;
-  box-shadow:
-    0 0 6px rgba(139, 92, 246, 0.9),
-    0 0 12px rgba(109, 40, 217, 0.55);
   transition: opacity .2s;
 }
 
 .nav-item.active .nav-dot {
   opacity: 1;
+  animation: nav-dot-pulse 2.8s ease-in-out infinite;
 }
 
 /* ─── Intra-group connector segment ─────────────────────────── */
