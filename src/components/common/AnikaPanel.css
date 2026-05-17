@@ -209,8 +209,34 @@
 }
 
 .ap-footer-trust svg {
-  color: rgba(167, 243, 208, 0.42);
+  color: var(--green);
+  opacity: 0.65;
   flex-shrink: 0;
+}
+
+/* ─── Light theme overrides ─────────────────────────────────────── */
+[data-theme="light"] .anika-panel::before {
+  background: linear-gradient(90deg, transparent, var(--border2), transparent);
+}
+[data-theme="light"] .ap-avatar {
+  box-shadow:
+    0 0 10px rgba(91, 61, 245, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+[data-theme="light"] .ap-shimmer-line {
+  background: linear-gradient(
+    90deg,
+    rgba(91, 61, 245, 0.06) 25%,
+    rgba(91, 61, 245, 0.14) 50%,
+    rgba(91, 61, 245, 0.06) 75%
+  );
+  background-size: 200% 100%;
+}
+[data-theme="light"] .ap-dot {
+  background: var(--hover);
+}
+[data-theme="light"] .ap-cursor {
+  background: var(--hover);
 }
 
 /* ─── Responsive ────────────────────────────────────────────────── */
