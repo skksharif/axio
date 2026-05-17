@@ -6,7 +6,7 @@
 
 .doc-icon {
   width: 42px; height: 42px; border-radius: var(--r8);
-  background: rgba(30, 27, 75, 0.7);
+  background: var(--surface-inner);
   border: 1px solid var(--border);
   display: flex; align-items: center; justify-content: center;
   font-size: 18px; flex-shrink: 0;
@@ -21,18 +21,18 @@
   border: 1px solid var(--border2); background: transparent;
   color: var(--text1); font-size: 12px; font-weight: 600;
   cursor: pointer; white-space: nowrap;
-  transition: border-color .18s ease, color .18s ease, background .18s ease, box-shadow .18s ease;
+  transition: border-color .18s ease, color .18s ease, background .18s ease;
 }
 .doc-action button:hover {
   border-color: var(--hover);
   color: var(--text0);
-  background: rgba(139, 92, 246, 0.08);
+  background: var(--surface-hover);
 }
 .doc-action button.ob-btn {
   background: var(--accentg);
   border: none; color: #fff;
-  box-shadow: 0 3px 12px rgba(109, 40, 217, 0.30);
+  box-shadow: 0 3px 10px rgba(109, 40, 217, 0.24);
 }
 .doc-action button.ob-btn:hover {
-  box-shadow: 0 3px 16px rgba(109, 40, 217, 0.40);
+  box-shadow: 0 3px 14px rgba(109, 40, 217, 0.34);
 }

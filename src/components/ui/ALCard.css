@@ -28,7 +28,7 @@
 .al-card {
   border-radius: var(--r16);
   border: 1px solid var(--glass-border);
-  background: rgba(23, 16, 47, 0.72);
+  background: var(--surface-card);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
   overflow: hidden;
@@ -37,19 +37,14 @@
 }
 
 .al-card:not(.on):hover {
-  border-color: rgba(139, 92, 246, 0.32);
-  box-shadow: 0 4px 22px rgba(0, 0, 0, 0.28), var(--glow-sm);
-  transform: translateY(-1px);
+  border-color: var(--border2);
+  box-shadow: var(--card-shadow-hover);
 }
 
 .al-card.on {
-  border-color: rgba(139, 92, 246, 0.48);
-  background: rgba(109, 40, 217, 0.09);
-  /* left accent bar signals active state without disrupting layout */
-  box-shadow:
-    inset 3px 0 0 rgba(167, 100, 255, 0.75),
-    0 0 0 1px rgba(139, 92, 246, 0.16),
-    var(--glow-sm);
+  border-color: var(--border2);
+  background: var(--surface-active);
+  box-shadow: inset 3px 0 0 var(--hover), var(--card-shadow);
 }
 
 /* ─── HEAD ──────────────────────────────────────────────────── */
@@ -72,7 +67,7 @@
   overflow: hidden;
   box-sizing: border-box;
 }
-.al-head:hover { background: rgba(139, 92, 246, 0.05); }
+.al-head:hover { background: var(--surface-hover); }
 
 /* Expanded state: release the height lock so meta text is visible */
 .al-card.on .al-head {
@@ -98,7 +93,7 @@
 .al-icon-box {
   width: 34px;
   height: 34px;
-  background: rgba(30, 27, 75, 0.85);
+  background: var(--surface-inner);
   border: 1px solid var(--border);
   border-radius: var(--r8);
   display: flex;
@@ -110,10 +105,9 @@
   transition: background .2s, border-color .2s, color .2s, box-shadow .2s;
 }
 .al-card.on .al-icon-box {
-  background: rgba(109, 40, 217, 0.2);
-  border-color: rgba(139, 92, 246, 0.38);
+  background: var(--surface-active);
+  border-color: var(--border2);
   color: var(--hover);
-  box-shadow: 0 0 10px rgba(109, 40, 217, 0.18);
 }
 
 /* ─── TYPOGRAPHY ────────────────────────────────────────────── */
@@ -125,7 +119,7 @@
   color: var(--text0);
   line-height: 1.22;
 }
-.al-card.on .al-title { color: #fff; }
+.al-card.on .al-title { color: var(--text0); }
 
 .al-desc {
   font-size: 11.5px;
@@ -186,16 +180,14 @@
   justify-content: center;
   color: transparent;
   flex-shrink: 0;
-  background: rgba(30, 27, 75, 0.55);
+  background: var(--surface-input);
   transition: background .2s, border-color .2s, color .2s, box-shadow .2s;
 }
 .al-card.on .al-check {
   background: var(--accentg);
   border-color: transparent;
   color: #fff;
-  box-shadow:
-    0 0 8px rgba(196, 148, 255, 0.6),
-    0 0 18px rgba(139, 92, 246, 0.28);
+  box-shadow: 0 0 8px rgba(139, 92, 246, 0.35);
 }
 
 /* ─── BODY (height animated by framer-motion, overflow hidden inline) */
@@ -209,7 +201,7 @@
 
 /* ─── ENTRY FORM ────────────────────────────────────────────── */
 .al-entry {
-  background: rgba(30, 27, 75, 0.55);
+  background: var(--surface-input);
   border: 1px solid var(--border);
   border-radius: var(--r8);
   padding: 12px;
@@ -229,7 +221,7 @@
 .al-field select {
   width: 100%;
   height: 36px;
-  background: rgba(30, 27, 75, 0.75);
+  background: var(--surface-input);
   border: 1px solid var(--border);
   border-radius: 6px;
   color: var(--text0);
@@ -237,12 +229,11 @@
   padding: 0 10px;
   outline: none;
   font-family: var(--font-body);
-  transition: border-color .2s, box-shadow .2s;
 }
 .al-field input:focus,
 .al-field select:focus {
   border-color: var(--hover);
-  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.12);
+  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.10);
 }
 .al-field input::placeholder { color: var(--text2); }
 

@@ -21,7 +21,13 @@
       "PowerShell(New-Item -ItemType File \"b:\\\\axio\\\\axio-react\\\\src\\\\data\\\\lenderNames.js\")",
       "PowerShell(\"created\")",
       "PowerShell(New-Item -ItemType File \"b:\\\\axio\\\\axio-react\\\\src\\\\components\\\\common\\\\LenderAutocomplete.jsx\")",
-      "PowerShell(New-Item -ItemType File \"b:\\\\axio\\\\axio-react\\\\src\\\\components\\\\common\\\\LenderAutocomplete.css\")"
+      "PowerShell(New-Item -ItemType File \"b:\\\\axio\\\\axio-react\\\\src\\\\components\\\\common\\\\LenderAutocomplete.css\")",
+      "Bash(New-Item -Path \"b:\\\\axio\\\\axio-react\\\\src\\\\hooks\" -ItemType Directory -Force)",
+      "Bash(New-Item -Path \"b:\\\\axio\\\\axio-react\\\\src\\\\hooks\\\\useTheme.js\" -ItemType File -Force)",
+      "Bash(\"ok\")",
+      "PowerShell(New-Item -Path \"b:\\\\axio\\\\axio-react\\\\src\\\\hooks\" -ItemType Directory -Force)",
+      "PowerShell(New-Item -Path \"b:\\\\axio\\\\axio-react\\\\src\\\\hooks\\\\useTheme.js\" -ItemType File -Force)",
+      "PowerShell(\"ok\")"
     ]
   }
 }

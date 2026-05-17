@@ -10,36 +10,32 @@
   border-radius: var(--r12);
   padding: 14px;
   cursor: pointer;
-  background: rgba(23, 16, 47, 0.65);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  transition: border-color .2s ease, background .2s ease, box-shadow .2s ease;
+  background: var(--surface-card);
+  transition: border-color .2s ease, background .2s ease;
   position: relative;
 }
 .itc:hover {
-  border-color: rgba(139, 92, 246, 0.38);
-  background: rgba(126, 34, 206, 0.07);
+  border-color: var(--border2);
+  background: var(--surface-hover);
 }
 .itc.on {
-  border-color: rgba(139, 92, 246, 0.6);
-  background: rgba(109, 40, 217, 0.14);
-  box-shadow: 0 0 0 1px rgba(139, 92, 246, 0.2), 0 0 14px rgba(139, 92, 246, 0.12);
+  border-color: var(--hover);
+  background: var(--surface-active);
 }
 
 .itc-check {
   position: absolute; top: 10px; right: 10px;
   width: 18px; height: 18px; border-radius: 50%;
-  border: 1.5px solid rgba(167, 139, 250, 0.3);
+  border: 1.5px solid var(--border2);
   font-size: 9px; color: transparent;
   display: flex; align-items: center; justify-content: center;
-  background: rgba(30, 27, 75, 0.5);
-  transition: background .18s ease, border-color .18s ease, color .18s ease, box-shadow .18s ease;
+  background: var(--surface-inner);
+  transition: background .18s ease, border-color .18s ease, color .18s ease;
 }
 .itc.on .itc-check {
   background: var(--accentg);
   border-color: transparent;
   color: #fff;
-  box-shadow: 0 0 10px rgba(139, 92, 246, 0.22);
 }
 
 .itc-icon  { display: flex; align-items: center; margin-bottom: 7px; color: var(--hover); }
@@ -48,13 +44,11 @@
 
 .income-entries { margin-bottom: 10px; }
 .income-entry {
-  background: rgba(30, 27, 75, 0.55);
+  background: var(--surface-input);
   border: 1px solid var(--border);
   border-radius: var(--r12);
   padding: 14px;
   margin-bottom: 10px;
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
 }
 .income-entry-head {
   display: flex;

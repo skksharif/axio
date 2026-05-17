@@ -11,20 +11,13 @@
   padding: 9px 16px;
   border-radius: var(--r8);
   border: 1px solid var(--border);
-  background: rgba(30, 27, 75, 0.55);
+  background: var(--surface-input);
   color: var(--text1);
   font-size: 13px;
   cursor: pointer;
-  transition:
-    border-color .2s ease,
-    background .2s ease,
-    box-shadow .22s ease,
-    color .18s ease,
-    transform .15s ease;
+  transition: border-color .2s ease, background .2s ease, color .18s ease;
   font-weight: 500;
   font-family: var(--font-body);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
   text-align: center;
   white-space: nowrap;
   user-select: none;
@@ -32,43 +25,35 @@
 }
 
 .chip:hover {
-  border-color: rgba(139, 92, 246, 0.48);
+  border-color: var(--border2);
   color: var(--text0);
-  background: rgba(126, 34, 206, 0.11);
-  box-shadow: 0 0 10px rgba(139, 92, 246, 0.1);
+  background: var(--surface-hover);
 }
 
 .chip.on {
-  border-color: rgba(139, 92, 246, 0.72);
-  background: rgba(126, 34, 206, 0.22);
+  border-color: var(--hover);
+  background: var(--surface-active);
   color: var(--text0);
   font-weight: 600;
-  box-shadow:
-    0 0 0 1px rgba(139, 92, 246, 0.24),
-    0 0 12px rgba(139, 92, 246, 0.16),
-    inset 0 0 10px rgba(109, 40, 217, 0.08);
 }
 
 .chip.disabled {
-  opacity: .58;
+  opacity: .52;
   cursor: not-allowed;
   color: var(--text2);
   border-color: var(--border);
-  background: rgba(30, 27, 75, 0.35);
+  background: var(--surface-inner);
   box-shadow: none;
-  transform: none !important;
-  transition: opacity .2s ease;
 }
 
 .chip.disabled:hover {
   border-color: var(--border);
   color: var(--text2);
-  background: rgba(30, 27, 75, 0.35);
+  background: var(--surface-inner);
   box-shadow: none;
-  transform: none;
 }
 
-/* ─── Equal-width: loan term selectors (short labels) ─────── */
+/* ─── Equal-width: loan term selectors ────────────────────── */
 .chips-even {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(104px, 1fr));
@@ -80,7 +65,7 @@
   min-height: 40px;
 }
 
-/* ─── Grid: longer labels (Living Situation, Employment) ───── */
+/* ─── Grid: longer labels ──────────────────────────────────── */
 .chips-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
@@ -94,7 +79,6 @@
   word-break: break-word;
 }
 
-/* ─── Responsive ─────────────────────────────────────────── */
 @media (max-width: 520px) {
   .chips-grid {
     grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));

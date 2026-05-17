@@ -10,24 +10,21 @@
   left: 0;
   right: 0;
   z-index: 300;
-  background: rgba(14, 9, 32, 0.98);
+  background: var(--surface-card);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(139, 92, 246, 0.3);
+  border: 1px solid var(--border2);
   border-radius: 8px;
-  box-shadow:
-    0 4px 6px rgba(0, 0, 0, 0.3),
-    0 12px 28px rgba(0, 0, 0, 0.35),
-    0 0 0 1px rgba(139, 92, 246, 0.06);
+  box-shadow: var(--card-shadow-hover);
   overflow: hidden;
   max-height: 210px;
   overflow-y: auto;
   scrollbar-width: thin;
-  scrollbar-color: rgba(139, 92, 246, 0.3) transparent;
+  scrollbar-color: var(--border2) transparent;
 }
 
 .la-dropdown::-webkit-scrollbar        { width: 4px; }
-.la-dropdown::-webkit-scrollbar-thumb  { background: rgba(139, 92, 246, 0.35); border-radius: 4px; }
+.la-dropdown::-webkit-scrollbar-thumb  { background: var(--border2); border-radius: 4px; }
 .la-dropdown::-webkit-scrollbar-track  { background: transparent; }
 
 /* ── Items ──────────────────────────────────────────────────── */
@@ -37,8 +34,7 @@
   font-family: var(--font-body);
   color: var(--text1);
   cursor: pointer;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
-  transition: background 0.1s ease, color 0.1s ease;
+  border-bottom: 1px solid var(--border);
   user-select: none;
   white-space: nowrap;
   overflow: hidden;
@@ -47,12 +43,12 @@
 .la-item:last-child { border-bottom: none; }
 
 .la-item:hover {
-  background: rgba(139, 92, 246, 0.12);
+  background: var(--surface-hover);
   color: var(--text0);
 }
 
 .la-item.la-active {
-  background: rgba(139, 92, 246, 0.18);
+  background: var(--surface-active);
   color: var(--hover);
 }
 

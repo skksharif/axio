@@ -1,7 +1,7 @@
 .dash-hero-card {
-  background: linear-gradient(135deg, rgba(26, 11, 56, 0.9), rgba(36, 18, 77, 0.85));
-  border-color: rgba(139, 92, 246, 0.3);
-  box-shadow: var(--glow-sm);
+  background: var(--surface-card);
+  border-color: var(--border2);
+  box-shadow: var(--card-shadow);
 }
 
 .timeline { display: flex; flex-direction: column; gap: 12px; }
@@ -19,11 +19,11 @@
   height: 10px;
   min-width: 10px;
   border-radius: 50%;
-  border: 2px solid rgba(167, 139, 250, 0.3);
+  border: 2px solid var(--border2);
   flex-shrink: 0;
 }
-.tl-dot.done    { background: var(--green); border-color: var(--green); box-shadow: 0 0 6px rgba(16, 185, 129, 0.5); }
-.tl-dot.pending { background: transparent; border-color: rgba(167, 139, 250, 0.3); }
+.tl-dot.done    { background: var(--green); border-color: var(--green); }
+.tl-dot.pending { background: transparent; border-color: var(--border2); }
 
 .tl-label { font-weight: 600; color: var(--text0); flex: 1; min-width: 0; }
 .tl-sub   { font-size: 11.5px; color: var(--text2); flex-shrink: 0; }
@@ -35,12 +35,10 @@
 }
 
 .dash-card {
-  background: rgba(30, 27, 75, 0.55);
+  background: var(--surface-input);
   border: 1px solid var(--border);
   border-radius: var(--r16);
   padding: 18px;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
   transition: border-color .2s;
 }
 .dash-card:hover { border-color: var(--border2); }
@@ -56,7 +54,7 @@
 }
 .sum-row:last-child { border-bottom: none; }
 .sum-key { color: var(--text1); }
-.sum-val { font-weight: 700; color: var(--text0); white-space: nowrap; }
+.sum-val { font-weight: 700; color: var(--text0); white-space: nowrap; font-family: var(--font-mono); }
 .sum-val.green { color: var(--green); }
 
 .dash-doc-item {
@@ -67,18 +65,16 @@
 .dash-doc-item:last-child { border-bottom: none; }
 
 .dash-product-card {
-  background: rgba(30, 27, 75, 0.5);
+  background: var(--surface-input);
   border: 1px solid var(--border);
   border-radius: var(--r12);
   padding: 16px;
   cursor: pointer;
   transition: border-color .2s ease, background .2s ease;
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
 }
 .dash-product-card:hover {
-  border-color: rgba(139, 92, 246, 0.38);
-  background: rgba(139, 92, 246, 0.07);
+  border-color: var(--border2);
+  background: var(--surface-hover);
 }
 
 @media (max-width: 900px) {

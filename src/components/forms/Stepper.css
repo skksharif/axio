@@ -1,19 +1,17 @@
 .stepper {
   display: flex;
   align-items: center;
-  background: rgba(30, 27, 75, 0.6);
+  background: var(--surface-input);
   border: 1px solid var(--border);
   border-radius: var(--r8);
   overflow: hidden;
   height: 42px;
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
   transition: border-color .2s, box-shadow .2s;
 }
 
 .stepper:focus-within {
   border-color: var(--hover);
-  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.12);
+  box-shadow: 0 0 0 3px rgba(109, 40, 217, 0.10);
 }
 
 .st-btn {
@@ -34,11 +32,11 @@
   -webkit-tap-highlight-color: transparent;
 }
 .st-btn:hover {
-  background: rgba(139, 92, 246, 0.15);
+  background: var(--surface-hover);
   color: var(--text0);
 }
 .st-btn:active {
-  background: rgba(139, 92, 246, 0.25);
+  background: var(--surface-active);
 }
 
 .st-val {
@@ -46,7 +44,7 @@
   text-align: center;
   font-size: 14px;
   font-weight: 700;
-  font-family: var(--font-display);
+  font-family: var(--font-mono);
   color: var(--text0);
   white-space: nowrap;
   border-left: 1px solid var(--border);
@@ -66,7 +64,7 @@
   color: var(--text0);
   font-size: 14px;
   font-weight: 700;
-  font-family: var(--font-display);
+  font-family: var(--font-mono);
   text-align: center;
   padding: 0 4px;
   cursor: text;
@@ -74,11 +72,11 @@
 }
 
 .st-input:hover {
-  background: rgba(139, 92, 246, 0.05);
+  background: var(--surface-hover);
 }
 
 .st-input:focus {
-  background: rgba(139, 92, 246, 0.08);
+  background: var(--surface-hover);
 }
 
 .st-input::placeholder {

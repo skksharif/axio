@@ -2,17 +2,16 @@
   width: 46px;
   height: 26px;
   border-radius: 13px;
-  background: rgba(30, 27, 75, 0.8);
-  border: 1px solid rgba(167, 139, 250, 0.2);
+  background: var(--surface-inner);
+  border: 1px solid var(--border);
   position: relative;
   cursor: pointer;
-  transition: background .2s ease, border-color .2s ease, box-shadow .2s ease;
+  transition: background .2s ease, border-color .2s ease;
   flex-shrink: 0;
 }
 .sw.on {
   background: var(--accentg);
   border-color: transparent;
-  box-shadow: 0 0 10px rgba(139, 92, 246, 0.22);
 }
 .sw::after {
   content: '';
@@ -24,6 +23,6 @@
   border-radius: 50%;
   background: #fff;
   transition: left .2s cubic-bezier(.22, 1, .36, 1);
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.22);
 }
 .sw.on::after { left: 21px; }

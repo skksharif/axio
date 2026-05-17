@@ -1,52 +1,69 @@
+/* ═══════════════════════════════════════════════════════════════
+   AXIO FINANCE — DESIGN TOKEN SYSTEM
+   Dark theme is the default (applied via :root).
+   Light theme overrides via [data-theme="light"].
+   ═══════════════════════════════════════════════════════════════ */
+
 :root {
   /* ─── BACKGROUNDS ─────────────────────────────────────────── */
-  --bg0: #100720;          /* Main Background */
-  --bg1: #1A0B38;          /* Secondary / Sidebar */
-  --bg2: #17102F;          /* Card Background */
-  --bg3: #1E1B4B;          /* Glass Background */
-  --bg4: #24124D;          /* Inner Cards */
+  --bg0: #0C0719;          /* Main background */
+  --bg1: #130929;          /* Secondary / Sidebar */
+  --bg2: #100822;          /* Card background */
+  --bg3: #18103A;          /* Glass background */
+  --bg4: #1C1242;          /* Inner cards */
+
+  /* ─── SEMANTIC SURFACES (use these in components) ─────────── */
+  --surface-card:    rgba(18, 10, 38, 0.84);   /* Cards, panels */
+  --surface-input:   rgba(24, 15, 48, 0.70);   /* Inputs, chips, ghost btns */
+  --surface-inner:   rgba(14, 8, 30, 0.88);    /* Icon boxes, inner elements */
+  --surface-hover:   rgba(109, 40, 217, 0.08); /* Hover tint */
+  --surface-active:  rgba(109, 40, 217, 0.14); /* Selected / active tint */
+  --surface-nav:     rgba(12, 6, 28, 0.95);    /* Sidebar */
+  --surface-topbar:  rgba(16, 8, 36, 0.88);    /* Top bar */
+  --surface-accent:  rgba(109, 40, 217, 0.10); /* Accent-tinted surface */
+  --surface-overlay: rgba(8, 3, 20, 0.78);     /* Mobile overlay */
 
   /* ─── BRAND PURPLE SPECTRUM ───────────────────────────────── */
-  --accent:  #7E22CE;      /* Main Purple */
-  --accent2: #9333EA;      /* Glow Purple */
-  --cta:     #6D28D9;      /* CTA Purple */
-  --hover:   #8B5CF6;      /* Hover Purple */
-  --deep:    #3B0764;      /* Deep Violet */
+  --accent:  #7E22CE;
+  --accent2: #9333EA;
+  --cta:     #6D28D9;
+  --hover:   #A78BFA;      /* Improved — lighter, more readable */
+  --deep:    #3B0764;
 
   /* ─── GRADIENTS ───────────────────────────────────────────── */
   --accentg:      linear-gradient(135deg, #6D28D9 0%, #7E22CE 55%, #9333EA 100%);
   --accentg-deep: linear-gradient(135deg, #3B0764 0%, #581C87 45%, #7E22CE 100%);
-  --dashg:        linear-gradient(145deg, #100720 0%, #1A0B38 40%, #2B105C 100%);
+  --dashg:        linear-gradient(145deg, #0C0719 0%, #130929 40%, #1E0E4A 100%);
 
   /* ─── BORDERS & GLASS ─────────────────────────────────────── */
-  --border:       rgba(167, 139, 250, 0.14);
-  --border2:      rgba(167, 139, 250, 0.28);
-  --glass-border: rgba(167, 139, 250, 0.18);
-  --white-glass:  rgba(255, 255, 255, 0.06);
+  --border:       rgba(167, 139, 250, 0.13);
+  --border2:      rgba(167, 139, 250, 0.26);
+  --glass-border: rgba(167, 139, 250, 0.16);
+  --white-glass:  rgba(255, 255, 255, 0.05);
 
   /* ─── TEXT ────────────────────────────────────────────────── */
-  --text0: #FFFFFF;        /* Primary */
-  --text1: #D8CCFF;        /* Muted / Secondary */
-  --text2: #A596D0;        /* Dim / Labels / Placeholders */
+  --text0: #EDE9FF;        /* Primary — warm white, easier on eyes */
+  --text1: #C4BAE8;        /* Secondary — clearly readable */
+  --text2: #9A8FC4;        /* Muted — still legible, improved */
 
   /* ─── STATUS ──────────────────────────────────────────────── */
   --green:        #10B981;
-  --greenbg:      rgba(16, 185, 129, .08);
-  --greenborder:  rgba(16, 185, 129);
+  --greenbg:      rgba(16, 185, 129, 0.09);
+  --greenborder:  rgba(16, 185, 129, 0.28);
   --yellow:       #F59E0B;
-  --yellowbg:     rgba(245, 158, 11, .08);
-  --yellowborder: rgba(245, 158, 11, .22);
+  --yellowbg:     rgba(245, 158, 11, 0.09);
+  --yellowborder: rgba(245, 158, 11, 0.24);
   --red:          #F43F5E;
-  --redbg:        rgba(244, 63, 94, .08);
-  --redborder:    rgba(244, 63, 94, .22);
+  --redbg:        rgba(244, 63, 94, 0.09);
+  --redborder:    rgba(244, 63, 94, 0.24);
 
-  /* ─── GLOW & SHADOWS ──────────────────────────────────────── */
-  --glow-clr:          rgba(147, 51, 234, 0.45);
-  --glow-sm:           0 0 12px rgba(147, 51, 234, 0.28);
-  --glow-md:           0 0 24px rgba(147, 51, 234, 0.38);
-  --glow-lg:           0 0 40px rgba(147, 51, 234, 0.52);
-  --card-shadow:       0 4px 24px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.04);
-  --card-shadow-hover: 0 8px 32px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(139, 92, 246, 0.15);
+  /* ─── SHADOWS (glow reduced for cleaner look) ─────────────── */
+  --glow-clr:          rgba(139, 92, 246, 0.32);
+  --glow-sm:           0 2px 10px rgba(109, 40, 217, 0.18);
+  --glow-md:           0 4px 20px rgba(109, 40, 217, 0.26);
+  --glow-lg:           0 8px 32px rgba(109, 40, 217, 0.36);
+  --card-shadow:       0 2px 12px rgba(0, 0, 0, 0.28), 0 1px 3px rgba(0, 0, 0, 0.18);
+  --card-shadow-hover: 0 6px 24px rgba(0, 0, 0, 0.36), 0 0 0 1px rgba(139, 92, 246, 0.14);
 
   /* ─── BORDER RADII ────────────────────────────────────────── */
   --r6:  6px;
@@ -57,9 +74,10 @@
   --r32: 32px;
 
   /* ─── FONTS ───────────────────────────────────────────────── */
-  --font-display: 'Inter', sans-serif;
-  --font-body:    'Inter', sans-serif;
-  --font-ai:      'Geist', 'Inter', sans-serif;
+  --font-display: 'Sora', 'Inter', sans-serif;   /* Headings, titles, labels */
+  --font-body:    'Inter', sans-serif;            /* Body, forms, UI text */
+  --font-mono:    'JetBrains Mono', monospace;    /* Amounts, rates, metrics */
+  --font-ai:      'Geist', 'Inter', sans-serif;   /* Anika AI panels */
 
   /* ─── LAYOUT ──────────────────────────────────────────────── */
   --sidebar-w:  300px;
@@ -81,6 +99,74 @@
   --sp28: 28px;
   --sp32: 32px;
   --sp36: 36px;
+
+  /* ─── THEME TRANSITIONS ───────────────────────────────────── */
+  --transition-theme: background-color 0.28s ease, border-color 0.22s ease, color 0.18s ease, box-shadow 0.22s ease;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   LIGHT THEME OVERRIDES
+   ═══════════════════════════════════════════════════════════════ */
+[data-theme="light"] {
+  /* ─── BACKGROUNDS ─────────────────────────────────────────── */
+  --bg0: #F2F4FB;
+  --bg1: #E8ECF8;
+  --bg2: #FFFFFF;
+  --bg3: #F7F8FE;
+  --bg4: #EDF0FC;
+
+  /* ─── SEMANTIC SURFACES ───────────────────────────────────── */
+  --surface-card:    rgba(255, 255, 255, 0.97);
+  --surface-input:   rgba(236, 239, 255, 0.80);
+  --surface-inner:   rgba(243, 245, 255, 0.90);
+  --surface-hover:   rgba(91, 61, 245, 0.05);
+  --surface-active:  rgba(91, 61, 245, 0.09);
+  --surface-nav:     rgba(242, 244, 252, 0.98);
+  --surface-topbar:  rgba(255, 255, 255, 0.95);
+  --surface-accent:  rgba(91, 61, 245, 0.06);
+  --surface-overlay: rgba(30, 20, 60, 0.40);
+
+  /* ─── BRAND ───────────────────────────────────────────────── */
+  --accent:  #4F35D9;
+  --accent2: #6B46FF;
+  --cta:     #5B3DF5;
+  --hover:   #5B3DF5;
+  --deep:    #3729A8;
+
+  /* ─── GRADIENTS ───────────────────────────────────────────── */
+  --accentg:      linear-gradient(135deg, #5B3DF5 0%, #7C4DFF 55%, #9B6DFF 100%);
+  --accentg-deep: linear-gradient(135deg, #3729A8 0%, #4F35D9 45%, #6B46FF 100%);
+  --dashg:        linear-gradient(145deg, #F2F4FB 0%, #E8ECF8 40%, #DDE2F5 100%);
+
+  /* ─── BORDERS ─────────────────────────────────────────────── */
+  --border:       rgba(91, 61, 245, 0.11);
+  --border2:      rgba(91, 61, 245, 0.20);
+  --glass-border: rgba(91, 61, 245, 0.13);
+  --white-glass:  rgba(255, 255, 255, 0.80);
+
+  /* ─── TEXT ────────────────────────────────────────────────── */
+  --text0: #0F172A;        /* Deep navy — strong contrast */
+  --text1: #334155;        /* Secondary — clear & readable */
+  --text2: #64748B;        /* Muted — accessible */
+
+  /* ─── STATUS ──────────────────────────────────────────────── */
+  --green:        #059669;
+  --greenbg:      rgba(5, 150, 105, 0.08);
+  --greenborder:  rgba(5, 150, 105, 0.22);
+  --yellow:       #D97706;
+  --yellowbg:     rgba(217, 119, 6, 0.08);
+  --yellowborder: rgba(217, 119, 6, 0.22);
+  --red:          #DC2626;
+  --redbg:        rgba(220, 38, 38, 0.07);
+  --redborder:    rgba(220, 38, 38, 0.20);
+
+  /* ─── SHADOWS ─────────────────────────────────────────────── */
+  --glow-clr:          rgba(91, 61, 245, 0.18);
+  --glow-sm:           0 2px 8px rgba(91, 61, 245, 0.10);
+  --glow-md:           0 4px 16px rgba(91, 61, 245, 0.14);
+  --glow-lg:           0 8px 28px rgba(91, 61, 245, 0.20);
+  --card-shadow:       0 1px 3px rgba(15, 23, 42, 0.06), 0 4px 14px rgba(15, 23, 42, 0.07);
+  --card-shadow-hover: 0 2px 6px rgba(15, 23, 42, 0.08), 0 8px 22px rgba(15, 23, 42, 0.09), 0 0 0 1px rgba(91, 61, 245, 0.10);
 }
 
 @media (max-width: 1100px) and (min-width: 901px) {

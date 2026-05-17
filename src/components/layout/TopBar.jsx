@@ -1,7 +1,8 @@
-import { CircleDot } from 'lucide-react';
+import { CircleDot, Sun, Moon } from 'lucide-react';
 import { useApp } from '../../context/AppContext';
 import { SCREENS } from '../../constants/screens';
 import { getInitials } from '../../utils/format';
+import { useTheme } from '../../hooks/useTheme';
 import './TopBar.css';
 
 export function TopBar({ onMenuClick }) {
@@ -9,6 +10,7 @@ export function TopBar({ onMenuClick }) {
   const { currentScreen, firstName, lastName } = state;
   const screen = SCREENS[currentScreen];
   const initials = getInitials(firstName, lastName);
+  const { theme, toggleTheme } = useTheme();
 
   return (
     <div className="topbar">
@@ -25,6 +27,16 @@ export function TopBar({ onMenuClick }) {
           <CircleDot size={8} />
           Progress saved
         </span>
+        <button
+          className="theme-toggle"
+          onClick={toggleTheme}
+          aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+          title={theme === 'dark' ? 'Light mode' : 'Dark mode'}
+        >
+          {theme === 'dark'
+            ? <Sun size={16} strokeWidth={2} />
+            : <Moon size={16} strokeWidth={2} />}
+        </button>
         <div className="topbar-avatar">{initials}</div>
       </div>
     </div>

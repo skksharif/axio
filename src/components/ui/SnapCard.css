@@ -1,5 +1,5 @@
 .snap-card {
-  background: rgba(23, 16, 47, 0.75);
+  background: var(--surface-card);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border: 1px solid var(--glass-border);
@@ -7,9 +7,8 @@
   overflow: hidden;
   margin-bottom: 10px;
   box-shadow: var(--card-shadow);
-  transition: border-color .22s;
 }
-.snap-card:hover { border-color: rgba(167, 139, 250, 0.28); }
+.snap-card:hover { border-color: var(--border2); }
 
 .snap-head {
   padding: 14px 20px;
@@ -30,7 +29,7 @@
 .snap-h-icon {
   width: 36px;
   height: 36px;
-  background: rgba(30, 27, 75, 0.8);
+  background: var(--surface-inner);
   border: 1px solid var(--border);
   border-radius: var(--r8);
   display: flex;
@@ -45,6 +44,7 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  color: var(--text0);
 }
 .snap-h-sub   { font-size: 11.5px; color: var(--text1); margin-top: 2px; }
 .snap-head-right {
@@ -65,23 +65,17 @@
   font-family: var(--font-body);
   color: var(--hover);
   background: transparent;
-  border: 1px solid rgba(139, 92, 246, 0.3);
+  border: 1px solid var(--border2);
   border-radius: 20px;
   padding: 3px 10px;
   cursor: pointer;
-  transition: border-color .18s ease, background .18s ease, box-shadow .18s ease;
   white-space: nowrap;
   touch-action: manipulation;
   -webkit-tap-highlight-color: transparent;
 }
 .edit-btn:hover {
-  background: rgba(139, 92, 246, 0.1);
+  background: var(--surface-hover);
   border-color: var(--hover);
-  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.08);
-}
-.edit-btn:active {
-  background: rgba(139, 92, 246, 0.16);
-  transition-duration: 0.06s;
 }
 
 .snap-body { padding: 16px 20px; }
@@ -91,7 +85,7 @@
   gap: 10px;
 }
 .sf {
-  background: rgba(30, 27, 75, 0.6);
+  background: var(--surface-inner);
   border: 1px solid var(--border);
   border-radius: var(--r8);
   padding: 11px;
@@ -111,8 +105,9 @@
 .sf-val {
   font-size: 13px;
   font-weight: 700;
-  font-family: var(--font-display);
+  font-family: var(--font-mono);
   word-break: break-word;
+  color: var(--text0);
 }
 .sf-val.green  { color: var(--green); }
 .sf-val.yellow { color: var(--yellow); }
@@ -129,7 +124,6 @@
 }
 
 @media (max-width: 440px) {
-  /* Hide Complete badge text on small screens to prevent head-right overflow */
   .snap-head-right .badge { display: none; }
   .snap-head-right { gap: 6px; }
   .snap-grid { gap: 8px; }

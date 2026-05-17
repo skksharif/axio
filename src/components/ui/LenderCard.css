@@ -10,7 +10,7 @@
 .lender-card {
   border-radius: var(--r22);
   border: 1px solid var(--glass-border);
-  background: rgba(23, 16, 47, 0.92);
+  background: var(--surface-card);
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -22,9 +22,9 @@
   box-shadow: 0 4px 28px rgba(0, 0, 0, 0.28);
 }
 .lender-card.best {
-  border-color: rgba(139, 92, 246, 0.48);
-  background: rgba(109, 40, 217, 0.08);
-  box-shadow: 0 0 0 1px rgba(139, 92, 246, 0.16), var(--card-shadow);
+  border-color: var(--border2);
+  background: var(--surface-accent);
+  box-shadow: 0 0 0 1px var(--border), var(--card-shadow);
 }
 
 /* ─── Header ────────────────────────────────────────────────────── */
@@ -101,14 +101,14 @@
 /* ─── Repayment hero ────────────────────────────────────────────── */
 .lc-repay {
   padding: 22px 20px 20px;
-  background: linear-gradient(180deg, rgba(109, 40, 217, 0.14) 0%, rgba(147, 51, 234, 0.06) 100%);
+  background: var(--surface-accent);
   border-top: 1px solid var(--border);
   border-bottom: 1px solid var(--border);
   text-align: center;
 }
 .best .lc-repay {
-  background: linear-gradient(180deg, rgba(109, 40, 217, 0.22) 0%, rgba(147, 51, 234, 0.1) 100%);
-  border-color: rgba(139, 92, 246, 0.2);
+  background: var(--surface-active);
+  border-color: var(--border2);
 }
 
 .lc-repay-freq {
@@ -125,8 +125,8 @@
   align-items: flex-start;
   justify-content: center;
   gap: 2px;
-  font-family: var(--font-display);
-  font-weight: 800;
+  font-family: var(--font-mono);
+  font-weight: 700;
   color: var(--text0);
   line-height: 1;
   letter-spacing: -1.5px;
@@ -155,7 +155,7 @@
   display: flex;
   align-items: stretch;
   border-bottom: 1px solid var(--border);
-  background: rgba(30, 27, 75, 0.3);
+  background: var(--surface-inner);
 }
 
 .lc-chip {
@@ -171,9 +171,9 @@
 }
 
 .lc-chip-val {
-  font-family: var(--font-display);
+  font-family: var(--font-mono);
   font-size: 15px;
-  font-weight: 800;
+  font-weight: 700;
   color: var(--text0);
   line-height: 1;
   letter-spacing: -.3px;
@@ -252,7 +252,7 @@
 /* ─── Approval confidence ───────────────────────────────────────── */
 .lc-approval {
   padding: 16px 20px 14px;
-  background: rgba(30, 27, 75, 0.3);
+  background: var(--surface-inner);
 }
 
 .lca-row {
@@ -294,7 +294,7 @@
 
 .lca-bar {
   height: 6px;
-  background: rgba(167, 139, 250, 0.1);
+  background: var(--surface-inner);
   border-radius: 999px;
   overflow: hidden;
 }
@@ -340,7 +340,7 @@
 .lc-apply-ghost:hover {
   border-color: var(--hover);
   color: var(--text0);
-  background: rgba(139, 92, 246, 0.08);
+  background: var(--surface-hover);
 }
 
 .lc-toggle {

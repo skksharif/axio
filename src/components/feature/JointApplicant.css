@@ -1,9 +1,7 @@
 .joint-panel {
-  background: rgba(109, 40, 217, 0.09);
-  border: 1px solid rgba(139, 92, 246, 0.28);
+  background: var(--surface-accent);
+  border: 1px solid var(--border2);
   border-radius: var(--r12);
   padding: 16px;
   margin-top: 12px;
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
 }

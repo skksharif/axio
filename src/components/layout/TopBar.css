@@ -1,7 +1,7 @@
 .topbar {
   height: var(--topbar-h);
   border-bottom: 1px solid var(--glass-border);
-  background: rgba(26, 11, 56, 0.78);
+  background: var(--surface-topbar);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   display: flex;
@@ -13,22 +13,22 @@
   z-index: 50;
   width: 100%;
   flex-shrink: 0;
-  box-shadow: 0 1px 24px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 1px 0 var(--glass-border), 0 2px 16px rgba(0, 0, 0, 0.12);
 }
 
 .topbar-left    { display: flex; align-items: center; gap: 12px; min-width: 0; flex: 1; }
-.topbar-step    { font-size: 12px; color: var(--text2); font-weight: 600; white-space: nowrap; }
-.topbar-divider { color: rgba(167, 139, 250, 0.3); flex-shrink: 0; }
+.topbar-step    { font-size: 12px; color: var(--text2); font-weight: 500; white-space: nowrap; }
+.topbar-divider { color: var(--border2); flex-shrink: 0; }
 .topbar-title {
   font-family: var(--font-display);
-  font-size: 15px;
+  font-size: 14.5px;
   font-weight: 600;
   color: var(--text0);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-.topbar-right { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+.topbar-right { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
 
 .save-indicator {
   font-size: 11px;
@@ -40,17 +40,36 @@
   font-weight: 500;
 }
 
+/* ─── Theme toggle ────────────────────────────────────────────── */
+.theme-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--r8);
+  border: 1px solid var(--border);
+  background: var(--surface-input);
+  color: var(--text2);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+.theme-toggle:hover {
+  border-color: var(--border2);
+  color: var(--hover);
+  background: var(--surface-hover);
+}
+
+/* ─── Avatar ──────────────────────────────────────────────────── */
 .topbar-avatar {
   width: 32px; height: 32px; border-radius: 50%;
   background: var(--accentg);
-  box-shadow: var(--glow-sm);
   display: flex; align-items: center; justify-content: center;
   font-size: 12px; font-weight: 700; color: #fff;
   font-family: var(--font-display); cursor: pointer; flex-shrink: 0;
-  transition: box-shadow .2s;
 }
-.topbar-avatar:hover { box-shadow: var(--glow-md); }
 
+/* ─── Hamburger ───────────────────────────────────────────────── */
 .topbar-hamburger {
   display: none;
   flex-direction: column;
@@ -59,15 +78,12 @@
   gap: 5px;
   width: 36px;
   height: 36px;
-  background: rgba(30, 27, 75, 0.6);
+  background: var(--surface-input);
   border: 1px solid var(--border);
   border-radius: var(--r8);
   cursor: pointer;
   padding: 0;
   flex-shrink: 0;
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  transition: border-color .18s;
 }
 .topbar-hamburger:hover { border-color: var(--border2); }
 .topbar-hamburger span {
@@ -75,7 +91,6 @@
   width: 18px; height: 2px;
   background: var(--text1);
   border-radius: 2px;
-  transition: background .15s;
 }
 .topbar-hamburger:hover span { background: var(--text0); }
 

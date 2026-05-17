@@ -45,7 +45,7 @@
 .doc-progress-track {
   height: 7px;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.12);
+  background: var(--surface-inner);
   overflow: hidden;
 }
 
@@ -60,7 +60,7 @@
   display: flex;
   gap: 12px;
   align-items: flex-start;
-  background: rgba(23, 16, 47, 0.75);
+  background: var(--surface-card);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border: 1px solid var(--glass-border);
@@ -94,8 +94,8 @@
   display: flex;
   gap: 12px;
   align-items: flex-start;
-  background: rgba(126, 34, 206, 0.08);
-  border: 1px solid rgba(139, 92, 246, 0.22);
+  background: var(--surface-accent);
+  border: 1px solid var(--border);
   border-left: 3px solid var(--hover);
   border-radius: var(--r16);
   padding: 14px 16px;
@@ -138,7 +138,7 @@
 
 /* ─── Document progress card ────────────────────────────────────── */
 .doc-progress-card {
-  background: rgba(23, 16, 47, 0.75);
+  background: var(--surface-card);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border: 1px solid var(--glass-border);
@@ -153,9 +153,9 @@
   display: flex;
   gap: 12px;
   align-items: flex-start;
-  background: rgba(109, 40, 217, 0.07);
-  border: 1px solid rgba(139, 92, 246, 0.22);
-  border-left: 3px solid rgba(139, 92, 246, 0.55);
+  background: var(--surface-accent);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--hover);
   border-radius: var(--r16);
   padding: 14px 16px;
   margin-bottom: 14px;
@@ -216,8 +216,8 @@
   height: 24px;
   min-width: 24px;
   border-radius: var(--r8);
-  background: rgba(109, 40, 217, 0.18);
-  border: 1px solid rgba(139, 92, 246, 0.28);
+  background: var(--surface-active);
+  border: 1px solid var(--border2);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -256,8 +256,8 @@
 }
 
 .doc-income-section {
-  background: rgba(23, 16, 47, 0.46);
-  border: 1px solid rgba(167, 139, 250, 0.13);
+  background: var(--surface-inner);
+  border: 1px solid var(--border);
   border-radius: var(--r16);
   padding: 10px;
   overflow: hidden;
@@ -270,7 +270,7 @@
   gap: 10px;
   padding: 1px 2px 9px;
   margin-bottom: 9px;
-  border-bottom: 1px solid rgba(167, 139, 250, 0.1);
+  border-bottom: 1px solid var(--border);
 }
 
 .doc-income-section-title {
@@ -294,8 +294,8 @@
   height: 22px;
   min-width: 22px;
   border-radius: var(--r8);
-  background: rgba(109, 40, 217, 0.13);
-  border: 1px solid rgba(139, 92, 246, 0.2);
+  background: var(--surface-accent);
+  border: 1px solid var(--border);
   color: var(--hover);
   display: flex;
   align-items: center;
@@ -314,7 +314,7 @@
 .doc-upload-card {
   display: block;
   width: 100%;
-  background: rgba(23, 16, 47, 0.75);
+  background: var(--surface-card);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border: 1px solid var(--glass-border);
@@ -348,7 +348,7 @@
 }
 
 .doc-upload-card.status-uploaded {
-  border-color: rgba(139, 92, 246, 0.32);
+  border-color: var(--border2);
 }
 
 .doc-card-inner {
@@ -362,7 +362,7 @@
   height: 42px;
   min-width: 42px;
   border-radius: var(--r12);
-  background: rgba(126, 34, 206, 0.12);
+  background: var(--surface-accent);
   border: 1px solid var(--border);
   display: flex;
   align-items: center;
@@ -433,15 +433,15 @@
 }
 
 .doc-status-badge.uploaded {
-  background: rgba(139, 92, 246, 0.10);
-  border-color: rgba(139, 92, 246, 0.3);
+  background: var(--surface-accent);
+  border-color: var(--border2);
   color: var(--hover);
 }
 
 .doc-status-badge.partial {
-  background: rgba(126, 34, 206, 0.10);
-  border-color: rgba(139, 92, 246, 0.25);
-  color: var(--accent2);
+  background: var(--surface-accent);
+  border-color: var(--border);
+  color: var(--hover);
 }
 
 .doc-status-badge.review {
@@ -451,7 +451,7 @@
 }
 
 .doc-status-badge.not-started {
-  background: rgba(30, 27, 75, 0.5);
+  background: var(--surface-inner);
   border-color: var(--border);
   color: var(--text2);
 }
@@ -464,7 +464,7 @@
   border-radius: 999px;
   font-size: 11px;
   font-weight: 600;
-  background: rgba(30, 27, 75, 0.5);
+  background: var(--surface-inner);
   color: var(--text2);
   white-space: nowrap;
 }
@@ -477,7 +477,7 @@
 /* ─── Desktop preview panel ─────────────────────────────────────── */
 .doc-preview-panel {
   display: none;
-  background: rgba(23, 16, 47, 0.75);
+  background: var(--surface-card);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border: 1px solid var(--glass-border);
@@ -530,7 +530,7 @@
   height: 48px;
   min-width: 48px;
   border-radius: var(--r16);
-  background: rgba(126, 34, 206, 0.12);
+  background: var(--surface-accent);
   border: 1px solid var(--border);
   display: flex;
   align-items: center;
@@ -544,7 +544,7 @@
   border-radius: var(--r22);
   padding: 22px 18px;
   text-align: center;
-  background: rgba(30, 27, 75, 0.3);
+  background: var(--surface-inner);
   margin-bottom: 18px;
 }
 
@@ -552,7 +552,7 @@
   width: 68px;
   height: 68px;
   border-radius: var(--r16);
-  background: rgba(23, 16, 47, 0.8);
+  background: var(--surface-inner);
   border: 1px solid var(--border);
   display: flex;
   align-items: center;
@@ -611,7 +611,7 @@
   padding: 9px 16px;
   border-radius: var(--r12);
   border: 1px solid var(--border2);
-  background: rgba(30, 27, 75, 0.4);
+  background: var(--surface-input);
   color: var(--text1);
   font-size: 12.5px;
   font-weight: 600;
@@ -623,7 +623,7 @@
 .doc-preview-btn-ghost:hover {
   border-color: var(--hover);
   color: var(--text0);
-  background: rgba(139, 92, 246, 0.1);
+  background: var(--surface-hover);
 }
 
 /* Extracts */
@@ -648,7 +648,7 @@
   display: flex;
   flex-direction: column;
   gap: 5px;
-  background: rgba(30, 27, 75, 0.5);
+  background: var(--surface-inner);
   border: 1px solid var(--border);
   border-radius: var(--r12);
   padding: 10px 11px;
@@ -674,7 +674,7 @@
   display: flex;
   gap: 10px;
   align-items: flex-start;
-  background: rgba(10, 5, 20, 0.65);
+  background: var(--surface-inner);
   border: 1px solid var(--border);
   border-radius: var(--r16);
   padding: 13px 15px;
@@ -720,7 +720,7 @@
   bottom: 0;
   left: 0;
   right: 0;
-  background: var(--bg2);
+  background: var(--surface-nav);
   border: 1px solid var(--glass-border);
   border-top-left-radius: var(--r32);
   border-top-right-radius: var(--r32);
@@ -770,7 +770,7 @@
   height: 32px;
   border-radius: 999px;
   border: 1px solid var(--border);
-  background: rgba(30, 27, 75, 0.6);
+  background: var(--surface-input);
   color: var(--text2);
   display: flex;
   align-items: center;
@@ -799,7 +799,7 @@
   padding: 12px 14px;
   border-radius: var(--r16);
   border: 1px solid var(--border);
-  background: rgba(30, 27, 75, 0.4);
+  background: var(--surface-inner);
   cursor: pointer;
   text-align: left;
   font-family: var(--font-body);
@@ -808,8 +808,8 @@
 }
 
 .doc-sheet-method:hover {
-  border-color: rgba(139, 92, 246, 0.35);
-  background: rgba(139, 92, 246, 0.07);
+  border-color: var(--border2);
+  background: var(--surface-hover);
 }
 
 .doc-sheet-method-icon {
@@ -817,7 +817,7 @@
   height: 40px;
   min-width: 40px;
   border-radius: var(--r12);
-  background: rgba(126, 34, 206, 0.12);
+  background: var(--surface-accent);
   border: 1px solid var(--border);
   display: flex;
   align-items: center;
@@ -850,8 +850,8 @@
   display: flex;
   gap: 11px;
   align-items: flex-start;
-  background: rgba(126, 34, 206, 0.08);
-  border: 1px solid rgba(139, 92, 246, 0.2);
+  background: var(--surface-accent);
+  border: 1px solid var(--border);
   border-radius: var(--r16);
   padding: 13px 15px;
 }

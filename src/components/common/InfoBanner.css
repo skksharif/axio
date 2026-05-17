@@ -7,12 +7,10 @@
   margin-bottom: 14px;
   font-size: 12px;
   line-height: 1.65;
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
 }
 .info-banner.blue {
-  background: rgba(139, 92, 246, 0.09);
-  border: 1px solid rgba(139, 92, 246, 0.24);
+  background: var(--surface-accent);
+  border: 1px solid var(--border2);
   color: var(--text1);
 }
 .info-banner.yellow {
@@ -23,7 +21,7 @@
 .info-banner.green {
   background: var(--greenbg);
   border: 1px solid var(--greenborder);
-  color: rgba(16, 185, 129, 0.85);
+  color: var(--green);
 }
 .info-banner.red {
   background: var(--redbg);

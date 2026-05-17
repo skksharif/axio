@@ -31,7 +31,7 @@
 }
 .s-stat-val {
   font-size: 17px; font-weight: 800; color: var(--green);
-  font-family: var(--font-display);
+  font-family: var(--font-mono);
   letter-spacing: -.2px;
 }
 
@@ -65,7 +65,7 @@
 .er-icon {
   width: 36px; height: 36px;
   border-radius: var(--r8);
-  background: rgba(30, 27, 75, 0.7);
+  background: var(--surface-inner);
   border: 1px solid var(--border);
   display: flex; align-items: center; justify-content: center;
   font-size: 16px; flex-shrink: 0;
@@ -96,13 +96,11 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: rgba(30, 27, 75, 0.6);
+  background: var(--surface-input);
   border: 1px solid var(--border);
   border-radius: var(--r12);
   padding: 16px 20px;
   margin-top: 18px;
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
 }
 
 .tb-label {
@@ -120,7 +118,7 @@
   font-size: 22px;
   font-weight: 800;
   color: var(--text0);
-  font-family: var(--font-display);
+  font-family: var(--font-mono);
   letter-spacing: -.4px;
 }
 
@@ -160,12 +158,12 @@
   padding: 0 22px;
   border-radius: 20px;
   border: 1px solid var(--border);
-  background: rgba(30, 27, 75, 0.6);
+  background: var(--surface-input);
   color: var(--text1);
   font-size: 12.5px;
   font-weight: 600;
   cursor: pointer;
-  transition: border-color .18s ease, color .18s ease, background .18s ease, box-shadow .18s ease;
+  transition: border-color .18s ease, color .18s ease, background .18s ease;
   font-family: var(--font-body);
 }
 .yn-pill:hover { border-color: var(--hover); color: var(--text0); }
@@ -173,7 +171,6 @@
   background: var(--accentg);
   border-color: transparent;
   color: #fff;
-  box-shadow: 0 0 10px rgba(139, 92, 246, 0.22);
 }
 
 .rent-fields {
@@ -200,7 +197,7 @@
 .rent-field input {
   width: 100%;
   height: 38px;
-  background: rgba(30, 27, 75, 0.7);
+  background: var(--surface-input);
   border: 1px solid var(--border);
   border-radius: 8px;
   color: var(--text0);
@@ -211,7 +208,7 @@
   transition: border-color .2s;
   box-sizing: border-box;
 }
-.rent-field input:focus { border-color: var(--hover); box-shadow: 0 0 0 2px rgba(139,92,246,.1); }
+.rent-field input:focus { border-color: var(--hover); box-shadow: 0 0 0 2px rgba(109,40,217,.10); }
 .rent-field input::placeholder { color: var(--text2); }
 
 .freq-pills { display: flex; gap: 5px; }
@@ -221,7 +218,7 @@
   height: 38px;
   border-radius: 8px;
   border: 1px solid var(--border);
-  background: rgba(30, 27, 75, 0.6);
+  background: var(--surface-input);
   color: var(--text2);
   font-size: 11.5px;
   font-weight: 600;
@@ -231,14 +228,12 @@
 }
 .freq-pill:hover { border-color: var(--hover); color: var(--text0); }
 .freq-pill.active {
-  background: rgba(139, 92, 246, 0.18);
-  border-color: rgba(139, 92, 246, 0.45);
+  background: var(--surface-active);
+  border-color: var(--hover);
   color: var(--hover);
 }
 
-/* ─── RESPONSIVE ─────────────────────────────────────────── */
-
-/* Rent section: switch to single-column before freq-pills get too cramped */
+/* ─── RESPONSIVE ─────────────────────────────────────── */
 @media (max-width: 640px) {
   .rent-fields {
     grid-template-columns: 1fr;
@@ -249,7 +244,6 @@
     grid-column: span 1;
   }
 
-  /* Full-width freq-pills: give each pill a proper touch target */
   .freq-pills {
     gap: 8px;
   }
@@ -259,7 +253,6 @@
     font-size: 12.5px;
   }
 
-  /* Sole-renter row: allow label to wrap above pills on very small screens */
   .rent-row {
     flex-wrap: wrap;
     gap: 10px;
@@ -276,7 +269,6 @@
 }
 
 @media (max-width: 580px) {
-  /* Stack expense rows: label on top, stepper on bottom */
   .expense-row {
     flex-wrap: wrap;
     align-items: stretch;
@@ -301,25 +293,21 @@
 
   .er-right { width: 100%; }
 
-  /* Stepper fills the full row width */
   .expense-row .stepper {
     flex: 1;
     min-width: 0;
   }
 
-  /* Value cell expands to fill space between buttons */
   .expense-row .st-val {
     flex: 1;
     min-width: 0;
   }
 
-  /* Share label sits inline to the left of the stepper */
   .er-share {
     flex-shrink: 0;
     white-space: nowrap;
   }
 
-  /* Shared card stats: tighten padding on small screens */
   .s-stat {
     padding: 10px 10px;
   }
@@ -333,7 +321,6 @@
     font-size: 14px;
   }
 
-  /* Total bar wraps cleanly on narrow screens */
   .total-bar {
     flex-wrap: wrap;
     gap: 6px;

@@ -40,18 +40,17 @@
 .check-box {
   width: 20px; height: 20px;
   border-radius: 5px;
-  border: 1.5px solid rgba(167, 139, 250, 0.3);
-  background: rgba(30, 27, 75, 0.55);
+  border: 1.5px solid var(--border2);
+  background: var(--surface-input);
   flex-shrink: 0;
   display: flex; align-items: center; justify-content: center;
   font-size: 11px;
   color: transparent;
   margin-top: 1px;
-  transition: background .18s ease, border-color .18s ease, color .18s ease, box-shadow .18s ease;
+  transition: background .18s ease, border-color .18s ease, color .18s ease;
 }
 .check-box.checked {
   background: var(--accentg);
   border-color: transparent;
   color: #fff;
-  box-shadow: 0 0 10px rgba(139, 92, 246, 0.22);
 }

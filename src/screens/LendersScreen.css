@@ -18,7 +18,7 @@
 
 .freq-tabs {
   display: flex;
-  background: rgba(23, 16, 47, 0.7);
+  background: var(--surface-inner);
   border: 1px solid var(--border);
   border-radius: var(--r12);
   padding: 3px;
@@ -41,7 +41,7 @@
 
 .freq-tab:hover {
   color: var(--text1);
-  background: rgba(139, 92, 246, 0.08);
+  background: var(--surface-hover);
 }
 
 .freq-tab.active {

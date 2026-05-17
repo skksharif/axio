@@ -12,40 +12,36 @@
   white-space: nowrap;
   transition: box-shadow .2s ease, opacity .18s;
   font-family: var(--font-display);
-  box-shadow: 0 3px 12px rgba(109, 40, 217, 0.32);
+  box-shadow: 0 3px 10px rgba(109, 40, 217, 0.26);
 }
-.rego-btn:hover { box-shadow: 0 3px 18px rgba(109, 40, 217, 0.42); }
+.rego-btn:hover { box-shadow: 0 3px 14px rgba(109, 40, 217, 0.36); }
 .rego-btn:disabled { opacity: .58; cursor: not-allowed; box-shadow: none; }
 
 .rego-loading {
   display: flex; align-items: center; gap: 10px;
   padding: 12px 14px;
-  background: rgba(30, 27, 75, 0.6);
+  background: var(--surface-input);
   border: 1px solid var(--border);
   border-radius: var(--r12);
   font-size: 12.5px; color: var(--text1);
   margin-bottom: 10px;
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
 }
 .rego-result {
-  background: rgba(23, 16, 47, 0.75);
+  background: var(--surface-card);
   border: 1px solid var(--glass-border);
   border-radius: var(--r12);
   overflow: hidden;
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
 }
 .rego-head {
   padding: 12px 16px; border-bottom: 1px solid var(--border);
   display: flex; justify-content: space-between; align-items: center;
 }
 .rego-plate {
-  background: rgba(30, 27, 75, 0.8);
+  background: var(--surface-inner);
   border: 1px solid var(--border2);
   border-radius: 6px; padding: 4px 12px;
   font-size: 13px; font-weight: 800;
-  letter-spacing: 2px; font-family: monospace;
+  letter-spacing: 2px; font-family: var(--font-mono);
   color: var(--hover);
 }
 .rego-fields {
@@ -53,7 +49,7 @@
   gap: 8px; padding: 12px 16px;
 }
 .rf {
-  background: rgba(30, 27, 75, 0.5);
+  background: var(--surface-inner);
   border: 1px solid var(--border);
   border-radius: 6px; padding: 10px;
 }
@@ -61,4 +57,4 @@
   font-size: 10px; color: var(--text2); font-weight: 700;
   text-transform: uppercase; letter-spacing: .4px; margin-bottom: 3px;
 }
-.rf-val { font-size: 12.5px; font-weight: 700; }
+.rf-val { font-size: 12.5px; font-weight: 700; font-family: var(--font-mono); }
