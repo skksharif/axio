@@ -12,7 +12,7 @@ export function LenderAutocomplete({ value = '', onChange, placeholder = 'e.g. C
   const filtered = useMemo(() => {
     const q = value.trim().toLowerCase();
     if (!q) return [];
-    return LENDER_NAMES.filter(l => l.toLowerCase().includes(q));
+    return LENDER_NAMES.filter(l => l.toLowerCase().startsWith(q));
   }, [value]);
 
   const showDropdown = open && value.trim().length > 0;
