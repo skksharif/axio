@@ -1,4 +1,40 @@
 export const LENDER_NAMES = [
+  // Major banks
+  'CBA',
+  'Westpac',
+  'NAB',
+  'ANZ',
+  'Macquarie Bank',
+  'ING Australia',
+  'Bankwest',
+  'Bendigo Bank',
+  'Suncorp Bank',
+  'BOQ (Bank of Queensland)',
+  'BOQ Specialist',
+  'AMP Bank',
+  'Virgin Money Australia',
+  'St.George Bank',
+  'Bank of Melbourne',
+  'BankSA',
+  'ME Bank',
+  'Great Southern Bank',
+  'Heritage Bank',
+  'Newcastle Permanent',
+  'Beyond Bank Australia',
+  'People’s Choice Credit Union',
+  'Australian Mutual Bank',
+  'Qudos Bank',
+  'Teachers Mutual Bank',
+  'Police Bank',
+  'Bank Australia',
+  'HSBC Australia',
+  'Citibank Australia',
+  'Up Bank',
+  'ubank',
+  '86 400',
+  'Volt Bank',
+  'Adelaide Bank',
+
   // Non-bank mortgage / specialist home lenders
   'Pepper Money',
   'Liberty Financial',
@@ -17,6 +53,9 @@ export const LENDER_NAMES = [
   'Reduce Home Loans',
   'Mortgage House',
   'Brighten Home Loans',
+  'Liberty',
+  'Latitude',
+
   // Personal loan lenders
   'Moula',
   'Bridgit',
@@ -34,6 +73,14 @@ export const LENDER_NAMES = [
   'Savvy Finance',
   'Cash Train',
   'Wallet Wizard',
+
+  // BNPL / consumer finance
+  'Afterpay',
+  'Zip',
+  'Humm',
+  'LatitudePay',
+  'Klarna Australia',
+
   // Auto / asset finance
   'Angle Auto Finance',
   'Metro Finance',
@@ -48,6 +95,7 @@ export const LENDER_NAMES = [
   'Latitude Auto',
   'Morris Finance',
   'Green Light Auto Group',
+
   // Business / SME lenders
   'Prospa',
   'ScotPac',
@@ -62,13 +110,15 @@ export const LENDER_NAMES = [
   'Octet Finance',
   'TruePillars',
   'Grow Finance',
+
+  // Private / specialist
   'Assetline',
   'Max Funding',
-  // Private / specialist
   'Goldfields Money',
   'Private Funding Partners',
   'SAS Finance Group',
   'MKM Capital',
+
   // Manufacturer captive finance
   'Toyota Finance Australia',
   'Mazda Finance',
