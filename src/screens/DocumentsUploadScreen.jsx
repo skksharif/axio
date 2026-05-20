@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+﻿import { useMemo, useState } from 'react';
 import { Upload, Sparkles } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Icon } from '../components/common/Icon';
@@ -8,6 +8,7 @@ import { AnikaPanel } from '../components/common/AnikaPanel';
 import { BtnPrimary, BtnGhost, BtnRow } from '../components/common/Button';
 import { INCOME_DOC_MAP } from '../data/incomeDocMap';
 import { INCOME_TYPES } from '../data/incomeTypes';
+import { getStep } from '../constants/screens';
 import './DocumentsUploadScreen.css';
 
 // ─── Static document data ─────────────────────────────────────────────────────
@@ -384,7 +385,7 @@ export function DocumentsUploadScreen() {
   return (
     <div className="screen-enter">
       <ScreenHeader
-        eyebrow="Step 13 · Document uploads"
+        eyebrow={`Step ${getStep('documentsupload')} · Document uploads`}
         title="Upload your"
         titleGradient="documents"
         sub={

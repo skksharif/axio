@@ -1,4 +1,4 @@
-import { Check, Wallet, Sparkles, FileCheck } from "lucide-react";
+﻿import { Check, Wallet, Sparkles, FileCheck } from "lucide-react";
 import { Icon } from "../components/common/Icon";
 import { useApp } from "../context/AppContext";
 import { ScreenHeader } from "../components/common/ScreenHeader";
@@ -8,6 +8,7 @@ import { InfoBanner } from "../components/common/InfoBanner";
 import { INCOME_TYPES } from "../data/incomeTypes";
 import { fmt } from "../utils/format";
 import "../components/ui/ALCard.css";
+import { getStep } from '../constants/screens';
 import "./IncomeScreen.css";
 
 export function IncomeScreen() {
@@ -17,7 +18,7 @@ export function IncomeScreen() {
   return (
     <div className="screen-enter">
       <ScreenHeader
-        eyebrow="Step 5 · Income"
+        eyebrow={`Step ${getStep('income')} · Income`}
         title=""
         titleGradient="Income"
         sub={

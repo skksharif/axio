@@ -1,4 +1,4 @@
-import { useState } from 'react';
+﻿import { useState } from 'react';
 import { AlertTriangle, Sparkles } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Icon } from '../components/common/Icon';
@@ -11,6 +11,7 @@ import { ChoiceCard, ChoiceGrid } from '../components/forms/ChoiceCard';
 import { Chip, Chips } from '../components/forms/Chip';
 import { DateSelect } from '../components/forms/DateSelect';
 import { getInitials } from '../utils/format';
+import { getStep } from '../constants/screens';
 import './ProfileScreen.css';
 
 const REL_OPTIONS = [
@@ -139,7 +140,7 @@ export function ProfileScreen() {
   return (
     <div className="screen-enter">
       <ScreenHeader
-        eyebrow="Step 4 · Profile"
+        eyebrow={`Step ${getStep('profile')} · Profile`}
         title="About"
         titleGradient="you"
         sub={

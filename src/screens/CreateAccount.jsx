@@ -1,8 +1,9 @@
-import { useState, useRef } from 'react';
+﻿import { useState, useRef } from 'react';
 import { useApp } from '../context/AppContext';
 import { ScreenHeader } from '../components/common/ScreenHeader';
 import { BtnGhost, BtnRow } from '../components/common/Button';
 import { Eye, EyeOff, ShieldCheck, Lock, Smartphone, Mail, Save, Activity } from 'lucide-react';
+import { getStep } from '../constants/screens';
 import './CreateAccount.css';
 
 export function CreateAccount() {
@@ -39,7 +40,7 @@ export function CreateAccount() {
   return (
     <div className="screen-enter ca-screen">
       <ScreenHeader
-        eyebrow="Step 12 · Account creation"
+        eyebrow={`Step ${getStep('signup')} · Account creation`}
         title="Create your"
         titleGradient="account"
         sub={

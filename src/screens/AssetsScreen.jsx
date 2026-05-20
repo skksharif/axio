@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo } from 'react';
+﻿import { useCallback, useEffect, useMemo } from 'react';
 import { LayoutGrid, Sparkles } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import { ScreenHeader } from '../components/common/ScreenHeader';
@@ -6,6 +6,7 @@ import { AnikaPanel } from '../components/common/AnikaPanel';
 import { BtnPrimary, BtnGhost, BtnRow } from '../components/common/Button';
 import { ALCard } from '../components/ui/ALCard';
 import { ASSET_TYPES } from '../data/assetTypes';
+import { getStep } from '../constants/screens';
 import '../components/ui/ALCard.css';
 
 // Default data shape for an asset type before the user has touched it.
@@ -90,7 +91,7 @@ export function AssetsScreen() {
   return (
     <div className="screen-enter">
       <ScreenHeader
-        eyebrow="Step 6 · Assets"
+        eyebrow={`Step ${getStep('assets')} · Assets`}
         title="Your"
         titleGradient="assets"
         sub={

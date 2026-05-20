@@ -1,4 +1,4 @@
-import { useState } from "react";
+﻿import { useState } from "react";
 import { Users, AlertTriangle, Receipt, Sparkles, SlidersHorizontal } from "lucide-react";
 import { Icon } from "../components/common/Icon";
 import { useApp } from "../context/AppContext";
@@ -15,6 +15,7 @@ import {
   HEM_SINGLE,
   HEM_COUPLE,
 } from "../data/expenseCategories";
+import { getStep } from '../constants/screens';
 import "./ExpensesScreen.css";
 
 export function ExpensesScreen() {
@@ -40,7 +41,7 @@ export function ExpensesScreen() {
   return (
     <div className="screen-enter">
       <ScreenHeader
-        eyebrow="Step 8 · Living expenses"
+        eyebrow={`Step ${getStep('expenses')} · Living expenses`}
         title="Monthly"
         titleGradient="living expenses"
         sub={

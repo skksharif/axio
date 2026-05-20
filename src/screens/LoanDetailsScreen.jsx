@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+﻿import { useEffect } from 'react';
 import { Sparkles, RefreshCw, AlertTriangle, Target, Building2, Check } from 'lucide-react';
 import { Icon } from '../components/common/Icon';
 import { useApp } from '../context/AppContext';
@@ -17,6 +17,7 @@ import { JointApplicant } from '../components/feature/JointApplicant';
 import { PURPOSES } from '../data/purposes';
 import { MARKETPLACE_CARS, MARKETPLACE_STATS } from '../data/productData';
 import { fmt, calcRepay, getRate, getRateLabel } from '../utils/format';
+import { getStep } from '../constants/screens';
 import './LoanDetailsScreen.css';
 
 const LOAN_TERMS_MO = [12, 24, 36, 48, 60, 72, 84];
@@ -41,7 +42,7 @@ export function LoanDetailsScreen() {
   return (
     <div className="screen-enter">
       <ScreenHeader
-        eyebrow={`Step 3 · ${isPersonal ? 'Personal Loan' : 'Car Loan'} Details`}
+        eyebrow={`Step ${getStep('loandetails')} · ${isPersonal ? 'Personal Loan' : 'Car Loan'} Details`}
         title="Tell us about"
         titleGradient={isPersonal ? 'your loan' : 'your car loan'}
         sub={
@@ -352,7 +353,7 @@ function CarLoanDetails({ repay, rateLabel }) {
       </Card>
 
       <Card>
-        <CardTitle icon="DollarSign">Loan amount, deposit &amp; trade-in</CardTitle>
+        <CardTitle icon="DollarSign">Loan amount</CardTitle>
         <RangeSlider label="Vehicle price / loan amount" value={state.loanAmount} prefix="$" min={5000} max={500000} step={1000} onChange={v => updateState({ loanAmount: v })} minLabel="$5,000" maxLabel="$500,000" />
 
         <div className="divider" />

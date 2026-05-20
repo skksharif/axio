@@ -1,10 +1,11 @@
-import { useState } from 'react';
+﻿import { useState } from 'react';
 import { ChevronDown, Check, FileText, Send } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import { ScreenHeader } from '../components/common/ScreenHeader';
 import { BtnPrimary, BtnGhost, BtnRow } from '../components/common/Button';
 import { Card, CardTitle } from '../components/common/Card';
 import { PRIVACY_SECTIONS, DECLARATIONS } from '../data/privacyData';
+import { getStep } from '../constants/screens';
 import './PrivacyScreen.css';
 
 export function PrivacyScreen() {
@@ -18,7 +19,7 @@ export function PrivacyScreen() {
   return (
     <div className="screen-enter">
       <ScreenHeader
-        eyebrow="Step 9 · Privacy & Consent"
+        eyebrow={`Step ${getStep('privacy')} · Privacy & Consent`}
         title="Privacy &"
         titleGradient="consent"
         sub={

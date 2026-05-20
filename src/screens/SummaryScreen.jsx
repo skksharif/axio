@@ -1,7 +1,7 @@
-import { useState, useCallback, useMemo } from 'react';
+﻿import { useState, useCallback, useMemo } from 'react';
 import { ShieldCheck, ClipboardList, Pencil } from 'lucide-react';
 import { useApp } from '../context/AppContext';
-import { SCREENS } from '../constants/screens';
+import { SCREENS, getStep } from '../constants/screens';
 import { ScreenHeader } from '../components/common/ScreenHeader';
 import { BtnPrimary, BtnGhost, BtnRow } from '../components/common/Button';
 import { SnapCard } from '../components/ui/SnapCard';
@@ -58,7 +58,7 @@ export function SummaryScreen() {
   return (
     <div className="screen-enter">
       <ScreenHeader
-        eyebrow="Step 10 · Final Summary"
+        eyebrow={`Step ${getStep('summary')} · Final Summary`}
         title="Application"
         titleGradient="summary"
         sub={

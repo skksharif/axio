@@ -1,4 +1,4 @@
-import { useState } from 'react';
+﻿import { useState } from 'react';
 import { BarChart2, Sparkles, Building2 } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import { ScreenHeader } from '../components/common/ScreenHeader';
@@ -7,6 +7,7 @@ import { AnikaPanel } from '../components/common/AnikaPanel';
 import { InfoBanner } from '../components/common/InfoBanner';
 import { LenderCard } from '../components/ui/LenderCard';
 import { LENDERS } from '../data/lenders';
+import { getStep } from '../constants/screens';
 import './LendersScreen.css';
 
 const FREQ_TABS = [
@@ -23,7 +24,7 @@ export function LendersScreen() {
   return (
     <div className="screen-enter">
       <ScreenHeader
-        eyebrow="Step 11 · Lender Results"
+        eyebrow={`Step ${getStep('lenders')} · Lender Results`}
         title="Your lender"
         titleGradient="matches"
         sub={

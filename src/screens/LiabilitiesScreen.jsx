@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+﻿import { useCallback } from 'react';
 import { ListChecks, Link2, Sparkles } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import { ScreenHeader } from '../components/common/ScreenHeader';
@@ -6,6 +6,7 @@ import { AnikaPanel } from '../components/common/AnikaPanel';
 import { BtnPrimary, BtnGhost, BtnRow } from '../components/common/Button';
 import { ALCard } from '../components/ui/ALCard';
 import { LIABILITY_TYPES } from '../data/liabilityTypes';
+import { getStep } from '../constants/screens';
 import '../components/ui/ALCard.css';
 
 const DEFAULT_LIABILITY_DATA = { nextId: 2, items: { 1: {} } };
@@ -38,7 +39,7 @@ export function LiabilitiesScreen() {
   return (
     <div className="screen-enter">
       <ScreenHeader
-        eyebrow="Step 7 · Liabilities"
+        eyebrow={`Step ${getStep('liabilities')} · Liabilities`}
         title="Your"
         titleGradient="liabilities"
         sub={

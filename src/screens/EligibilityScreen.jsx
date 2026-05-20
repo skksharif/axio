@@ -1,10 +1,11 @@
-import { useState } from 'react';
+﻿import { useState } from 'react';
 import { Check, Info, Sparkles } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import { Icon } from '../components/common/Icon';
 import { ScreenHeader } from '../components/common/ScreenHeader';
 import { AnikaPanel } from '../components/common/AnikaPanel';
 import { BtnPrimary, BtnRow } from '../components/common/Button';
+import { getStep } from '../constants/screens';
 import './EligibilityScreen.css';
 
 const WHY_FEATURES = [
@@ -108,7 +109,7 @@ export function EligibilityScreen() {
 
       {/* 3 ── ELIGIBILITY REQUIREMENTS ──────────────────────────── */}
       <ScreenHeader
-        eyebrow="Step 1 · Eligibility Check"
+        eyebrow={`Step ${getStep('eligibility')} · Eligibility Check`}
         title="Before we begin, let's check"
         titleGradient="your eligibility."
         sub="Tick all requirements below to confirm you're ready to apply. Anika AI uses your responses to match you with suitable lenders — zero credit file impact."

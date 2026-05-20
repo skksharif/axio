@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+﻿import { useEffect, useMemo, useState } from 'react';
 import { Landmark, Sparkles } from 'lucide-react';
 import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -6,6 +6,7 @@ import { Icon } from '../components/common/Icon';
 import { useApp } from '../context/AppContext';
 import { ScreenHeader } from '../components/common/ScreenHeader';
 import { BtnPrimary, BtnGhost, BtnRow } from '../components/common/Button';
+import { getStep } from '../constants/screens';
 import './ConnectBanksScreen.css';
 
 // ─── Static data ─────────────────────────────────────────────────────────────
@@ -277,7 +278,7 @@ export function ConnectBanksScreen() {
   return (
     <div className="screen-enter">
       <ScreenHeader
-        eyebrow="Step 14 · Connect banks"
+        eyebrow={`Step ${getStep('connectbanks')} · Connect banks`}
         title="Secure bank"
         titleGradient="connection"
         sub={

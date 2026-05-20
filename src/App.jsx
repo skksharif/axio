@@ -22,22 +22,22 @@ const DashboardScreen          = lazy(() => import('./screens/DashboardScreen').
 
 // Order MUST match screens.js exactly (index → component)
 const SCREEN_COMPONENTS = [
-  EligibilityScreen,        //  0
-  ProductScreen,            //  1
-  LoanDetailsScreen,        //  2
-  ProfileScreen,            //  3
-  IncomeScreen,             //  4
-  AssetsScreen,             //  5
-  LiabilitiesScreen,        //  6
-  ExpensesScreen,           //  7
-  PrivacyScreen,            //  8
-  SummaryScreen,            //  9
-  LendersScreen,            // 10
-  CreateAccount,            // 11
-  DocumentsUploadScreen,    // 12
-  ConnectBanksScreen,       // 13
-  VerificationStatusScreen, // 14
-  DashboardScreen,          // 15
+  EligibilityScreen,        //  0  Step 1
+  ProductScreen,            //  1  Step 2
+  LoanDetailsScreen,        //  2  Step 3
+  ProfileScreen,            //  3  Step 4
+  IncomeScreen,             //  4  Step 5
+  AssetsScreen,             //  5  Step 6
+  LiabilitiesScreen,        //  6  Step 7
+  ExpensesScreen,           //  7  Step 8
+  ConnectBanksScreen,       //  8  Step 9
+  DocumentsUploadScreen,    //  9  Step 10
+  PrivacyScreen,            // 10  Step 11
+  SummaryScreen,            // 11  Step 12
+  LendersScreen,            // 12  Step 13
+  CreateAccount,            // 13  Step 14
+  VerificationStatusScreen, // 14  Step 15
+  DashboardScreen,          // 15  Step 16
 ];
 
 function ScreenFallback() {

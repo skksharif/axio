@@ -15,7 +15,7 @@ export function ProductScreen() {
   return (
     <div className="screen-enter">
       <ScreenHeader
-        eyebrow="Axio Finance · No broker bias · Soft check only"
+        eyebrow="Step 2  ·  Select your loan type"
         title="Finance for the"
         titleGradient="new generation"
         sub={
