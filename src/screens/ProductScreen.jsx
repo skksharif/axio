@@ -57,6 +57,7 @@ export function ProductScreen() {
             <div
               key={p.id}
               className={`product-card${isSelected ? ' selected' : ''}`}
+              onClick={() => updateState({ loanType: p.id })}
             >
               {/* Top-right selection ring */}
               <div className={`pc-ring${isSelected ? ' pc-ring--active' : ''}`} aria-hidden="true">
@@ -90,7 +91,7 @@ export function ProductScreen() {
                 </div>
                 <button
                   className={`pc-apply-btn${isSelected ? ' pc-apply-btn--applied' : ''}`}
-                  onClick={() => updateState({ loanType: p.id })}
+                  onClick={e => { e.stopPropagation(); updateState({ loanType: p.id }); }}
                 >
                   {isSelected ? (
                     <><Icon name="Check" size={12} strokeWidth={2.5} /> Applied</>

@@ -14,7 +14,7 @@
   position: relative;
   text-align: center;
 }
-.choice-card:hover {
+.choice-card:not(.on):hover {
   border-color: var(--border2);
   background: var(--surface-hover);
   box-shadow: var(--card-shadow);
@@ -23,6 +23,10 @@
   border-color: var(--hover);
   background: var(--surface-active);
   box-shadow: 0 0 0 1px var(--border2);
+}
+.choice-card.on:hover {
+  border-color: var(--hover);
+  background: var(--surface-active);
 }
 
 .cc-check {
@@ -36,15 +40,23 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 10px;
-  color: transparent;
-  transition: background .18s ease, border-color .18s ease, color .18s ease;
   background: var(--surface-inner);
+  transition: background .18s ease, border-color .18s ease;
+  overflow: hidden;
+}
+.cc-check svg {
+  opacity: 0;
+  transform: scale(0.5);
+  color: #fff;
+  transition: opacity .15s ease, transform .2s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 .choice-card.on .cc-check {
-  background: var(--accentg);
+  background: var(--accent);
   border-color: transparent;
-  color: #fff;
+}
+.choice-card.on .cc-check svg {
+  opacity: 1;
+  transform: scale(1);
 }
 
 .cc-icon   { display: flex; align-items: center; justify-content: center; margin-bottom: 10px; color: var(--hover); }
@@ -66,7 +78,7 @@
   text-align: center;
   position: relative;
 }
-.cond-card:hover {
+.cond-card:not(.on):hover {
   border-color: var(--border2);
   background: var(--surface-hover);
 }
@@ -75,7 +87,19 @@
   background: var(--surface-active);
   box-shadow: 0 0 0 1px var(--border2);
 }
+.cond-card.on:hover {
+  border-color: var(--hover);
+  background: var(--surface-active);
+}
 .cond-card .cc-check { position: absolute; top: 10px; right: 10px; }
+.cond-card.on .cc-check {
+  background: var(--accent);
+  border-color: transparent;
+}
+.cond-card.on .cc-check svg {
+  opacity: 1;
+  transform: scale(1);
+}
 
 @media (max-width: 1100px) {
   .choice-grid-6 { grid-template-columns: repeat(4, 1fr); }

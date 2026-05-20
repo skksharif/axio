@@ -178,16 +178,24 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: transparent;
   flex-shrink: 0;
   background: var(--surface-input);
-  transition: background .2s, border-color .2s, color .2s, box-shadow .2s;
+  overflow: hidden;
+  transition: background .2s, border-color .2s;
+}
+.al-check svg {
+  opacity: 0;
+  transform: scale(0.5);
+  color: #fff;
+  transition: opacity .15s ease, transform .2s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 .al-card.on .al-check {
-  background: var(--accentg);
+  background: var(--accent);
   border-color: transparent;
-  color: #fff;
-  box-shadow: var(--glow-sm);
+}
+.al-card.on .al-check svg {
+  opacity: 1;
+  transform: scale(1);
 }
 
 /* ─── BODY (height animated by framer-motion, overflow hidden inline) */

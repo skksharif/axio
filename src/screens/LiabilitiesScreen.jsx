@@ -84,6 +84,7 @@ export function LiabilitiesScreen() {
                   linkedItems={linkedItems}
                   linkedMeta={linkedMeta}
                   isLiability={!isLinked}
+                  allowConsolidate={!l.linked}
                   liabilityData={isLinked ? undefined : (state.liabilitiesData[l.id] ?? DEFAULT_LIABILITY_DATA)}
                   onAddItem={handlers.onAddItem}
                   onRemoveItem={handlers.onRemoveItem}

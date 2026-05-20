@@ -30,28 +30,27 @@ export function SummaryScreen() {
     if (idx !== -1) goTo(idx);
   }, [goTo]);
 
-  // Sum current balances of all liabilities (and real estate links) where consolidate === true.
+  // Sum current balances of eligible liabilities where consolidate === true.
+  // Real estate (realEstateLinks + homeloan liabilityData) is excluded — not eligible for consolidation.
   const totalConsolidation = useMemo(() => {
     let total = 0;
-    Object.values(state.realEstateLinks || {}).forEach(link => {
-      if (link.consolidate) total += parseCurrency(link.currentBalance);
-    });
-    Object.values(state.liabilitiesData || {}).forEach(liabType => {
+    Object.entries(state.liabilitiesData || {}).forEach(([typeId, liabType]) => {
+      if (typeId === 'homeloan') return;
       Object.values(liabType.items || {}).forEach(item => {
         if (item.consolidate) total += parseCurrency(item.currentBalance);
       });
     });
     return total;
-  }, [state.realEstateLinks, state.liabilitiesData]);
+  }, [state.liabilitiesData]);
 
-  // Build snap card list — inject the Consolidate row into Assets & Liabilities when > 0.
+  // Build snap card list — always inject the Consolidate row into Assets & Liabilities.
   const snapCards = useMemo(() => SNAP_CARDS.map(snap => {
-    if (snap.id !== 'assets' || totalConsolidation === 0) return snap;
+    if (snap.id !== 'assets') return snap;
     return {
       ...snap,
       fields: [
         ...snap.fields,
-        ['Consolidate', formatAUD(totalConsolidation), 'yellow'],
+        ['Consolidate', formatAUD(totalConsolidation), totalConsolidation > 0 ? 'yellow' : undefined],
       ],
     };
   }), [totalConsolidation]);

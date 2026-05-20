@@ -84,6 +84,7 @@ export function ALCard({
   id, icon, title, desc, hasFin, on, onToggle,
   isLinked, linkedItems, linkedMeta, onLinkedItemChange,
   isRealEstate, isLiability,
+  allowConsolidate = true,
   addLabel, addDesc, children,
   // Controlled-mode props (assets)
   assetData,      // { nextId: N, items: { [itemId]: { ...fields } } }
@@ -172,6 +173,7 @@ export function ALCard({
                   <LinkedEntry
                     key={item.id}
                     data={item}
+                    allowConsolidate={allowConsolidate}
                     onChange={onLinkedItemChange
                       ? (fields) => onLinkedItemChange(item.id, fields)
                       : undefined}
@@ -204,6 +206,7 @@ export function ALCard({
                           ) : isLiability ? (
                             <LiabilityEntry
                               title={title}
+                              allowConsolidate={allowConsolidate}
                               values={isControlled ? (controlledItems[itemId] || {}) : {}}
                               onChange={isControlled ? (fields) => onItemChange?.(itemId, fields) : undefined}
                               {...entryProps}
@@ -271,8 +274,8 @@ function EntryHeader({ label, canRemove, onRemove }) {
   );
 }
 
-/* ─── Linked entry — read-only fields, consolidation toggle ─── */
-function LinkedEntry({ data, onChange }) {
+/* ─── Linked entry — read-only fields (real estate, no consolidation) ─── */
+function LinkedEntry({ data, onChange, allowConsolidate }) {
   const propLabel = PROPERTY_TYPE_LABELS[data?.propertyType] || data?.propertyType || 'Property';
   const consolidate = data?.consolidate ?? false;
 
@@ -311,13 +314,15 @@ function LinkedEntry({ data, onChange }) {
       <div className="linked-entry-note">
         To edit these details, update them in the Assets section.
       </div>
-      <div className="fin-toggle-row">
-        <span className="fin-toggle-lbl">Consolidate this debt?</span>
-        <ToggleSwitch
-          on={consolidate}
-          onToggle={() => onChange?.({ consolidate: !consolidate })}
-        />
-      </div>
+      {allowConsolidate && (
+        <div className="fin-toggle-row">
+          <span className="fin-toggle-lbl">Consolidate this debt?</span>
+          <ToggleSwitch
+            on={consolidate}
+            onToggle={() => onChange?.({ consolidate: !consolidate })}
+          />
+        </div>
+      )}
     </div>
   );
 }
@@ -515,7 +520,7 @@ function CreditCardEntry({ num, canRemove, onRemove, values = {}, onChange }) {
 }
 
 /* ─── Generic liability entry ────────────────────────────────────── */
-function LiabilityEntry({ title, num, canRemove, onRemove, values = {}, onChange }) {
+function LiabilityEntry({ title, num, canRemove, onRemove, values = {}, onChange, allowConsolidate = true }) {
   const lender           = values.lender           ?? '';
   const amountBorrowed   = values.amountBorrowed   ?? '';
   const currentBalance   = values.currentBalance   ?? '';
@@ -554,10 +559,12 @@ function LiabilityEntry({ title, num, canRemove, onRemove, values = {}, onChange
           <input placeholder="$0" value={monthlyRepayments} onChange={set('monthlyRepayments')} />
         </div>
       </div>
-      <div className="fin-toggle-row">
-        <span className="fin-toggle-lbl">Consolidate this debt?</span>
-        <ToggleSwitch on={consolidate} onToggle={() => onChange?.({ consolidate: !consolidate })} />
-      </div>
+      {allowConsolidate && (
+        <div className="fin-toggle-row">
+          <span className="fin-toggle-lbl">Consolidate this debt?</span>
+          <ToggleSwitch on={consolidate} onToggle={() => onChange?.({ consolidate: !consolidate })} />
+        </div>
+      )}
     </div>
   );
 }
