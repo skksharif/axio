@@ -277,7 +277,7 @@ export function ConnectBanksScreen() {
   return (
     <div className="screen-enter">
       <ScreenHeader
-        eyebrow="Step 13 · Connect banks"
+        eyebrow="Step 14 · Connect banks"
         title="Secure bank"
         titleGradient="connection"
         sub={

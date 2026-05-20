@@ -3,6 +3,7 @@ import { useApp } from './context/AppContext';
 import { Sidebar } from './components/layout/Sidebar';
 import { TopBar } from './components/layout/TopBar';
 
+const EligibilityScreen        = lazy(() => import('./screens/EligibilityScreen').then(m => ({ default: m.EligibilityScreen })));
 const ProductScreen            = lazy(() => import('./screens/ProductScreen').then(m => ({ default: m.ProductScreen })));
 const LoanDetailsScreen        = lazy(() => import('./screens/LoanDetailsScreen').then(m => ({ default: m.LoanDetailsScreen })));
 const ProfileScreen            = lazy(() => import('./screens/ProfileScreen').then(m => ({ default: m.ProfileScreen })));
@@ -21,21 +22,22 @@ const DashboardScreen          = lazy(() => import('./screens/DashboardScreen').
 
 // Order MUST match screens.js exactly (index → component)
 const SCREEN_COMPONENTS = [
-  ProductScreen,            // 0
-  LoanDetailsScreen,        // 1
-  ProfileScreen,            // 2
-  IncomeScreen,             // 3
-  AssetsScreen,             // 4
-  LiabilitiesScreen,        // 5
-  ExpensesScreen,           // 6
-  PrivacyScreen,            // 7
-  SummaryScreen,            // 8
-  LendersScreen,            // 9
-  CreateAccount,            // 10
-  DocumentsUploadScreen,    // 11
-  ConnectBanksScreen,       // 12
-  VerificationStatusScreen, // 13
-  DashboardScreen,          // 14
+  EligibilityScreen,        //  0
+  ProductScreen,            //  1
+  LoanDetailsScreen,        //  2
+  ProfileScreen,            //  3
+  IncomeScreen,             //  4
+  AssetsScreen,             //  5
+  LiabilitiesScreen,        //  6
+  ExpensesScreen,           //  7
+  PrivacyScreen,            //  8
+  SummaryScreen,            //  9
+  LendersScreen,            // 10
+  CreateAccount,            // 11
+  DocumentsUploadScreen,    // 12
+  ConnectBanksScreen,       // 13
+  VerificationStatusScreen, // 14
+  DashboardScreen,          // 15
 ];
 
 function ScreenFallback() {

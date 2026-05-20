@@ -17,7 +17,7 @@ export function IncomeScreen() {
   return (
     <div className="screen-enter">
       <ScreenHeader
-        eyebrow="Step 4 · Income"
+        eyebrow="Step 5 · Income"
         title=""
         titleGradient="Income"
         sub={

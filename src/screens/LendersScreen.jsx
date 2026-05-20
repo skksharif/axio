@@ -23,7 +23,7 @@ export function LendersScreen() {
   return (
     <div className="screen-enter">
       <ScreenHeader
-        eyebrow="Step 10 · Lender Results"
+        eyebrow="Step 11 · Lender Results"
         title="Your lender"
         titleGradient="matches"
         sub={

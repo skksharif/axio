@@ -39,7 +39,7 @@ export function CreateAccount() {
   return (
     <div className="screen-enter ca-screen">
       <ScreenHeader
-        eyebrow="Step 11 · Account creation"
+        eyebrow="Step 12 · Account creation"
         title="Create your"
         titleGradient="account"
         sub={

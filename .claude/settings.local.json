@@ -28,7 +28,12 @@
       "PowerShell(New-Item -Path \"b:\\\\axio\\\\axio-react\\\\src\\\\hooks\" -ItemType Directory -Force)",
       "PowerShell(New-Item -Path \"b:\\\\axio\\\\axio-react\\\\src\\\\hooks\\\\useTheme.js\" -ItemType File -Force)",
       "PowerShell(\"ok\")",
-      "Bash(xargs grep -l \"consolidat\\\\|Consolidat\")"
+      "Bash(xargs grep -l \"consolidat\\\\|Consolidat\")",
+      "Bash(sed -i 's/eyebrow=\"Step 3 · Profile\"/eyebrow=\"Step 4 · Profile\"/' \"b:/axio/axio-react/src/screens/ProfileScreen.jsx\")",
+      "Bash(sed -i 's/eyebrow=\"Step 4 · Income\"/eyebrow=\"Step 5 · Income\"/' \"b:/axio/axio-react/src/screens/IncomeScreen.jsx\")",
+      "Bash(sed -i 's/eyebrow=\"Step 5 · Assets\"/eyebrow=\"Step 6 · Assets\"/' \"b:/axio/axio-react/src/screens/AssetsScreen.jsx\")",
+      "Bash(sed -i 's/eyebrow=\"Step 6 · Liabilities\"/eyebrow=\"Step 7 · Liabilities\"/' \"b:/axio/axio-react/src/screens/LiabilitiesScreen.jsx\")",
+      "Bash(sed -i 's/eyebrow=\"Step 7 · Living expenses\"/eyebrow=\"Step 8 · Living expenses\"/' \"b:/axio/axio-react/src/screens/ExpensesScreen.jsx\")"
     ]
   }
 }

@@ -58,7 +58,7 @@ export function SummaryScreen() {
   return (
     <div className="screen-enter">
       <ScreenHeader
-        eyebrow="Step 9 · Final Summary"
+        eyebrow="Step 10 · Final Summary"
         title="Application"
         titleGradient="summary"
         sub={

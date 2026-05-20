@@ -384,7 +384,7 @@ export function DocumentsUploadScreen() {
   return (
     <div className="screen-enter">
       <ScreenHeader
-        eyebrow="Step 12 · Document uploads"
+        eyebrow="Step 13 · Document uploads"
         title="Upload your"
         titleGradient="documents"
         sub={

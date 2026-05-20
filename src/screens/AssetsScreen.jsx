@@ -90,7 +90,7 @@ export function AssetsScreen() {
   return (
     <div className="screen-enter">
       <ScreenHeader
-        eyebrow="Step 5 · Assets"
+        eyebrow="Step 6 · Assets"
         title="Your"
         titleGradient="assets"
         sub={

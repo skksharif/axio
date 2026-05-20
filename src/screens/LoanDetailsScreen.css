@@ -1,3 +1,10 @@
+/* ─── Vehicle fields layout transition ──────────────────────────── */
+@keyframes veh-fields-in {
+  from { opacity: 0; transform: translateY(5px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.veh-fields { animation: veh-fields-in .2s ease forwards; }
+
 /* ─── Secure loan card header ──────────────────────────────────── */
 .sec-loan-hd { margin-bottom: 16px; }
 
@@ -137,4 +144,95 @@
   align-items: center;
   gap: 5px;
   opacity: 0.88;
+}
+
+/* ─── Security asset type selection ─────────────────────────────── */
+@keyframes sec-type-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.sec-type-section {
+  margin-top: 16px;
+  animation: sec-type-in .2s ease forwards;
+}
+
+.sec-type-hd { margin-bottom: 10px; }
+
+.sec-type-lbl {
+  font-size: 10.5px;
+  font-weight: 700;
+  color: var(--text2);
+  text-transform: uppercase;
+  letter-spacing: .65px;
+}
+
+.sec-type-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.sec-type-card {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 11px 13px;
+  border-radius: var(--r12);
+  border: 1px solid var(--glass-border);
+  background: var(--surface-card);
+  cursor: pointer;
+  position: relative;
+  transition: border-color .18s ease, background .18s ease;
+}
+.sec-type-card:not(.on):hover {
+  border-color: var(--border2);
+  background: var(--surface-hover);
+}
+.sec-type-card.on {
+  border-color: var(--hover);
+  background: var(--surface-active);
+}
+
+.sec-type-icon {
+  width: 36px;
+  height: 36px;
+  min-width: 36px;
+  border-radius: var(--r8);
+  background: var(--surface-inner);
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text1);
+  flex-shrink: 0;
+  transition: background .18s, border-color .18s, color .18s;
+}
+.sec-type-card.on .sec-type-icon {
+  background: var(--surface-active);
+  border-color: var(--border2);
+  color: var(--hover);
+}
+
+.sec-type-body { flex: 1; min-width: 0; }
+.sec-type-title { font-size: 13px; font-weight: 700; color: var(--text0); margin-bottom: 2px; line-height: 1.2; }
+.sec-type-desc  { font-size: 11px; color: var(--text2); line-height: 1.4; }
+
+/* Override absolute positioning from .cc-check base so it flows as a flex item */
+.sec-type-card .cc-check { position: static; flex-shrink: 0; }
+
+.sec-type-card.on .cc-check {
+  background: var(--accent);
+  border-color: transparent;
+}
+.sec-type-card.on .cc-check svg {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.sec-type-form { animation: sec-type-in .18s ease forwards; }
+
+@media (max-width: 600px) {
+  .sec-type-grid { grid-template-columns: 1fr; }
 }

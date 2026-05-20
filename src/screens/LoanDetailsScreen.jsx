@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Sparkles, RefreshCw, AlertTriangle, Target, Building2 } from 'lucide-react';
+import { Sparkles, RefreshCw, AlertTriangle, Target, Building2, Check } from 'lucide-react';
 import { Icon } from '../components/common/Icon';
 import { useApp } from '../context/AppContext';
 import { ScreenHeader } from '../components/common/ScreenHeader';
@@ -20,6 +20,13 @@ import { fmt, calcRepay, getRate, getRateLabel } from '../utils/format';
 import './LoanDetailsScreen.css';
 
 const LOAN_TERMS_MO = [12, 24, 36, 48, 60, 72, 84];
+
+const SECURITY_ASSET_TYPES = [
+  { id: 'vehicle',   icon: 'Car',    title: 'Vehicle',   desc: 'Cars, SUVs, Utes & Vans' },
+  { id: 'caravan',   icon: 'Truck',  title: 'Caravan',   desc: 'Caravans, campers & RVs' },
+  { id: 'marine',    icon: 'Anchor', title: 'Marine',    desc: 'Boats, jet skis & marine assets' },
+  { id: 'motorbike', icon: 'Bike',   title: 'Motorbike', desc: 'Road, cruiser & dirt bikes' },
+];
 const BALLOON_MAX_TERM = 60;
 
 export function LoanDetailsScreen() {
@@ -34,7 +41,7 @@ export function LoanDetailsScreen() {
   return (
     <div className="screen-enter">
       <ScreenHeader
-        eyebrow={`Step 2 · ${isPersonal ? 'Personal Loan' : 'Car Loan'} Details`}
+        eyebrow={`Step 3 · ${isPersonal ? 'Personal Loan' : 'Car Loan'} Details`}
         title="Tell us about"
         titleGradient={isPersonal ? 'your loan' : 'your car loan'}
         sub={
@@ -165,11 +172,34 @@ function PersonalLoanDetails({ repay, rateLabel }) {
         </ChoiceGrid>
         <div className="divider" />
         <InfoBanner icon="AlertTriangle" variant="yellow">
-          The vehicle used as security <strong>must be owned outright with no existing finance</strong>. A PPSR check will be run during assessment.
+          The asset used as security <strong>must be owned outright with no existing finance</strong>. A PPSR / title check will be run during assessment.
         </InfoBanner>
         {state.securityType === 'secured' && (
-          <div className="cond-panel show">
-            <RegoLookup prefix="pl" />
+          <div className="sec-type-section">
+            <div className="sec-type-hd">
+              <span className="sec-type-lbl">What type of asset?</span>
+            </div>
+            <div className="sec-type-grid">
+              {SECURITY_ASSET_TYPES.map(t => (
+                <div
+                  key={t.id}
+                  className={`sec-type-card${state.securityAssetType === t.id ? ' on' : ''}`}
+                  onClick={() => updateState({ securityAssetType: t.id })}
+                >
+                  <div className="sec-type-icon"><Icon name={t.icon} size={18} /></div>
+                  <div className="sec-type-body">
+                    <div className="sec-type-title">{t.title}</div>
+                    <div className="sec-type-desc">{t.desc}</div>
+                  </div>
+                  <div className="cc-check"><Check size={10} strokeWidth={2.8} /></div>
+                </div>
+              ))}
+            </div>
+            {state.securityAssetType && (
+              <div className="sec-type-form">
+                <RegoLookup prefix="pl" />
+              </div>
+            )}
           </div>
         )}
       </Card>
@@ -253,15 +283,30 @@ function CarLoanDetails({ repay, rateLabel }) {
         {state.vehicleFound && (
           <>
             <div className="divider" />
-            <div className="g3">
-              <div className="fld"><label className="fl">Year</label><input className="inp" placeholder="e.g. 2023" /></div>
-              <div className="fld"><label className="fl">Make</label><input className="inp" placeholder="e.g. Toyota" /></div>
-              <div className="fld"><label className="fl">Model</label><input className="inp" placeholder="e.g. Camry" /></div>
-            </div>
-            <div className="g2">
-              <div className="fld"><label className="fl">Purchase price</label><input className="inp" placeholder="$0" /></div>
-              <div className="fld"><label className="fl">Odometer</label><input className="inp" placeholder="km" /></div>
-            </div>
+            {state.vehicleCondition === 'new' ? (
+              <div key="layout-new" className="veh-fields">
+                <div className="g2">
+                  <div className="fld"><label className="fl">Year</label><input className="inp" placeholder="e.g. 2023" /></div>
+                  <div className="fld"><label className="fl">Make</label><input className="inp" placeholder="e.g. Toyota" /></div>
+                </div>
+                <div className="g2">
+                  <div className="fld"><label className="fl">Model</label><input className="inp" placeholder="e.g. Camry" /></div>
+                  <div className="fld"><label className="fl">Purchase price</label><input className="inp" placeholder="$0" /></div>
+                </div>
+              </div>
+            ) : (
+              <div key="layout-used" className="veh-fields">
+                <div className="g3">
+                  <div className="fld"><label className="fl">Year</label><input className="inp" placeholder="e.g. 2023" /></div>
+                  <div className="fld"><label className="fl">Make</label><input className="inp" placeholder="e.g. Toyota" /></div>
+                  <div className="fld"><label className="fl">Model</label><input className="inp" placeholder="e.g. Camry" /></div>
+                </div>
+                <div className="g2">
+                  <div className="fld"><label className="fl">Purchase price</label><input className="inp" placeholder="$0" /></div>
+                  <div className="fld"><label className="fl">Odometer</label><input key={state.vehicleCondition} className="inp" placeholder="km" /></div>
+                </div>
+              </div>
+            )}
           </>
         )}
 

@@ -40,7 +40,7 @@ export function ExpensesScreen() {
   return (
     <div className="screen-enter">
       <ScreenHeader
-        eyebrow="Step 7 · Living expenses"
+        eyebrow="Step 8 · Living expenses"
         title="Monthly"
         titleGradient="living expenses"
         sub={

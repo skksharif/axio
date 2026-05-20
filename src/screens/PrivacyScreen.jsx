@@ -18,7 +18,7 @@ export function PrivacyScreen() {
   return (
     <div className="screen-enter">
       <ScreenHeader
-        eyebrow="Step 8 · Privacy & Consent"
+        eyebrow="Step 9 · Privacy & Consent"
         title="Privacy &"
         titleGradient="consent"
         sub={

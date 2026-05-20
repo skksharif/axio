@@ -38,7 +38,7 @@ export function LiabilitiesScreen() {
   return (
     <div className="screen-enter">
       <ScreenHeader
-        eyebrow="Step 6 · Liabilities"
+        eyebrow="Step 7 · Liabilities"
         title="Your"
         titleGradient="liabilities"
         sub={

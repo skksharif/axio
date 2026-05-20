@@ -9,11 +9,13 @@ const initialExpenses = Object.fromEntries(
 const initialState = {
   currentScreen: 0,
   completedScreens: [],
+  checkedEligibility: [],
   loanType: 'personal',
   vehicleCondition: 'new',
   purchaseType: 'dealer',
   vehicleFound: true,
   securityType: 'unsecured',
+  securityAssetType: 'vehicle',
   loanAmount: 25000,
   loanTerm: null,
   deposit: 5000,

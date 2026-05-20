@@ -40,7 +40,7 @@ export function RegoLookup({ prefix }) {
           </select>
         </div>
         <div>
-          <label className="fl">Registration plate</label>
+          <label className="fl">Registration Number</label>
           <input
             className="inp"
             value={plate}

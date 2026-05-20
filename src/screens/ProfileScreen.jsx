@@ -139,7 +139,7 @@ export function ProfileScreen() {
   return (
     <div className="screen-enter">
       <ScreenHeader
-        eyebrow="Step 3 · Profile"
+        eyebrow="Step 4 · Profile"
         title="About"
         titleGradient="you"
         sub={
