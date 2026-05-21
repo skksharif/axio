@@ -1,5 +1,5 @@
 ﻿import { useState } from 'react';
-import { Check, Info, Sparkles } from 'lucide-react';
+import { Check, Info } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import { Icon } from '../components/common/Icon';
 import { ScreenHeader } from '../components/common/ScreenHeader';
@@ -7,15 +7,6 @@ import { AnikaPanel } from '../components/common/AnikaPanel';
 import { BtnPrimary, BtnRow } from '../components/common/Button';
 import { getStep } from '../constants/screens';
 import './EligibilityScreen.css';
-
-const WHY_FEATURES = [
-  { icon: 'Smartphone',    title: 'Simple digital process',     desc: 'Apply online, upload documents securely, and track your finance journey from one dashboard.' },
-  { icon: 'ShieldCheck',   title: 'Safe & secure',              desc: 'Designed with secure verification, protected document uploads, and privacy-first data handling.' },
-  { icon: 'Eye',           title: 'Full transparency',          desc: 'Every lender fee, repayment, comparison rate, and charge is clearly disclosed upfront.' },
-  { icon: 'CreditCard',    title: 'Zero credit impact check',   desc: 'Explore lender options using soft checks only, without impacting your credit file.' },
-  { icon: 'Bell',          title: 'Stay alert via dashboard',   desc: 'Get real-time updates, document requests, and application progress alerts in one place.' },
-  { icon: 'MessageCircle', title: 'Less calls. Less pressure.', desc: 'No pushy sales tactics. Communication is digital, clear, and on your terms.' },
-];
 
 const ITEMS = [
   {
@@ -82,29 +73,7 @@ export function EligibilityScreen() {
   return (
     <div className="screen-enter">
 
-      {/* 1 ── WHY AXIO ──────────────────────────────────────────── */}
-      <div className="elig-why-section">
-        <div className="elig-why-intro">
-          <div className="screen-eyebrow"><Sparkles size={10} />Why Axio</div>
-          <h2 className="elig-why-heading">Simple. Digital. Transparent. Secure.</h2>
-          <p className="elig-why-sub">
-            A finance experience built to remove confusion, reduce pressure,
-            and give customers clearer control from start to finish.
-          </p>
-        </div>
-
-        <div className="elig-why-grid">
-          {WHY_FEATURES.map((f, i) => (
-            <div key={i} className="elig-why-card">
-              <div className="elig-why-icon"><Icon name={f.icon} size={14} /></div>
-              <div className="elig-why-card-title">{f.title}</div>
-              <div className="elig-why-card-desc">{f.desc}</div>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* 2 ── ANIKA AI ──────────────────────────────────────────── */}
+      {/* 1 ── ANIKA AI ──────────────────────────────────────────── */}
       <AnikaPanel message={ANIKA_MSG} />
 
       {/* 3 ── ELIGIBILITY REQUIREMENTS ──────────────────────────── */}
@@ -169,7 +138,7 @@ export function EligibilityScreen() {
 
       <BtnRow style={{ justifyContent: 'flex-end' }}>
         <BtnPrimary onClick={next} disabled={!allDone}>
-          Continue to product selection →
+          Continue →
         </BtnPrimary>
       </BtnRow>
 

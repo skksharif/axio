@@ -99,7 +99,7 @@ export function VerificationStatusScreen() {
 
       <BtnRow>
         <BtnGhost onClick={prev}>← Back</BtnGhost>
-        <BtnPrimary onClick={next}>Access your portal →</BtnPrimary>
+        <BtnPrimary onClick={next}>Continue →</BtnPrimary>
       </BtnRow>
     </div>
   );

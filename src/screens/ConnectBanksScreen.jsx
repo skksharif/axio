@@ -615,7 +615,7 @@ export function ConnectBanksScreen() {
 
       <BtnRow>
         <BtnGhost onClick={prev}>← Back</BtnGhost>
-        <BtnPrimary onClick={next}>Continue to verification →</BtnPrimary>
+        <BtnPrimary onClick={next}>Continue →</BtnPrimary>
       </BtnRow>
 
       <SecureConnectModal

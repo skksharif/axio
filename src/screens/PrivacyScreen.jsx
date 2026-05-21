@@ -67,7 +67,7 @@ export function PrivacyScreen() {
 
       <BtnRow>
         <BtnGhost onClick={prev}>← Back</BtnGhost>
-        <BtnPrimary onClick={next}>Continue to summary →</BtnPrimary>
+        <BtnPrimary onClick={next}>Continue →</BtnPrimary>
       </BtnRow>
     </div>
   );

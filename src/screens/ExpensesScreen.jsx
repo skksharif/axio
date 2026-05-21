@@ -322,7 +322,7 @@ export function ExpensesScreen() {
 
       <BtnRow>
         <BtnGhost onClick={prev}>← Back</BtnGhost>
-        <BtnPrimary onClick={next}>Continue to privacy →</BtnPrimary>
+        <BtnPrimary onClick={next}>Continue →</BtnPrimary>
       </BtnRow>
     </div>
   );

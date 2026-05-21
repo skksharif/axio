@@ -582,7 +582,7 @@ export function DocumentsUploadScreen() {
           disabled={isVisaHolder && !visaUploaded}
           style={isVisaHolder && !visaUploaded ? { opacity: 0.45, cursor: 'not-allowed' } : {}}
         >
-          Continue to connect banks →
+          Continue →
         </BtnPrimary>
       </BtnRow>
 

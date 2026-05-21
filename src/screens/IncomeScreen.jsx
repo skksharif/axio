@@ -116,7 +116,7 @@ export function IncomeScreen() {
 
       <BtnRow>
         <BtnGhost onClick={prev}>← Back</BtnGhost>
-        <BtnPrimary onClick={next}>Continue to assets →</BtnPrimary>
+        <BtnPrimary onClick={next}>Continue →</BtnPrimary>
       </BtnRow>
     </div>
   );

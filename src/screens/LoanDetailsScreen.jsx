@@ -74,7 +74,7 @@ export function LoanDetailsScreen() {
 
       <BtnRow>
         <BtnGhost onClick={prev}>← Back</BtnGhost>
-        <BtnPrimary onClick={next}>Continue to profile →</BtnPrimary>
+        <BtnPrimary onClick={next}>Continue →</BtnPrimary>
       </BtnRow>
     </div>
   );
@@ -135,7 +135,7 @@ function PersonalLoanDetails({ repay, rateLabel }) {
         <RepayBox
           label="Estimated monthly repayment"
           sub="Indicative · actual rate confirmed after matching"
-          value={state.loanTerm ? `${fmt(repay)} / mo` : '— select a term'}
+          value={state.loanTerm ? `${fmt(repay)} / month` : '$0 / month'}
           rateLabel={rateLabel}
         />
       </Card>
@@ -284,38 +284,25 @@ function CarLoanDetails({ repay, rateLabel }) {
         {state.vehicleFound && (
           <>
             <div className="divider" />
-            {state.vehicleCondition === 'new' ? (
-              <div key="layout-new" className="veh-fields">
-                <div className="veh-row-2">
-                  <div className="fld"><label className="fl">Year</label><input className="inp" placeholder="e.g. 2024" /></div>
-                  <div className="fld"><label className="fl">Make</label><input className="inp" placeholder="e.g. Toyota" /></div>
-                </div>
-                <div className="veh-row-2">
-                  <div className="fld"><label className="fl">Model</label><input className="inp" placeholder="e.g. Camry" /></div>
-                  <div className="fld"><label className="fl">Series / Variant</label><input className="inp" placeholder="e.g. GX, Sport, Executive" /></div>
-                </div>
-                <div className="veh-row-2">
-                  <div className="fld"><label className="fl">Purchase price</label><input className="inp" placeholder="$0" /></div>
-                  <div className="fld"><label className="fl">Inspection link</label><input className="inp" type="url" placeholder="e.g. carsales.com.au/..." /></div>
-                </div>
+            <div className="veh-fields">
+              <div className="veh-row-2">
+                <div className="fld"><label className="fl">Year</label><input className="inp" placeholder={state.vehicleCondition === 'new' ? 'e.g. 2024' : 'e.g. 2020'} /></div>
+                <div className="fld"><label className="fl">Make</label><input className="inp" placeholder="e.g. Toyota" /></div>
               </div>
-            ) : (
-              <div key="layout-used" className="veh-fields">
-                <div className="veh-row-3">
-                  <div className="fld"><label className="fl">Year</label><input className="inp" placeholder="e.g. 2020" /></div>
-                  <div className="fld"><label className="fl">Make</label><input className="inp" placeholder="e.g. Toyota" /></div>
-                  <div className="fld"><label className="fl">Model</label><input className="inp" placeholder="e.g. Camry" /></div>
-                </div>
-                <div className="veh-row-2">
-                  <div className="fld"><label className="fl">Series / Variant</label><input className="inp" placeholder="e.g. GX, Sport, Executive" /></div>
-                  <div className="fld"><label className="fl">Purchase price</label><input className="inp" placeholder="$0" /></div>
-                </div>
-                <div className="veh-row-2">
-                  <div className="fld"><label className="fl">Odometer</label><input key={state.vehicleCondition} className="inp" placeholder="e.g. 85,000 km" /></div>
-                  <div className="fld"><label className="fl">Inspection link</label><input className="inp" type="url" placeholder="e.g. carsales.com.au/..." /></div>
-                </div>
+              <div className="veh-row-2">
+                <div className="fld"><label className="fl">Model</label><input className="inp" placeholder="e.g. Camry" /></div>
+                <div className="fld"><label className="fl">Series / Variant</label><input className="inp" placeholder="e.g. GX, Sport, Executive" /></div>
               </div>
-            )}
+              {state.vehicleCondition !== 'new' && (
+                <div className="veh-row-2">
+                  <div className="fld">
+                    <label className="fl">Odometer</label>
+                    <input key={state.vehicleCondition} className="inp" placeholder="e.g. 85,000 km" />
+                  </div>
+                  <div aria-hidden="true" />
+                </div>
+              )}
+            </div>
           </>
         )}
 
@@ -354,7 +341,7 @@ function CarLoanDetails({ repay, rateLabel }) {
             </div>
             <div className="mp-cta-row">
               <div className="text-small text-border2"><strong className="text-strong">Budget-matched listings</strong> unlock after approval.</div>
-              <BtnPrimary onClick={() => {}}>Continue to get approved →</BtnPrimary>
+              <BtnPrimary onClick={() => {}}>Continue →</BtnPrimary>
             </div>
           </div>
         )}
@@ -422,13 +409,13 @@ function CarLoanDetails({ repay, rateLabel }) {
           )}
         </div>
 
-        <RepayBox label="Estimated monthly repayment" sub="Indicative · confirmed after matching" value={state.loanTerm ? `${fmt(repay)} / mo` : '— select a term'} rateLabel={rateLabel} />
+        <RepayBox label="Estimated monthly repayment" sub="Indicative · confirmed after matching" value={state.loanTerm ? `${fmt(repay)} / month` : '$0 / month'} rateLabel={rateLabel} />
 
         <div className="grid-4" style={{ marginTop: 12 }}>
           {[
             { label: 'Vehicle price', val: fmt(state.loanAmount), accent: false },
-            { label: 'Cash deposit',  val: `−${fmt(state.deposit)}`, accent: false },
-            { label: 'Trade-in',      val: '−$0', accent: false },
+            { label: 'Cash deposit',  val: `${fmt(state.deposit)}`, accent: false },
+            { label: 'Trade-in',      val: '$0', accent: false },
             { label: 'Net loan',      val: fmt(netLoan), accent: true },
           ].map(b => (
             <div key={b.label} className="card" style={{ background: b.accent ? 'rgba(79,110,247,.1)' : 'var(--bg2)', border: `1px solid ${b.accent ? 'rgba(79,110,247,.25)' : 'var(--border)'}`, borderRadius: 'var(--r8)', padding: 12, textAlign: 'center', marginBottom: 0 }}>

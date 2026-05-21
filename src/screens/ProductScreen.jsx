@@ -5,7 +5,7 @@ import { useApp } from '../context/AppContext';
 import { ScreenHeader } from '../components/common/ScreenHeader';
 import { BtnPrimary } from '../components/common/Button';
 import { Badge } from '../components/common/Badge';
-import { TRUST_STRIP_ITEMS, PROMISE_CARDS, PRODUCTS } from '../data/productData';
+import { TRUST_STRIP_ITEMS, PRODUCTS, WHY_FEATURES } from '../data/productData';
 import { getStep } from '../constants/screens';
 import './ProductScreen.css';
 
@@ -106,12 +106,14 @@ export function ProductScreen() {
         })}
       </div>
 
-      <div className="promise-grid">
-        {PROMISE_CARDS.map((c, i) => (
-          <div key={i} className="promise-card">
-            <div className="promise-icon"><Icon name={c.icon} size={22} /></div>
-            <div className="promise-title">{c.title}</div>
-            <div className="promise-text">{c.text}</div>
+
+
+      <div className="why-grid">
+        {WHY_FEATURES.map((f, i) => (
+          <div key={i} className="why-card">
+            <div className="why-icon"><Icon name={f.icon} size={14} /></div>
+            <div className="why-card-title">{f.title}</div>
+            <div className="why-card-desc">{f.desc}</div>
           </div>
         ))}
       </div>
@@ -121,7 +123,7 @@ export function ProductScreen() {
           <div className="cta-title">Ready to find your rate?</div>
           <div className="cta-sub">Takes under 2 minutes · soft check only · no commitment</div>
         </div>
-        <BtnPrimary onClick={next}>Get started — it's free →</BtnPrimary>
+        <BtnPrimary onClick={next}>Continue →</BtnPrimary>
       </div>
       <div className="no-credit-note">
         <ShieldCheck size={14} /> Checking your rate will <strong className="text-strong">not</strong> affect your credit score

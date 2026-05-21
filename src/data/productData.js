@@ -6,14 +6,15 @@ export const TRUST_STRIP_ITEMS = [
   { icon: 'PhoneOff',    val: 'No calls',  lbl: 'No pressure sales ever' },
 ];
 
-export const PROMISE_CARDS = [
-  { icon: 'Lock',        title: 'No credit file impact',  text: 'Soft enquiry only during matching. Hard check only after you choose a lender — with your full consent.' },
-  { icon: 'Scale',       title: 'Full transparency',       text: 'Every rate, fee and charge shown upfront. Monthly repayments include all fees. No surprises at settlement.' },
-  { icon: 'Smartphone',  title: 'Your portal, your pace',  text: 'All communication is electronic through your personal Axio portal. No pressure calls ever.' },
-  { icon: 'FileText',    title: '100% paperless',           text: 'Application, verification, approval and settlement — all digital. Documents signed electronically.' },
-  { icon: 'Building2',   title: '45+ car · 25+ personal',  text: 'Our algorithm matches your profile against Australia\'s largest lender panel simultaneously — no broker, no bias.' },
-  { icon: 'Handshake',   title: 'No broker bias',           text: 'We don\'t push lenders who pay us more. Pure algorithm ranking on fit and approval probability.' },
+export const WHY_FEATURES = [
+  { icon: 'Smartphone',    title: 'Simple digital process',     desc: 'Apply online, upload documents securely, and track your finance journey from one dashboard.' },
+  { icon: 'ShieldCheck',   title: 'Safe & secure',              desc: 'Designed with secure verification, protected document uploads, and privacy-first data handling.' },
+  { icon: 'Eye',           title: 'Full transparency',          desc: 'Every lender fee, repayment, comparison rate, and charge is clearly disclosed upfront.' },
+  { icon: 'CreditCard',    title: 'Zero credit impact check',   desc: 'Explore lender options using soft checks only, without impacting your credit file.' },
+  { icon: 'Bell',          title: 'Stay alert via dashboard',   desc: 'Get real-time updates, document requests, and application progress alerts in one place.' },
+  { icon: 'MessageCircle', title: 'Less calls. Less pressure.', desc: 'No pushy sales tactics. Communication is digital, clear, and on your terms.' },
 ];
+
 
 export const PRODUCTS = [
   {

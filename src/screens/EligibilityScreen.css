@@ -1,88 +1,7 @@
 /* ═══════════════════════════════════════════════════════════════════
    ELIGIBILITY SCREEN
-   Full-width vertical flow: Why Axio → Anika AI → Checklist → CTA
+   Full-width vertical flow: Anika AI → Checklist → CTA
    ═══════════════════════════════════════════════════════════════════ */
-
-/* ─── WHY AXIO SECTION ───────────────────────────────────────────── */
-.elig-why-section {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  margin-bottom: 32px;
-}
-
-.elig-why-intro {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 10px;
-}
-
-.elig-why-heading {
-  font-family: var(--font-display);
-  font-size: 26px;
-  font-weight: 800;
-  line-height: 1.2;
-  color: var(--text0);
-  letter-spacing: -0.6px;
-  margin: 0;
-}
-
-.elig-why-sub {
-  font-size: 13.5px;
-  color: var(--text1);
-  line-height: 1.65;
-  margin: 0;
-  max-width: 640px;
-}
-
-/* Feature grid — 3 cols desktop */
-.elig-why-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: var(--sp8);
-}
-
-.elig-why-card {
-  padding: 16px;
-  border-radius: var(--r12);
-  background: var(--surface-card);
-  border: 1px solid var(--glass-border);
-  transition: border-color 0.16s ease, transform 0.16s ease;
-}
-
-.elig-why-card:hover {
-  border-color: var(--border2);
-  transform: translateY(-1px);
-}
-
-.elig-why-icon {
-  width: 32px;
-  height: 32px;
-  border-radius: var(--r8);
-  background: var(--surface-inner);
-  border: 1px solid var(--border);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--hover);
-  margin-bottom: 10px;
-  flex-shrink: 0;
-}
-
-.elig-why-card-title {
-  font-size: 12px;
-  font-weight: 700;
-  color: var(--text0);
-  margin-bottom: 5px;
-  line-height: 1.3;
-}
-
-.elig-why-card-desc {
-  font-size: 11px;
-  color: var(--text2);
-  line-height: 1.58;
-}
 
 /* ─── CHECKLIST CONTAINER ────────────────────────────────────────── */
 .elig-checklist-wrap {
@@ -304,20 +223,10 @@
 }
 
 /* ─── RESPONSIVE ─────────────────────────────────────────────────── */
-@media (max-width: 900px) {
-  .elig-why-grid { grid-template-columns: repeat(2, 1fr); }
-}
-
 @media (max-width: 640px) {
-  .elig-why-grid   { grid-template-columns: repeat(2, 1fr); }
-  .elig-why-heading { font-size: 22px; }
-  .elig-prog-bar   { display: none; }
+  .elig-prog-bar       { display: none; }
   .elig-checklist-wrap { padding: 16px; }
-  .elig-card       { padding: 12px 14px; gap: 12px; }
-  .elig-card-icon  { width: 28px; height: 28px; min-width: 28px; }
-  .elig-card-title { font-size: 12.5px; }
-}
-
-@media (max-width: 480px) {
-  .elig-why-grid { grid-template-columns: 1fr; }
+  .elig-card           { padding: 12px 14px; gap: 12px; }
+  .elig-card-icon      { width: 28px; height: 28px; min-width: 28px; }
+  .elig-card-title     { font-size: 12.5px; }
 }
