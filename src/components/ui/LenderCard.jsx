@@ -137,20 +137,22 @@ export function LenderCard({ lender, frequency = 'monthly' }) {
       <div className="lc-header">
         <LenderLogo src={logo} abbr={abbr} logoBg={logoBg} />
         <div className="lc-header-body">
-          <div className="lc-name">{shortName}</div>
+          <div className="lc-name-row">
+            <div className="lc-name">{shortName}</div>
+            {best && (
+              <div className="lc-best-badge">
+                <Badge variant="green">
+                  <Star size={9} fill="currentColor" /> Best match
+                </Badge>
+              </div>
+            )}
+          </div>
           <div className="lc-types">
             {types.map(t => (
               <span key={t} className={`type-pill ${t === 'Fixed' ? 'type-fixed' : 'type-variable'}`}>{t}</span>
             ))}
           </div>
         </div>
-        {best && (
-          <div className="lc-best-badge">
-            <Badge variant="green">
-              <Star size={9} fill="currentColor" /> Best match
-            </Badge>
-          </div>
-        )}
       </div>
 
       {/* ── Repayment hero ── */}
