@@ -286,25 +286,33 @@ function CarLoanDetails({ repay, rateLabel }) {
             <div className="divider" />
             {state.vehicleCondition === 'new' ? (
               <div key="layout-new" className="veh-fields">
-                <div className="g2">
-                  <div className="fld"><label className="fl">Year</label><input className="inp" placeholder="e.g. 2023" /></div>
+                <div className="veh-row-2">
+                  <div className="fld"><label className="fl">Year</label><input className="inp" placeholder="e.g. 2024" /></div>
                   <div className="fld"><label className="fl">Make</label><input className="inp" placeholder="e.g. Toyota" /></div>
                 </div>
-                <div className="g2">
+                <div className="veh-row-2">
                   <div className="fld"><label className="fl">Model</label><input className="inp" placeholder="e.g. Camry" /></div>
+                  <div className="fld"><label className="fl">Series / Variant</label><input className="inp" placeholder="e.g. GX, Sport, Executive" /></div>
+                </div>
+                <div className="veh-row-2">
                   <div className="fld"><label className="fl">Purchase price</label><input className="inp" placeholder="$0" /></div>
+                  <div className="fld"><label className="fl">Inspection link</label><input className="inp" type="url" placeholder="e.g. carsales.com.au/..." /></div>
                 </div>
               </div>
             ) : (
               <div key="layout-used" className="veh-fields">
-                <div className="g3">
-                  <div className="fld"><label className="fl">Year</label><input className="inp" placeholder="e.g. 2023" /></div>
+                <div className="veh-row-3">
+                  <div className="fld"><label className="fl">Year</label><input className="inp" placeholder="e.g. 2020" /></div>
                   <div className="fld"><label className="fl">Make</label><input className="inp" placeholder="e.g. Toyota" /></div>
                   <div className="fld"><label className="fl">Model</label><input className="inp" placeholder="e.g. Camry" /></div>
                 </div>
-                <div className="g2">
+                <div className="veh-row-2">
+                  <div className="fld"><label className="fl">Series / Variant</label><input className="inp" placeholder="e.g. GX, Sport, Executive" /></div>
                   <div className="fld"><label className="fl">Purchase price</label><input className="inp" placeholder="$0" /></div>
-                  <div className="fld"><label className="fl">Odometer</label><input key={state.vehicleCondition} className="inp" placeholder="km" /></div>
+                </div>
+                <div className="veh-row-2">
+                  <div className="fld"><label className="fl">Odometer</label><input key={state.vehicleCondition} className="inp" placeholder="e.g. 85,000 km" /></div>
+                  <div className="fld"><label className="fl">Inspection link</label><input className="inp" type="url" placeholder="e.g. carsales.com.au/..." /></div>
                 </div>
               </div>
             )}
@@ -391,7 +399,7 @@ function CarLoanDetails({ repay, rateLabel }) {
           <Icon name="CircleDollarSign" size={13} /> Balloon payment <span className="text-border2" style={{ fontSize: 11, fontWeight: 400 }}>(optional)</span>
         </div>
         <div className="card" style={{ background: 'var(--bg2)', borderRadius: 'var(--r8)', padding: 14 }}>
-          <RangeSlider label="Balloon percentage" value={state.balloonPct} suffix="%" min={0} max={40} step={1} onChange={v => updateState({ balloonPct: v })} minLabel="0%" maxLabel="40%" />
+          <RangeSlider label="Balloon percentage" value={state.balloonPct} suffix="%" min={0} max={30} step={1} onChange={v => updateState({ balloonPct: v })} minLabel="0%" maxLabel="30%" />
         </div>
 
         <div className="divider" />

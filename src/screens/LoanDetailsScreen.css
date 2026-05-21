@@ -1,9 +1,45 @@
-/* ─── Vehicle fields layout transition ──────────────────────────── */
+/* ─── Vehicle fields ─────────────────────────────────────────────── */
 @keyframes veh-fields-in {
-  from { opacity: 0; transform: translateY(5px); }
+  from { opacity: 0; transform: translateY(6px); }
   to   { opacity: 1; transform: translateY(0); }
 }
-.veh-fields { animation: veh-fields-in .2s ease forwards; }
+
+.veh-fields {
+  animation: veh-fields-in .22s ease forwards;
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp16);
+  padding-top: var(--sp4);
+}
+
+/* Zero out fld bottom margin — gap on the parent handles row spacing */
+.veh-fields .fld { margin-bottom: 0; }
+
+/* 2-col row: Year/Make, Model/Variant, Price/Link, Odometer/Link */
+.veh-row-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--sp14);
+}
+
+/* 3-col row: Year / Make / Model (used & demo) */
+.veh-row-3 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: var(--sp14);
+}
+
+/* Tablet — 3-col folds to 2-col (Year+Make | Model wraps) */
+@media (max-width: 700px) {
+  .veh-row-3 { grid-template-columns: 1fr 1fr; }
+}
+
+/* Mobile — all rows stack to single column */
+@media (max-width: 480px) {
+  .veh-row-2,
+  .veh-row-3 { grid-template-columns: 1fr; gap: var(--sp12); }
+  .veh-fields { gap: var(--sp12); }
+}
 
 /* ─── Secure loan card header ──────────────────────────────────── */
 .sec-loan-hd { margin-bottom: 16px; }
