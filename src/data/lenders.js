@@ -2,7 +2,7 @@ export const LENDERS = [
   {
     id: 'lender1',
     name: 'Commonwealth Bank',
-    displayName: 'CommBank',
+    displayName: 'CBA',
     abbr: 'CBA',
     logo: '/lender-logos/CBA.png',
     logoBg: 'linear-gradient(135deg, #FFCC00 0%, #FDB913 100%)',
