@@ -22,17 +22,144 @@
   margin-bottom: 12px; display: flex; align-items: center; gap: 7px;
 }
 
-/* ─── Previous employment panel — inline inside emp-block ───── */
-.emp-block .prev-emp-panel {
-  margin-top: 16px;
-  margin-left: -18px;
-  margin-right: -18px;
-  margin-bottom: -16px;
-  border-radius: 0;
-  border-left: none;
-  border-right: none;
-  border-bottom: none;
-  border-top: 1px solid var(--yellowborder);
+/* ─── Residential history ─────────────────────────────────── */
+@keyframes rh-in {
+  from { opacity: 0; transform: translateY(-8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.rh-section-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text2);
+  text-transform: uppercase;
+  letter-spacing: 0.65px;
+  margin-bottom: 14px;
+}
+
+.rh-live-dot {
+  width: 7px;
+  height: 7px;
+  min-width: 7px;
+  border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 7px rgba(16, 185, 129, 0.65);
+}
+
+/* ─── Previous address block ─── */
+.rh-prev-block {
+  margin-top: 10px;
+  border: 1px solid var(--yellowborder);
+  border-radius: var(--r16);
+  background: var(--yellowbg);
+  overflow: hidden;
+}
+
+.rh-prev-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 11px 14px;
+  border-bottom: 1px solid var(--yellowborder);
+}
+
+.rh-prev-icon {
+  width: 28px;
+  height: 28px;
+  min-width: 28px;
+  border-radius: var(--r8);
+  background: rgba(245, 158, 11, 0.15);
+  border: 1px solid var(--yellowborder);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--yellow);
+  flex-shrink: 0;
+}
+
+.rh-prev-header-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.rh-prev-title {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--yellow);
+  font-family: var(--font-display);
+  letter-spacing: -0.15px;
+  margin-bottom: 1px;
+}
+
+.rh-prev-sub {
+  font-size: 11px;
+  color: var(--text2);
+  line-height: 1.4;
+}
+
+.rh-prev-pct {
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--yellow);
+  font-family: var(--font-mono);
+  white-space: nowrap;
+  opacity: 0.85;
+}
+
+.rh-prev-body {
+  padding: 13px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background: var(--surface-card);
+}
+
+.rh-prev-body .fld {
+  margin-bottom: 0;
+}
+
+/* ─── Summary strip ─── */
+.rh-summary {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  margin-top: 12px;
+  padding: 10px 13px;
+  border-radius: var(--r12);
+  font-size: 12.5px;
+  font-weight: 500;
+  line-height: 1.45;
+  border: 1px solid transparent;
+}
+
+.rh-summary svg {
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.rh-summary.ok {
+  background: var(--greenbg);
+  border-color: var(--greenborder);
+  color: var(--green);
+}
+
+.rh-summary.warn {
+  background: var(--yellowbg);
+  border-color: var(--yellowborder);
+  color: var(--yellow);
+}
+
+@media (max-width: 480px) {
+  .rh-prev-header { padding: 10px 12px; }
+  .rh-prev-body   { padding: 12px 12px; gap: 10px; }
+}
+
+/* ─── Nested rh-prev-block inside emp-block ─────────────────── */
+.emp-block .rh-prev-block {
+  margin-top: 14px;
 }
 
 /* ─── Previous employment panel ────────────────────────────── */
@@ -164,7 +291,6 @@
   border-radius: var(--r16);
   padding: 18px 18px 16px;
   margin-top: 16px;
-  overflow: hidden;
   transition: border-color .22s ease;
 }
 

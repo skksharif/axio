@@ -1,97 +1,365 @@
-/* ─── Screen ──────────────────────────────────────────────── */
+/* ═══════════════════════════════════════════════════════════════
+   CREATE ACCOUNT — 3-step fintech auth flow
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ─── Two-column page wrapper ─────────────────────────────────── */
+.ca-wrap {
+  display: grid;
+  grid-template-columns: 1fr 390px;
+  gap: 36px;
+  align-items: start;
+  width: 100%;
+}
+
+/* ─── Right column: form area ─────────────────────────────────── */
 .ca-screen {
   display: flex;
   flex-direction: column;
+  min-width: 0;
+  width: 100%;
 }
 
-/* ─── Two-column grid ─────────────────────────────────────── */
-.ca-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 18px;
-  align-items: start;
-  margin-bottom: 24px;
-}
-
-/* ─── Card shell ──────────────────────────────────────────── */
-.ca-card {
-  background: var(--surface-card);
-  border: 1px solid var(--border);
-  border-radius: var(--r22);
-  padding: 28px 28px 24px;
-  box-shadow: var(--card-shadow);
+/* ─── Left content panel ──────────────────────────────────────── */
+.ca-panel {
   display: flex;
   flex-direction: column;
+  gap: 20px;
+  position: sticky;
+  top: 24px;
 }
 
-/* ─── Card header ─────────────────────────────────────────── */
-.ca-head {
+/* Hero block ── */
+.ca-panel-hero-block {
   display: flex;
-  align-items: center;
+  flex-direction: column;
   gap: 14px;
-  margin-bottom: 20px;
 }
 
-.ca-icon-wrap {
-  width: 40px;
-  height: 40px;
-  min-width: 40px;
-  border-radius: var(--r12);
-  background: var(--accentg);
+.ca-panel-hero {
+  font-family: var(--font-display);
+  font-size: 26px;
+  font-weight: 800;
+  color: var(--text0);
+  letter-spacing: -0.7px;
+  line-height: 1.25;
+  margin: 0;
+}
+
+.ca-panel-hero-accent {
+  background: linear-gradient(135deg, #C4B5FD 0%, #A78BFA 40%, #7C3AED 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.ca-panel-desc {
+  font-size: 13.5px;
+  color: var(--text1);
+  line-height: 1.7;
+  margin: 0;
+}
+
+/* 2 × 2 feature card grid ── */
+.ca-panel-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.ca-panel-feat-card {
+  background: var(--surface-card);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--r16);
+  padding: 14px 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  box-shadow: var(--card-shadow);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.ca-panel-feat-card:hover {
+  border-color: var(--border2);
+  box-shadow: var(--card-shadow-hover);
+}
+
+.ca-panel-feat-icon {
+  width: 34px;
+  height: 34px;
+  min-width: 34px;
+  border-radius: var(--r8);
+  background: var(--surface-active);
+  border: 1px solid var(--border2);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #fff;
-  box-shadow: 0 2px 8px rgba(109, 40, 217, 0.20);
+  color: var(--hover);
   flex-shrink: 0;
 }
 
-.ca-icon-wrap--green {
-  background: linear-gradient(135deg, #065F46 0%, #059669 100%);
-  box-shadow: 0 2px 8px rgba(5, 150, 105, 0.20);
-}
-
-.ca-card-title {
+.ca-panel-feat-title {
   font-family: var(--font-display);
-  font-size: 15.5px;
+  font-size: 13px;
   font-weight: 700;
   color: var(--text0);
-  letter-spacing: -.2px;
-  line-height: 1.15;
-  margin-bottom: 3px;
+  letter-spacing: -0.15px;
+  line-height: 1.2;
 }
 
-.ca-card-sub {
-  font-size: 12px;
+.ca-panel-feat-desc {
+  font-size: 11.5px;
   color: var(--text2);
-  line-height: 1.4;
+  line-height: 1.5;
 }
 
-/* ─── Trust badge ─────────────────────────────────────────── */
-.ca-trust-badge {
+/* Stats strip ── */
+.ca-panel-stats {
+  display: flex;
+  align-items: stretch;
+  background: var(--surface-card);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--r16);
+  box-shadow: var(--card-shadow);
+  overflow: hidden;
+}
+
+.ca-panel-stat {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 16px 12px;
+  border-right: 1px solid var(--border);
+}
+
+.ca-panel-stat:last-child { border-right: none; }
+
+.ca-panel-stat-val {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--text0);
+  letter-spacing: -0.55px;
+  line-height: 1;
+}
+
+.ca-panel-stat-label {
+  font-size: 10.5px;
+  font-weight: 600;
+  color: var(--text2);
+  text-transform: uppercase;
+  letter-spacing: 0.55px;
+  white-space: nowrap;
+}
+
+/* Trust row ── */
+.ca-panel-trust {
   display: flex;
   align-items: center;
-  gap: 7px;
-  padding: 8px 12px;
+  gap: 16px;
+  flex-wrap: wrap;
+  padding: 2px 0 4px;
+}
+
+.ca-pt {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text2);
+  white-space: nowrap;
+}
+
+.ca-pt svg { color: var(--green); flex-shrink: 0; }
+
+/* ─── Page header ─────────────────────────────────────────────── */
+.ca-page-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.ca-page-head-left {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  align-items: flex-start;
+}
+
+.ca-security-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--accent2);
+  letter-spacing: 0.15px;
+}
+
+.ca-page-title {
+  font-family: var(--font-display);
+  font-size: 23px;
+  font-weight: 800;
+  color: var(--text0);
+  letter-spacing: -0.55px;
+  line-height: 1.15;
+  margin: 0;
+}
+
+.ca-safe-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 11px;
   background: var(--greenbg);
   border: 1px solid var(--greenborder);
-  border-radius: var(--r8);
+  border-radius: 999px;
   color: var(--green);
   font-size: 11px;
   font-weight: 600;
-  letter-spacing: .1px;
-  margin-bottom: 22px;
+  white-space: nowrap;
   flex-shrink: 0;
+  margin-top: 3px;
 }
 
-/* ─── Form fields ─────────────────────────────────────────── */
-.ca-fields {
+/* ─── Step tabs ───────────────────────────────────────────────── */
+.ca-tabs {
+  display: flex;
+  gap: 3px;
+  background: var(--surface-card);
+  border: 1px solid var(--border);
+  border-radius: var(--r12);
+  padding: 4px;
+  margin-bottom: 22px;
+  box-shadow: var(--card-shadow);
+}
+
+.ca-tab {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 9px 10px;
+  border-radius: var(--r8);
+  font-size: 12.5px;
+  font-weight: 600;
+  border: none;
+  background: transparent;
+  color: var(--text2);
+  font-family: var(--font-body);
+  white-space: nowrap;
+  cursor: default;
+  transition: color 0.18s;
+  line-height: 1;
+}
+
+.ca-tab--active {
+  background: var(--accentg);
+  color: #fff;
+  box-shadow: 0 2px 10px rgba(109, 40, 217, 0.34);
+}
+
+.ca-tab--done {
+  color: var(--green);
+  cursor: pointer;
+}
+
+.ca-tab--done:hover { color: var(--text0); }
+
+.ca-tab--locked {
+  opacity: 0.42;
+  cursor: not-allowed;
+}
+
+/* ─── Step motion wrapper ─────────────────────────────────────── */
+.ca-step { width: 100%; }
+
+/* ─── Column layout shared by all steps ──────────────────────── */
+.ca-col {
   display: flex;
   flex-direction: column;
   gap: 14px;
-  margin-bottom: 22px;
 }
 
+/* ─── Main card ───────────────────────────────────────────────── */
+.ca-card {
+  background: var(--surface-card);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--r22);
+  padding: 22px 22px 20px;
+  box-shadow: var(--card-shadow);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* ─── Social login ────────────────────────────────────────────── */
+.ca-social {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.ca-social-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  height: 44px;
+  background: var(--surface-input);
+  border: 1px solid var(--border);
+  border-radius: var(--r12);
+  color: var(--text0);
+  font-size: 13px;
+  font-weight: 600;
+  font-family: var(--font-body);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.18s, border-color 0.18s, box-shadow 0.18s;
+}
+
+.ca-social-btn:hover {
+  background: var(--surface-hover);
+  border-color: var(--border2);
+  box-shadow: var(--glow-sm);
+}
+
+.ca-social-btn:active { opacity: 0.82; }
+
+/* ─── OR divider ──────────────────────────────────────────────── */
+.ca-divider {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.ca-divider::before,
+.ca-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+.ca-divider span {
+  font-size: 10.5px;
+  font-weight: 700;
+  color: var(--text2);
+  letter-spacing: 0.9px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* ─── Form fields ─────────────────────────────────────────────── */
 .ca-field {
   display: flex;
   flex-direction: column;
@@ -100,10 +368,10 @@
 
 .ca-lbl {
   font-size: 10.5px;
-  font-weight: 600;
+  font-weight: 700;
   color: var(--text2);
   text-transform: uppercase;
-  letter-spacing: .6px;
+  letter-spacing: 0.65px;
   font-family: var(--font-body);
 }
 
@@ -115,7 +383,7 @@
 
 .ca-inp-icon {
   position: absolute;
-  left: 14px;
+  left: 13px;
   color: var(--text2);
   pointer-events: none;
   flex-shrink: 0;
@@ -132,110 +400,237 @@
   padding: 0 16px 0 40px;
   outline: none;
   font-family: var(--font-body);
-  transition: border-color .2s ease, box-shadow .2s ease;
   box-sizing: border-box;
+  transition: border-color 0.2s, box-shadow 0.2s;
 }
 
 .ca-inp:focus {
   border-color: var(--hover);
-  box-shadow: 0 0 0 3px rgba(109, 40, 217, 0.12);
+  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.13);
 }
 
-.ca-inp::placeholder { color: var(--text2); }
+.ca-inp::placeholder { color: var(--text2); opacity: 0.65; }
 
-.ca-inp--pw { padding-right: 44px; }
+.ca-inp-wrap--err .ca-inp {
+  border-color: var(--red);
+  box-shadow: 0 0 0 3px var(--redbg);
+}
 
-.ca-eye-btn {
-  position: absolute;
-  right: 12px;
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: var(--text2);
+.ca-err {
   display: flex;
   align-items: center;
-  padding: 4px;
-  border-radius: var(--r6);
-  transition: color .15s ease;
-  line-height: 0;
+  gap: 5px;
+  font-size: 11px;
+  color: var(--red);
+  font-weight: 500;
+  line-height: 1.4;
 }
 
-.ca-eye-btn:hover { color: var(--text1); }
+.ca-err svg { flex-shrink: 0; }
 
-.ca-eye-btn:focus-visible {
-  outline: 2px solid var(--hover);
-  outline-offset: 2px;
+/* ─── OTP info banner ─────────────────────────────────────────── */
+.ca-otp-info {
+  display: flex;
+  align-items: flex-start;
+  gap: 11px;
+  padding: 13px 14px;
+  background: rgba(139, 92, 246, 0.07);
+  border: 1px solid rgba(139, 92, 246, 0.17);
+  border-radius: var(--r12);
 }
 
-/* ─── CTA button ──────────────────────────────────────────── */
+.ca-otp-info-icon {
+  width: 28px;
+  height: 28px;
+  min-width: 28px;
+  border-radius: var(--r8);
+  background: rgba(139, 92, 246, 0.16);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--hover);
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.ca-otp-info-text {
+  font-size: 12.5px;
+  color: var(--text1);
+  line-height: 1.62;
+  margin: 0;
+}
+
+/* ─── Primary CTA button ──────────────────────────────────────── */
 .ca-cta {
   width: 100%;
-  max-width: 280px;
-  height: 42px;
+  height: 48px;
   background: var(--accentg);
   color: #fff;
   border: none;
   border-radius: var(--r12);
-  font-size: 13px;
-  font-weight: 600;
+  font-size: 14px;
+  font-weight: 700;
+  font-family: var(--font-display);
+  letter-spacing: -0.1px;
   cursor: pointer;
-  font-family: var(--font-body);
-  letter-spacing: -.1px;
-  transition: opacity .2s ease;
-  margin: 0 auto 14px;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 6px;
-  flex-shrink: 0;
+  gap: 8px;
+  box-shadow: 0 2px 16px rgba(109, 40, 217, 0.38);
+  transition: opacity 0.18s, box-shadow 0.2s;
 }
 
-.ca-cta:hover  { opacity: 0.88; }
-.ca-cta:active { opacity: 0.76; }
-.ca-cta:disabled { opacity: .52; cursor: not-allowed; }
+.ca-cta:hover {
+  opacity: 0.9;
+  box-shadow: 0 4px 22px rgba(109, 40, 217, 0.52);
+}
 
-/* ─── Sign-in hint ────────────────────────────────────────── */
-.ca-signin-hint {
-  text-align: center;
-  font-size: 12.5px;
+.ca-cta:active { opacity: 0.82; }
+.ca-cta:disabled,
+.ca-cta--loading { opacity: 0.6; cursor: not-allowed; }
+
+/* ─── Spin keyframe ───────────────────────────────────────────── */
+@keyframes ca-rotate {
+  to { transform: rotate(360deg); }
+}
+
+.ca-spin      { animation: ca-rotate 0.65s linear infinite; }
+.ca-spin-slow { animation: ca-rotate 3.5s linear infinite; }
+
+/* ─── Step 2 — Confirm details ────────────────────────────────── */
+.ca-confirm-head {
+  padding-bottom: 13px;
+  border-bottom: 1px solid var(--border);
+}
+
+.ca-confirm-title {
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text0);
+  letter-spacing: -0.2px;
+}
+
+.ca-confirm-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.ca-confirm-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.ca-confirm-lbl {
+  font-size: 10px;
+  font-weight: 700;
   color: var(--text2);
+  text-transform: uppercase;
+  letter-spacing: 0.65px;
 }
 
-.ca-signin-link {
+.ca-confirm-val {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--text0);
+}
+
+.ca-edit-link {
+  font-size: 12px;
   color: var(--hover);
   font-weight: 600;
+  background: none;
+  border: none;
   cursor: pointer;
-  transition: color .15s ease;
+  padding: 0;
+  font-family: var(--font-body);
+  text-align: left;
+  margin-top: -4px;
+  transition: color 0.15s;
 }
 
-.ca-signin-link:hover { color: var(--text0); }
+.ca-edit-link:hover { color: var(--text0); }
 
-.ca-signin-link:focus-visible {
-  outline: 2px solid var(--hover);
-  outline-offset: 2px;
-  border-radius: 2px;
+/* ─── Dual OTP sections ───────────────────────────────────────── */
+.ca-otp-sections {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
-/* ─── OTP description ─────────────────────────────────────── */
-.ca-otp-desc {
-  font-size: 13px;
+.ca-otp-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.ca-otp-group-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.ca-otp-group-left {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.ca-otp-group-icon {
+  width: 28px;
+  height: 28px;
+  min-width: 28px;
+  border-radius: var(--r8);
+  background: var(--surface-active);
+  border: 1px solid var(--border2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--hover);
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.ca-otp-group-label {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--text0);
+  letter-spacing: -0.1px;
+  line-height: 1.3;
+}
+
+.ca-otp-group-dest {
+  font-size: 11px;
   color: var(--text2);
-  line-height: 1.65;
-  margin-bottom: 24px;
+  margin-top: 2px;
+  line-height: 1.3;
 }
 
-.ca-otp-desc strong {
-  color: var(--text1);
-  font-weight: 600;
+.ca-resend-action {
+  font-size: 12px;
+  font-weight: 700;
+  background: none;
+  border: none;
+  padding: 0;
+  font-family: var(--font-body);
+  flex-shrink: 0;
+  transition: color 0.15s;
+  cursor: pointer;
 }
 
-/* ─── OTP inputs ──────────────────────────────────────────── */
-.ca-otp-inputs {
+.ca-resend-ready { color: var(--hover); }
+.ca-resend-ready:hover { color: var(--text0); }
+.ca-resend-wait  { color: var(--text2); cursor: not-allowed; }
+
+/* ─── OTP digit boxes ─────────────────────────────────────────── */
+.ca-otp-boxes {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
-  gap: 9px;
-  max-width: 340px;
-  margin: 0 auto 26px;
+  gap: 8px;
   width: 100%;
 }
 
@@ -244,23 +639,28 @@
   height: 52px;
   background: var(--surface-input);
   border: 1px solid var(--border);
-  border-radius: var(--r12);
+  border-radius: var(--r8);
   color: var(--text0);
   font-size: 22px;
   font-weight: 700;
   font-family: var(--font-mono);
   text-align: center;
   outline: none;
-  transition: border-color .18s ease, background .18s ease;
   caret-color: var(--hover);
   padding: 0;
+  -webkit-appearance: textfield;
   -moz-appearance: textfield;
   appearance: textfield;
+  transition: border-color 0.18s, background 0.18s, box-shadow 0.18s;
 }
 
+.ca-otp-box::-webkit-outer-spin-button,
+.ca-otp-box::-webkit-inner-spin-button { -webkit-appearance: none; }
+
 .ca-otp-box:focus {
-  border-color: var(--hover);
+  border-color: var(--accent2);
   background: var(--surface-hover);
+  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.15);
 }
 
 .ca-otp-box--filled {
@@ -268,86 +668,296 @@
   background: var(--surface-hover);
 }
 
-.ca-otp-box::-webkit-outer-spin-button,
-.ca-otp-box::-webkit-inner-spin-button {
-  -webkit-appearance: none;
+.ca-otp-boxes--done .ca-otp-box {
+  border-color: var(--green);
+  background: var(--greenbg);
+  color: var(--green);
 }
 
-/* ─── Resend row ──────────────────────────────────────────── */
-.ca-resend-row {
+/* ─── Expiry timer row ────────────────────────────────────────── */
+.ca-expiry-row {
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 6px;
+  justify-content: space-between;
+  padding: 9px 0;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  gap: 8px;
 }
 
-.ca-resend-lbl {
-  font-size: 12.5px;
+.ca-expiry-left {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 12px;
   color: var(--text2);
 }
 
-.ca-resend-btn {
-  background: none;
-  border: none;
-  cursor: pointer;
-  font-size: 12.5px;
-  color: var(--text2);
-  font-family: var(--font-body);
-  padding: 0;
-  transition: color .15s ease;
-}
-
-.ca-resend-timer {
-  color: var(--hover);
+.ca-expiry-left strong {
+  color: var(--text0);
   font-weight: 700;
   font-variant-numeric: tabular-nums;
 }
 
-.ca-resend-btn:hover { color: var(--text1); }
-.ca-resend-btn:hover .ca-resend-timer { color: var(--text0); }
+.ca-2step {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--hover);
+  opacity: 0.8;
+  white-space: nowrap;
+}
 
-/* ─── Responsive ──────────────────────────────────────────── */
-@media (max-width: 1100px) {
-  .ca-grid {
+/* ─── OTP form-level error ────────────────────────────────────── */
+.ca-otp-err {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 13px;
+  background: var(--redbg);
+  border: 1px solid var(--redborder);
+  border-radius: var(--r8);
+  font-size: 12.5px;
+  color: var(--red);
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.ca-otp-err svg { flex-shrink: 0; }
+
+/* ─── Step 3 — Success card ───────────────────────────────────── */
+.ca-card--success {
+  align-items: center;
+  text-align: center;
+  padding: 36px 28px 30px;
+  gap: 22px;
+}
+
+.ca-success-icon {
+  width: 76px;
+  height: 76px;
+  border-radius: 50%;
+  background: var(--greenbg);
+  border: 2px solid var(--greenborder);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--green);
+  box-shadow: 0 0 36px rgba(16, 185, 129, 0.22);
+}
+
+.ca-success-body { width: 100%; }
+
+.ca-success-title {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--text0);
+  letter-spacing: -0.5px;
+  margin-bottom: 10px;
+}
+
+.ca-success-text {
+  font-size: 13.5px;
+  color: var(--text1);
+  line-height: 1.65;
+  margin: 0;
+}
+
+/* ─── Validation checklist panel ─────────────────────────────── */
+.ca-val-panel {
+  background: var(--surface-card);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--r16);
+  padding: 16px 18px;
+  box-shadow: var(--card-shadow);
+}
+
+.ca-val-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 13px;
+}
+
+.ca-val-title {
+  font-size: 10px;
+  font-weight: 800;
+  color: var(--text2);
+  letter-spacing: 1.1px;
+  text-transform: uppercase;
+}
+
+.ca-val-badge {
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--green);
+}
+
+.ca-val-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px 18px;
+}
+
+.ca-val-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  font-size: 11.5px;
+  color: var(--text1);
+  font-weight: 500;
+  line-height: 1.35;
+}
+
+.ca-val-item svg {
+  color: var(--green);
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+/* ─── Security card ───────────────────────────────────────────── */
+.ca-security {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  background: var(--surface-card);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--r16);
+  padding: 14px 16px;
+  box-shadow: var(--card-shadow);
+}
+
+.ca-security-icon {
+  width: 34px;
+  height: 34px;
+  min-width: 34px;
+  border-radius: var(--r8);
+  background: var(--surface-active);
+  border: 1px solid var(--border2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--hover);
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.ca-security-title {
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text0);
+  margin-bottom: 4px;
+  letter-spacing: -0.15px;
+}
+
+.ca-security-text {
+  font-size: 12px;
+  color: var(--text2);
+  line-height: 1.55;
+}
+
+/* ─── Legal text ──────────────────────────────────────────────── */
+.ca-legal {
+  font-size: 11.5px;
+  color: var(--text2);
+  line-height: 1.62;
+  text-align: center;
+  padding: 0 6px;
+  margin-bottom: 8px;
+}
+
+/* ─── Responsive ──────────────────────────────────────────────── */
+
+/* Compress left column at narrower desktops */
+@media (max-width: 1260px) {
+  .ca-wrap { grid-template-columns: 1fr 330px; gap: 28px; }
+  .ca-panel-hero { font-size: 22px; }
+}
+
+/* ≤1080px — panel collapses above the form in a tablet layout */
+@media (max-width: 1080px) {
+  .ca-wrap {
     grid-template-columns: 1fr;
-    max-width: 560px;
-    gap: 14px;
+    gap: 28px;
   }
 
-  .ca-grid {
-    margin-left: auto;
-    margin-right: auto;
-    width: 100%;
+  .ca-panel {
+    position: static;
+    /* Re-flow panel sections into a 2-col horizontal grid on tablet */
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    align-items: start;
   }
 
-  .ca-otp-inputs {
-    max-width: 380px;
-  }
+  /* Hero block + trust span full width */
+  .ca-panel-hero-block,
+  .ca-panel-trust { grid-column: 1 / -1; }
 
-  .ca-otp-box {
-    height: 56px;
-  }
+  /* Feature grid already 2-col — keep; stats beside it */
+  .ca-panel-hero { font-size: 22px; }
 }
 
-@media (max-width: 520px) {
-  .ca-card {
-    padding: 22px 18px 20px;
-    border-radius: var(--r16);
+/* ≤768px — single column, panel stacked above form, compact */
+@media (max-width: 768px) {
+  .ca-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
   }
 
-  .ca-otp-inputs {
-    gap: 7px;
-    max-width: 100%;
-  }
-
-  .ca-otp-box {
-    height: 50px;
-    font-size: 20px;
-    border-radius: var(--r8);
-  }
+  .ca-panel-hero { font-size: 20px; }
+  .ca-panel-feat-card { padding: 12px 12px 14px; gap: 8px; }
+  .ca-panel-feat-icon { width: 30px; height: 30px; }
+  .ca-panel-feat-title { font-size: 12.5px; }
+  .ca-panel-feat-desc  { font-size: 11px; }
+  .ca-panel-stat-val   { font-size: 19px; }
 }
 
-@media (max-width: 380px) {
-  .ca-otp-inputs { gap: 5px; }
-  .ca-otp-box    { height: 44px; font-size: 18px; }
+/* ≤640px — form adjustments */
+@media (max-width: 640px) {
+  .ca-page-title { font-size: 20px; }
+  .ca-card { padding: 18px 16px; gap: 14px; }
+  .ca-social { grid-template-columns: 1fr; gap: 8px; }
+  .ca-confirm-row { grid-template-columns: 1fr; gap: 8px; }
+  .ca-otp-box { height: 48px; font-size: 20px; }
+  .ca-otp-boxes { gap: 7px; }
+  .ca-val-grid { grid-template-columns: 1fr; gap: 7px 0; }
+  .ca-card--success { padding: 28px 20px 24px; }
+
+  /* Keep 2-col feature grid — row direction removed */
+}
+
+/* ≤420px */
+@media (max-width: 420px) {
+  .ca-panel { gap: 12px; }
+  .ca-panel-hero { font-size: 18px; }
+  .ca-panel-desc { font-size: 12.5px; }
+  .ca-panel-grid { gap: 8px; }
+  .ca-panel-feat-card { padding: 10px 10px 12px; gap: 7px; }
+  .ca-panel-feat-icon { width: 28px; height: 28px; min-width: 28px; }
+  .ca-panel-feat-title { font-size: 12px; }
+  .ca-panel-feat-desc  { font-size: 10.5px; }
+  .ca-tabs { padding: 3px; gap: 2px; }
+  .ca-tab { padding: 8px 7px; font-size: 11.5px; }
+  .ca-otp-box { height: 42px; font-size: 18px; border-radius: var(--r6); }
+  .ca-otp-boxes { gap: 5px; }
+  .ca-success-title { font-size: 19px; }
+  .ca-panel-stats { border-radius: var(--r12); }
+  .ca-panel-stat { padding: 13px 10px; }
+  .ca-panel-stat-val { font-size: 18px; }
+}
+
+/* ≤360px — feature grid single col only at this extreme size */
+@media (max-width: 360px) {
+  .ca-panel-grid { grid-template-columns: 1fr; }
+  .ca-panel-feat-card { flex-direction: row; align-items: flex-start; gap: 10px; padding: 10px 12px; }
+}
+
+/* ≤340px */
+@media (max-width: 340px) {
+  .ca-tab { font-size: 10.5px; padding: 7px 5px; gap: 4px; }
+  .ca-otp-box { height: 38px; font-size: 16px; }
+  .ca-otp-boxes { gap: 4px; }
 }

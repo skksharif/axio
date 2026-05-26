@@ -1,5 +1,5 @@
 ﻿import { useState } from 'react';
-import { AlertTriangle, Sparkles } from 'lucide-react';
+import { AlertTriangle, CheckCircle2, MapPin } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Icon } from '../components/common/Icon';
 import { useApp } from '../context/AppContext';
@@ -40,76 +40,30 @@ const EMP_META = {
   'other':         { label: 'Other Employment',      icon: 'HelpCircle' },
 };
 
-const EMPTY_EMP = { employer: '', phone: '', years: '', months: '' };
+const EMP_REQUIRED_MONTHS = 36;
+const EMPTY_EMP_ENTRY     = { employer: '', role: '', phone: '', years: '', months: '' };
 
-/* ─── Previous employment panel (per employment type) ────────── */
-function PrevEmpPanel({ label, data, onUpdate }) {
-  return (
-    <motion.div
-      className="prev-emp-panel"
-      initial={{ opacity: 0, y: -6 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -4 }}
-      transition={{ duration: 0.22, ease: 'easeOut' }}
-    >
-      <div className="prev-emp-header">
-        <div className="prev-emp-header-icon">
-          <AlertTriangle size={13} />
-        </div>
-        <div className="prev-emp-header-body">
-          <div className="prev-emp-header-title">Previous employment required</div>
-          <div className="prev-emp-header-sub">{label} under 3 years — lenders need your prior history.</div>
-        </div>
-      </div>
+const toEmpMonths = (e) =>
+  (Math.max(0, Number(e.years) || 0)) * 12 +
+  Math.min(11, Math.max(0, Number(e.months) || 0));
 
-      <div className="prev-emp-body">
-        <div className="fld">
-          <label className="fl">Previous employer / ABN</label>
-          <input className="inp" placeholder="⌕  Search employer or ABN"
-            value={data.employer}
-            onChange={e => onUpdate('employer', e.target.value)} />
-        </div>
-        <div className="fld">
-          <label className="fl">Previous role title</label>
-          <input className="inp" placeholder="e.g. Senior Analyst"
-            value={data.role}
-            onChange={e => onUpdate('role', e.target.value)} />
-        </div>
-        <div className="prev-emp-duration">
-          <div className="fld prev-emp-date-fld">
-            <label className="fl">Start date</label>
-            <DateSelect value={data.start} onChange={v => onUpdate('start', v)} yearRange={[1970, new Date().getFullYear()]} />
-          </div>
-          {!data.current && (
-            <div className="fld prev-emp-date-fld">
-              <label className="fl">End date</label>
-              <DateSelect value={data.end} onChange={v => onUpdate('end', v)} yearRange={[1970, new Date().getFullYear()]} />
-            </div>
-          )}
-          <label className="prev-emp-current-chk">
-            <input
-              type="checkbox"
-              checked={data.current}
-              onChange={e => {
-                onUpdate('current', e.target.checked);
-                if (e.target.checked) onUpdate('end', null);
-              }}
-            />
-            <span>Still employed here</span>
-          </label>
-        </div>
-      </div>
+// Clamps a raw month input value to [0, 11]; returns '' for empty input.
+const clampMonths = (val) => {
+  if (val === '' || val === undefined) return '';
+  const n = parseInt(val, 10);
+  return isNaN(n) ? '' : String(Math.min(11, Math.max(0, n)));
+};
 
-      <div className="prev-emp-footer">
-        <Sparkles size={9} />
-        <span>Anika will never contact your employer without your permission. <a className="prev-emp-policy-link" href="#">See our Privacy Policy.</a></span>
-      </div>
-    </motion.div>
-  );
-}
+// Prevents e/E/./+/- key entry in month number inputs.
+const blockInvalidMonthKeys = (e) => {
+  if (['-', '+', '.', 'e', 'E'].includes(e.key)) e.preventDefault();
+};
 
-/* ─── Per-type employment detail block ───────────────────────── */
-function EmploymentBlock({ typeId, label, icon, details, onUpdate, otherText, setOtherText, needsPrev, prevData, onPrevUpdate }) {
+/* ─── Employment history block (per type) ─────────────────────── */
+function EmploymentBlock({ typeId, label, icon, entries, onUpdate, otherText, setOtherText }) {
+  const totalMonths = entries.reduce((s, e) => s + toEmpMonths(e), 0);
+  const satisfied   = totalMonths >= EMP_REQUIRED_MONTHS;
+
   return (
     <motion.div
       className="emp-block"
@@ -126,30 +80,48 @@ function EmploymentBlock({ typeId, label, icon, details, onUpdate, otherText, se
         <span className="emp-block-title">{label}</span>
       </div>
 
+      {/* Current employment entry */}
+      <div className="rh-section-label" style={{ marginBottom: 12 }}>
+        <span className="rh-live-dot" />
+        Current Employment
+      </div>
+
       <div className="g2">
         <div className="fld">
           <label className="fl">Employer / ABN</label>
           <input className="inp" placeholder="⌕  Search employer or ABN"
-            value={details.employer}
-            onChange={e => onUpdate('employer', e.target.value)} />
+            value={entries[0].employer}
+            onChange={e => onUpdate(0, 'employer', e.target.value)} />
         </div>
         <div className="fld">
           <label className="fl">Employer phone</label>
           <input className="inp" placeholder="02 0000 0000"
-            value={details.phone}
-            onChange={e => onUpdate('phone', e.target.value)} />
+            value={entries[0].phone}
+            onChange={e => onUpdate(0, 'phone', e.target.value)} />
         </div>
+      </div>
+
+      <div className="fld">
+        <label className="fl">Role / position</label>
+        <input className="inp" placeholder="e.g. Senior Analyst"
+          value={entries[0].role}
+          onChange={e => onUpdate(0, 'role', e.target.value)} />
+      </div>
+
+      <div className="g2">
         <div className="fld" style={{ marginBottom: typeId === 'other' ? undefined : 0 }}>
           <label className="fl">Years in role</label>
           <input className="inp" type="number" min="0" placeholder="Years"
-            value={details.years}
-            onChange={e => onUpdate('years', e.target.value)} />
+            value={entries[0].years}
+            onChange={e => onUpdate(0, 'years', e.target.value)} />
         </div>
         <div className="fld" style={{ marginBottom: typeId === 'other' ? undefined : 0 }}>
           <label className="fl">Months (0–11)</label>
-          <input className="inp" type="number" min="0" max="11" placeholder="Months"
-            value={details.months}
-            onChange={e => onUpdate('months', e.target.value)} />
+          <input className="inp" type="number" inputMode="numeric" pattern="[0-9]*"
+            min="0" max="11" step="1" placeholder="Months"
+            value={entries[0].months}
+            onChange={e => onUpdate(0, 'months', e.target.value)}
+            onKeyDown={blockInvalidMonthKeys} />
         </div>
       </div>
 
@@ -163,16 +135,94 @@ function EmploymentBlock({ typeId, label, icon, details, onUpdate, otherText, se
         </div>
       )}
 
+      {/* Previous employment entries — animated, progressive */}
       <AnimatePresence initial={false}>
-        {needsPrev && (
-          <PrevEmpPanel
-            key="prev"
-            label={label}
-            data={prevData}
-            onUpdate={onPrevUpdate}
-          />
-        )}
+        {entries.slice(1).map((entry, relIdx) => {
+          const idx       = relIdx + 1;
+          const runningMo = entries.slice(0, idx).reduce((s, e) => s + toEmpMonths(e), 0);
+          const stillNeed = Math.max(0, EMP_REQUIRED_MONTHS - runningMo);
+          const needYrs   = Math.floor(stillNeed / 12);
+          const needMo    = stillNeed % 12;
+          const pct       = Math.min(100, Math.round((runningMo / EMP_REQUIRED_MONTHS) * 100));
+          const needLabel = stillNeed === 0
+            ? 'Employment history complete'
+            : `${needYrs > 0 ? `${needYrs}y ` : ''}${needMo > 0 ? `${needMo}mo ` : ''}more needed`;
+
+          return (
+            <motion.div
+              key={idx}
+              className="rh-prev-block"
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -8 }}
+              transition={{ duration: 0.22, ease: 'easeOut' }}
+            >
+              <div className="rh-prev-header">
+                <div className="rh-prev-icon">
+                  <AlertTriangle size={12} />
+                </div>
+                <div className="rh-prev-header-body">
+                  <div className="rh-prev-title">Previous Employment {relIdx + 1}</div>
+                  <div className="rh-prev-sub">{needLabel}</div>
+                </div>
+                <div className="rh-prev-pct">{pct}%</div>
+              </div>
+
+              <div className="rh-prev-body">
+                <div className="g2">
+                  <div className="fld">
+                    <label className="fl">Employer / ABN</label>
+                    <input className="inp" placeholder="⌕  Search employer or ABN"
+                      value={entry.employer}
+                      onChange={e => onUpdate(idx, 'employer', e.target.value)} />
+                  </div>
+                  <div className="fld">
+                    <label className="fl">Role / position</label>
+                    <input className="inp" placeholder="e.g. Sales Manager"
+                      value={entry.role}
+                      onChange={e => onUpdate(idx, 'role', e.target.value)} />
+                  </div>
+                  <div className="fld" style={{ marginBottom: 0 }}>
+                    <label className="fl">Years there</label>
+                    <input className="inp" type="number" min="0" placeholder="Years"
+                      value={entry.years}
+                      onChange={e => onUpdate(idx, 'years', e.target.value)} />
+                  </div>
+                  <div className="fld" style={{ marginBottom: 0 }}>
+                    <label className="fl">Months (0–11)</label>
+                    <input className="inp" type="number" inputMode="numeric" pattern="[0-9]*"
+                      min="0" max="11" step="1" placeholder="Months"
+                      value={entry.months}
+                      onChange={e => onUpdate(idx, 'months', e.target.value)}
+                      onKeyDown={blockInvalidMonthKeys} />
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          );
+        })}
       </AnimatePresence>
+
+      {/* Employment history summary strip */}
+      {totalMonths > 0 && (
+        <div className={`rh-summary ${satisfied ? 'ok' : 'warn'}`}>
+          {satisfied ? (
+            <>
+              <CheckCircle2 size={14} />
+              <span>
+                Employment history complete —{' '}
+                {Math.floor(totalMonths / 12)} yr{Math.floor(totalMonths / 12) !== 1 ? 's' : ''}
+                {totalMonths % 12 > 0 ? ` ${totalMonths % 12} mo` : ''} recorded
+              </span>
+            </>
+          ) : (
+            <>
+              <AlertTriangle size={14} />
+              <span>Additional employment history required — minimum 3 years needed</span>
+            </>
+          )}
+        </div>
+      )}
     </motion.div>
   );
 }
@@ -181,47 +231,91 @@ function EmploymentBlock({ typeId, label, icon, details, onUpdate, otherText, se
 export function ProfileScreen() {
   const { state, updateState, toggleDependantAge, toggleEmploymentType, next, prev } = useApp();
 
-  const [addrYrs,      setAddrYrs]      = useState('');
   const [dob,          setDob]          = useState(null);
   const [visaExpiry,   setVisaExpiry]   = useState(null);
   const [otherEmpText, setOtherEmpText] = useState('');
-  const [empDetails,   setEmpDetails]   = useState({});
-  const [prevEmpData,  setPrevEmpData]  = useState({});
+  const [empHistory,   setEmpHistory]   = useState({});
+
+  // ── Dynamic residential history ──────────────────────────────
+  const EMPTY_ADDR = { address: '', years: '', months: '', status: '' };
+  const REQUIRED_MONTHS = 36;
+
+  const [addresses, setAddresses] = useState([{ ...EMPTY_ADDR }]);
+
+  const toAddrMonths = (a) =>
+    (Math.max(0, Number(a.years) || 0)) * 12 +
+    Math.min(11, Math.max(0, Number(a.months) || 0));
+
+  // Number of address slots to show: stop when cumulative >= 36,
+  // or add one more empty slot if current last entry has a duration.
+  const visibleCount = (() => {
+    let running = 0;
+    for (let i = 0; i < addresses.length; i++) {
+      const mo = toAddrMonths(addresses[i]);
+      running += mo;
+      if (running >= REQUIRED_MONTHS) return i + 1;
+      if (mo === 0) return i + 1; // don't cascade past an empty entry
+    }
+    return addresses.length + 1; // need one more
+  })();
+
+  // Padded view — always exactly visibleCount entries for rendering
+  const viewAddrs = Array.from({ length: visibleCount }, (_, i) =>
+    addresses[i] ?? { ...EMPTY_ADDR }
+  );
+
+  const totalAddrMonths = viewAddrs.reduce((s, a) => s + toAddrMonths(a), 0);
+  const addrSatisfied   = totalAddrMonths >= REQUIRED_MONTHS;
+
+  const updateAddr = (idx, field, value) => {
+    const val = field === 'months' ? clampMonths(value) : value;
+    if (idx === 0 && field === 'status') updateState({ livingStatus: value });
+    setAddresses(prev => {
+      const padded = [...prev];
+      while (padded.length <= idx) padded.push({ ...EMPTY_ADDR });
+      return padded.map((a, i) => i === idx ? { ...a, [field]: val } : a);
+    });
+  };
 
   const initials = getInitials(state.firstName, state.lastName);
 
-  const checkAddr = (yrs) => {
-    setAddrYrs(yrs);
-    updateState({ addressHistoryUnder3: yrs && Number(yrs) < 3 });
+  // ── Dynamic employment history ────────────────────────────────
+  const getEmpEntries = (typeId) => empHistory[typeId] ?? [{ ...EMPTY_EMP_ENTRY }];
+
+  const getEmpVisibleCount = (typeId) => {
+    const entries = getEmpEntries(typeId);
+    let running = 0;
+    for (let i = 0; i < entries.length; i++) {
+      const mo = toEmpMonths(entries[i]);
+      running += mo;
+      if (running >= EMP_REQUIRED_MONTHS) return i + 1;
+      if (mo === 0) return i + 1;
+    }
+    return entries.length + 1;
   };
 
-  const updateEmpDetail = (typeId, field, value) => {
-    setEmpDetails(prev => ({
-      ...prev,
-      [typeId]: { ...EMPTY_EMP, ...prev[typeId], [field]: value },
-    }));
+  const getEmpViewEntries = (typeId) => {
+    const count = getEmpVisibleCount(typeId);
+    return Array.from({ length: count }, (_, i) =>
+      getEmpEntries(typeId)[i] ?? { ...EMPTY_EMP_ENTRY }
+    );
   };
 
-  const getEmpDetails = (typeId) => ({ ...EMPTY_EMP, ...empDetails[typeId] });
+  const updateEmpHistory = (typeId, idx, field, value) => {
+    const val = field === 'months' ? clampMonths(value) : value;
+    setEmpHistory(prev => {
+      const current = prev[typeId] ?? [{ ...EMPTY_EMP_ENTRY }];
+      const padded  = [...current];
+      while (padded.length <= idx) padded.push({ ...EMPTY_EMP_ENTRY });
+      return {
+        ...prev,
+        [typeId]: padded.map((e, i) => i === idx ? { ...e, [field]: val } : e),
+      };
+    });
+  };
 
   // "not-employed" is exclusive and needs no employer form
   const activeEmpTypes = state.employmentTypes.filter(t => t !== 'not-employed');
-
-  const EMPTY_PREV = { employer: '', role: '', current: false, start: null, end: null };
-  const getPrevEmp = (typeId) => ({ ...EMPTY_PREV, ...prevEmpData[typeId] });
-  const updatePrevEmp = (typeId, field, value) => {
-    setPrevEmpData(p => ({
-      ...p,
-      [typeId]: { ...EMPTY_PREV, ...p[typeId], [field]: value },
-    }));
-  };
-
-  const needsPrevForType = (typeId) => {
-    const d = getEmpDetails(typeId);
-    if (d.years === '') return false;
-    const total = Number(d.years) * 12 + (d.months === '' ? 0 : Number(d.months));
-    return total < 36;
-  };
 
   return (
     <div className="screen-enter">
@@ -352,30 +446,147 @@ export function ProfileScreen() {
       {/* ── Residential history ───────────────────────────────── */}
       <Card>
         <CardTitle icon="Home">Residential history</CardTitle>
-        <div className="fld"><label className="fl">Current address</label><input className="inp" placeholder="⌕  Search address" /></div>
+
+        {/* Current address block */}
+        <div className="rh-section-label">
+          <span className="rh-live-dot" />
+          Current Address
+        </div>
+
+        <div className="fld">
+          <label className="fl">Address</label>
+          <input className="inp" placeholder="⌕  Search address"
+            value={viewAddrs[0].address}
+            onChange={e => updateAddr(0, 'address', e.target.value)} />
+        </div>
+
         <div className="fld">
           <label className="fl">Living situation</label>
           <Chips className="chips-grid" style={{ marginTop: 8 }}>
             {LIVING_OPTIONS.map(l => {
               const id = l.toLowerCase().replace(/ /g,'-').replace(/—/g,'-');
-              return <Chip key={id} selected={state.livingStatus === id} onClick={() => updateState({ livingStatus: id })}>{l}</Chip>;
+              return (
+                <Chip key={id}
+                  selected={state.livingStatus === id}
+                  onClick={() => { updateState({ livingStatus: id }); updateAddr(0, 'status', id); }}>
+                  {l}
+                </Chip>
+              );
             })}
           </Chips>
         </div>
+
         <div className="g2">
-          <div className="fld"><label className="fl">Years at address</label><input className="inp" type="number" min="0" placeholder="Years" value={addrYrs} onChange={e => checkAddr(e.target.value)} /></div>
-          <div className="fld"><label className="fl">Months (0–11)</label><input className="inp" type="number" min="0" max="11" placeholder="Months" /></div>
+          <div className="fld">
+            <label className="fl">Years at address</label>
+            <input className="inp" type="number" min="0" placeholder="Years"
+              value={viewAddrs[0].years}
+              onChange={e => updateAddr(0, 'years', e.target.value)} />
+          </div>
+          <div className="fld">
+            <label className="fl">Months (0–11)</label>
+            <input className="inp" type="number" inputMode="numeric" pattern="[0-9]*"
+              min="0" max="11" step="1" placeholder="Months"
+              value={viewAddrs[0].months}
+              onChange={e => updateAddr(0, 'months', e.target.value)}
+              onKeyDown={blockInvalidMonthKeys} />
+          </div>
         </div>
-        {state.addressHistoryUnder3 && (
-          <div className="cond-panel show">
-            <div className="cond-head" style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-              <AlertTriangle size={13} /> Previous address needed — current address under 3 years
-            </div>
-            <div className="fld"><label className="fl">Previous address</label><input className="inp" placeholder="⌕  Search previous address" /></div>
-            <div className="g2">
-              <div className="fld" style={{ marginBottom: 0 }}><label className="fl">Years there</label><input className="inp" type="number" min="0" placeholder="Years" /></div>
-              <div className="fld" style={{ marginBottom: 0 }}><label className="fl">Months</label><input className="inp" type="number" min="0" max="11" placeholder="Months" /></div>
-            </div>
+
+        {/* Previous address blocks — animated, progressive */}
+        <AnimatePresence initial={false}>
+          {viewAddrs.slice(1).map((addr, relIdx) => {
+            const idx        = relIdx + 1;
+            const runningMo  = viewAddrs.slice(0, idx).reduce((s, a) => s + toAddrMonths(a), 0);
+            const stillNeed  = Math.max(0, REQUIRED_MONTHS - runningMo);
+            const needYrs    = Math.floor(stillNeed / 12);
+            const needMo     = stillNeed % 12;
+            const pct        = Math.min(100, Math.round((runningMo / REQUIRED_MONTHS) * 100));
+            const needLabel  = stillNeed === 0
+              ? 'Address history complete'
+              : `${needYrs > 0 ? `${needYrs}y ` : ''}${needMo > 0 ? `${needMo}mo ` : ''}more needed`;
+
+            return (
+              <motion.div
+                key={idx}
+                className="rh-prev-block"
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -8 }}
+                transition={{ duration: 0.22, ease: 'easeOut' }}
+              >
+                <div className="rh-prev-header">
+                  <div className="rh-prev-icon">
+                    <MapPin size={12} />
+                  </div>
+                  <div className="rh-prev-header-body">
+                    <div className="rh-prev-title">Previous Address {relIdx + 1}</div>
+                    <div className="rh-prev-sub">{needLabel}</div>
+                  </div>
+                  <div className="rh-prev-pct">{pct}%</div>
+                </div>
+
+                <div className="rh-prev-body">
+                  <div className="fld">
+                    <label className="fl">Address</label>
+                    <input className="inp" placeholder="⌕  Search previous address"
+                      value={addr.address}
+                      onChange={e => updateAddr(idx, 'address', e.target.value)} />
+                  </div>
+                  <div className="fld">
+                    <label className="fl">Residential status</label>
+                    <select className="sel" value={addr.status}
+                      onChange={e => updateAddr(idx, 'status', e.target.value)}>
+                      <option value="">Select…</option>
+                      {LIVING_OPTIONS.map(l => {
+                        const id = l.toLowerCase().replace(/ /g,'-').replace(/—/g,'-');
+                        return <option key={id} value={id}>{l}</option>;
+                      })}
+                    </select>
+                  </div>
+                  <div className="g2">
+                    <div className="fld" style={{ marginBottom: 0 }}>
+                      <label className="fl">Years at address</label>
+                      <input className="inp" type="number" min="0" placeholder="Years"
+                        value={addr.years}
+                        onChange={e => updateAddr(idx, 'years', e.target.value)} />
+                    </div>
+                    <div className="fld" style={{ marginBottom: 0 }}>
+                      <label className="fl">Months (0–11)</label>
+                      <input className="inp" type="number" inputMode="numeric" pattern="[0-9]*"
+                        min="0" max="11" step="1" placeholder="Months"
+                        value={addr.months}
+                        onChange={e => updateAddr(idx, 'months', e.target.value)}
+                        onKeyDown={blockInvalidMonthKeys} />
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            );
+          })}
+        </AnimatePresence>
+
+        {/* Status summary — only show once user has started filling */}
+        {totalAddrMonths > 0 && (
+          <div className={`rh-summary ${addrSatisfied ? 'ok' : 'warn'}`}>
+            {addrSatisfied ? (
+              <>
+                <CheckCircle2 size={14} />
+                <span>
+                  Residential history complete —{' '}
+                  {Math.floor(totalAddrMonths / 12)} yr{Math.floor(totalAddrMonths / 12) !== 1 ? 's' : ''}
+                  {totalAddrMonths % 12 > 0 ? ` ${totalAddrMonths % 12} mo` : ''} recorded
+                </span>
+              </>
+            ) : (
+              <>
+                <AlertTriangle size={14} />
+                <span>
+                  Additional address history required — minimum 3 years needed
+                  {` (${Math.ceil((REQUIRED_MONTHS - totalAddrMonths) / 12 * 10) / 10} yr${Math.ceil((REQUIRED_MONTHS - totalAddrMonths) / 12 * 10) / 10 !== 1 ? 's' : ''} remaining)`}
+                </span>
+              </>
+            )}
           </div>
         )}
       </Card>
@@ -412,13 +623,10 @@ export function ProfileScreen() {
               typeId={typeId}
               label={EMP_META[typeId]?.label ?? typeId}
               icon={EMP_META[typeId]?.icon ?? 'Briefcase'}
-              details={getEmpDetails(typeId)}
-              onUpdate={(field, value) => updateEmpDetail(typeId, field, value)}
+              entries={getEmpViewEntries(typeId)}
+              onUpdate={(idx, field, value) => updateEmpHistory(typeId, idx, field, value)}
               otherText={otherEmpText}
               setOtherText={setOtherEmpText}
-              needsPrev={needsPrevForType(typeId)}
-              prevData={getPrevEmp(typeId)}
-              onPrevUpdate={(field, value) => updatePrevEmp(typeId, field, value)}
             />
           ))}
         </AnimatePresence>
