@@ -1,8 +1,7 @@
 import { useState } from 'react';
+import { Users, Send, CheckCircle2, Sparkles } from 'lucide-react';
 import { useApp } from '../../context/AppContext';
 import { ToggleSwitch } from '../forms/ToggleSwitch';
-import { InfoBanner } from '../common/InfoBanner';
-import { BtnPrimary } from '../common/Button';
 import './JointApplicant.css';
 
 export function JointApplicant() {
@@ -12,39 +11,64 @@ export function JointApplicant() {
   const toggle = () => updateState({ jointApplicant: !state.jointApplicant });
 
   return (
-    <div className="card">
-      <div className="flex-between" onClick={toggle} style={{ cursor: 'pointer' }}>
-        <div className="flex-between" style={{ gap: 12 }}>
-          <div className="card-icon">👥</div>
-          <div>
-            <div style={{ fontFamily: 'var(--font-display)', fontSize: 14, fontWeight: 700 }}>Add a joint applicant?</div>
-            <div style={{ fontSize: 12, color: 'var(--text1)', marginTop: 2 }}>Adding a co-borrower can improve approval odds and rate</div>
-          </div>
+    <div className="jt-card">
+      <div className="jt-header" onClick={toggle}>
+        <div className="jt-icon-box">
+          <Users size={17} />
+        </div>
+        <div className="jt-text">
+          <div className="jt-title">Add a joint applicant?</div>
+          <div className="jt-sub">A co-borrower can improve approval odds and your rate</div>
         </div>
         <ToggleSwitch on={state.jointApplicant} onToggle={e => { e.stopPropagation(); toggle(); }} />
       </div>
 
       {state.jointApplicant && (
-        <div className="joint-panel open">
-          <InfoBanner icon="✦" variant="blue" style={{ marginTop: 0, marginBottom: 14 }}>
-            We'll send a secure digital invite. Your co-applicant completes their own profile independently in the Axio portal — no in-person meeting needed.
-          </InfoBanner>
-          <div className="g2">
-            <div className="fld"><label className="fl">Co-applicant full name</label><input className="inp" placeholder="Full name" /></div>
-            <div className="fld"><label className="fl">Relationship</label>
+        <div className="jt-panel">
+          <div className="jt-info">
+            <div className="jt-info-icon">
+              <Sparkles size={12} />
+            </div>
+            <p className="jt-info-text">
+              We'll send a secure invite. Your co-applicant completes their profile independently — no in-person meeting needed.
+            </p>
+          </div>
+
+          <div className="jt-fields">
+            <div className="fld">
+              <label className="fl">Co-applicant name</label>
+              <input className="inp" placeholder="Full name" />
+            </div>
+            <div className="fld">
+              <label className="fl">Relationship</label>
               <select className="sel">
-                <option>Spouse / partner</option><option>Parent</option>
-                <option>Sibling</option><option>Friend</option><option>Other</option>
+                <option>Spouse / partner</option>
+                <option>Parent</option>
+                <option>Sibling</option>
+                <option>Friend</option>
+                <option>Other</option>
               </select>
             </div>
-            <div className="fld"><label className="fl">Mobile number</label><input className="inp" placeholder="0400 000 000" /></div>
-            <div className="fld"><label className="fl">Email address</label><input className="inp" placeholder="jane@example.com" /></div>
+            <div className="fld">
+              <label className="fl">Mobile</label>
+              <input className="inp" type="tel" placeholder="0400 000 000" />
+            </div>
+            <div className="fld">
+              <label className="fl">Email</label>
+              <input className="inp" type="email" placeholder="jane@example.com" />
+            </div>
           </div>
-          <BtnPrimary style={{ width: '100%' }} onClick={() => setSent(true)}>Send digital application invite →</BtnPrimary>
-          {sent && (
-            <InfoBanner icon="✅" variant="green" style={{ marginTop: 12 }}>
-              <strong style={{ color: 'var(--green)' }}>Invite sent.</strong> They'll receive a secure SMS and email link to complete their application.
-            </InfoBanner>
+
+          {sent ? (
+            <div className="jt-sent">
+              <CheckCircle2 size={15} />
+              <span>Invite sent — they'll receive a secure SMS &amp; email link.</span>
+            </div>
+          ) : (
+            <button className="jt-cta" onClick={() => setSent(true)}>
+              <Send size={13} />
+              Send application invite
+            </button>
           )}
         </div>
       )}

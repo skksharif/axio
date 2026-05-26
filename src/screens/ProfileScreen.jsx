@@ -184,12 +184,10 @@ export function ProfileScreen() {
   const [addrYrs,      setAddrYrs]      = useState('');
   const [dob,          setDob]          = useState(null);
   const [visaExpiry,   setVisaExpiry]   = useState(null);
-  const [partnerDob,   setPartnerDob]   = useState(null);
   const [otherEmpText, setOtherEmpText] = useState('');
   const [empDetails,   setEmpDetails]   = useState({});
   const [prevEmpData,  setPrevEmpData]  = useState({});
 
-  const isCouple = state.relationshipStatus === 'married' || state.relationshipStatus === 'defacto';
   const initials = getInitials(state.firstName, state.lastName);
 
   const checkAddr = (yrs) => {
@@ -324,20 +322,6 @@ export function ProfileScreen() {
           </div>
         </div>
         <div className="divider" />
-        {isCouple && (
-          <>
-            <InfoBanner icon="Users" variant="blue">Partner details help assess household position. Income is not declared as yours unless adding a joint applicant.</InfoBanner>
-            <div className="g2">
-              <div className="fld"><label className="fl">Partner full name</label><input className="inp" placeholder="Full name" /></div>
-              <div className="fld"><label className="fl">Partner date of birth</label><DateSelect value={partnerDob} onChange={setPartnerDob} yearRange={[1940, new Date().getFullYear() - 18]} /></div>
-              <div className="fld"><label className="fl">Partner employment</label>
-                <select className="sel"><option value="">Select…</option><option>Full-time</option><option>Part-time</option><option>Casual</option></select>
-              </div>
-              <div className="fld"><label className="fl">Partner income (approx.)</label><input className="inp" placeholder="$0 — optional" /></div>
-            </div>
-            <div className="divider" />
-          </>
-        )}
         <div className="fld" style={{ marginBottom: 0 }}>
           <label className="fl">Number of dependants</label>
           <div className="text-small text-border2" style={{ margin: '6px 0 12px' }}>Include all children and others you financially support.</div>
