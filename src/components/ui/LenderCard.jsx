@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { Star, ChevronDown, Sparkles, CheckCircle2 } from 'lucide-react';
 import { Badge } from '../common/Badge';
-import { useApp } from '../../context/AppContext';
+import { useApp } from '@shared/hooks/useApp';
 import './LenderCard.css';
 
 const FREQ_TEXT = {

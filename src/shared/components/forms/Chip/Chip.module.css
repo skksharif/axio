@@ -1,0 +1,21 @@
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip {
+  padding: 6px 14px;
+  border-radius: var(--r22);
+  border: 1.5px solid var(--border);
+  background: var(--surface-input);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text1);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: border-color 0.15s, background 0.15s, color 0.15s;
+  user-select: none;
+}
+.chip:hover:not(.disabled) { border-color: var(--border2); color: var(--text0); }
+.on {
+  border-color: var(--accent);
+  background: var(--surface-active);
+  color: var(--accent2);
+}
+.disabled { opacity: 0.45; cursor: not-allowed; }

@@ -1,0 +1,51 @@
+.grid {
+  display: grid;
+  grid-template-columns: repeat(var(--cc-cols, 2), 1fr);
+  gap: var(--sp12);
+}
+@media (max-width: 640px) {
+  .grid { grid-template-columns: 1fr; }
+}
+
+.card, .condCard {
+  position: relative;
+  padding: 16px;
+  background: var(--surface-input);
+  border: 1.5px solid var(--border);
+  border-radius: var(--r12);
+  cursor: pointer;
+  transition: border-color 0.18s, background 0.18s, box-shadow 0.18s;
+  overflow: hidden;
+}
+.card:hover, .condCard:hover {
+  border-color: var(--border2);
+  background: var(--surface-hover);
+}
+.selected {
+  border-color: var(--accent) !important;
+  background: var(--surface-active) !important;
+  box-shadow: 0 0 0 1px rgba(124,58,237,0.20);
+}
+.check {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 1.5px solid var(--border2);
+  background: var(--surface-inner);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: transparent;
+  transition: all 0.15s;
+}
+.selected .check {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+.icon  { font-size: 24px; margin-bottom: 8px; }
+.title { font-size: 13px; font-weight: 600; color: var(--text0); margin-bottom: 4px; }
+.desc  { font-size: 12px; color: var(--text2); line-height: 1.5; }

@@ -1,0 +1,5 @@
+/**
+ * Shared styles entry point.
+ * Import this in components that need access to global utilities.
+ * The design token system (variables.css) is loaded globally in main.jsx via global.css.
+ */

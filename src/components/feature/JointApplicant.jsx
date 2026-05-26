@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useApp } from '../../context/AppContext';
+import { useApp } from '@shared/hooks/useApp';
 import { ToggleSwitch } from '../forms/ToggleSwitch';
 import { InfoBanner } from '../common/InfoBanner';
 import { BtnPrimary } from '../common/Button';

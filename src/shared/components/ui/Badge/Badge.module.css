@@ -1,0 +1,30 @@
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 9px;
+  border-radius: var(--r22);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+
+.blue   { background: rgba(139,92,246,0.14); color: var(--accent2); border: 1px solid rgba(139,92,246,0.20); }
+.green  { background: var(--greenbg);        color: var(--green);   border: 1px solid var(--greenborder); }
+.yellow { background: var(--yellowbg);       color: var(--yellow);  border: 1px solid var(--yellowborder); }
+.red    { background: var(--redbg);          color: var(--red);     border: 1px solid var(--redborder); }
+.ghost  { background: var(--surface-input);  color: var(--text2);   border: 1px solid var(--border); }
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px;
+  border-radius: var(--r22);
+  font-size: 12px;
+  font-weight: 600;
+}
+.pill_green  { background: var(--greenbg);  color: var(--green);  border: 1px solid var(--greenborder); }
+.pill_yellow { background: var(--yellowbg); color: var(--yellow); border: 1px solid var(--yellowborder); }
+.pill_red    { background: var(--redbg);    color: var(--red);    border: 1px solid var(--redborder); }

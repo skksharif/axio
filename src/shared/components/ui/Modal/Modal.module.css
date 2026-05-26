@@ -1,0 +1,48 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: var(--surface-overlay);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  z-index: 500;
+  backdrop-filter: blur(4px);
+}
+.panel {
+  width: 100%;
+  background: var(--surface-card);
+  border: 1px solid var(--border2);
+  border-radius: var(--r16);
+  box-shadow: var(--glow-lg);
+  overflow: hidden;
+  animation: scaleIn 0.18s ease;
+}
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 20px;
+  border-bottom: 1px solid var(--border);
+}
+.title { font-size: 14px; font-weight: 600; color: var(--text0); }
+.close {
+  width: 28px;
+  height: 28px;
+  border: none;
+  background: var(--surface-input);
+  border-radius: var(--r8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text2);
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.close:hover { background: var(--surface-hover); color: var(--text0); }
+.body { padding: 20px; }
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to   { opacity: 1; transform: scale(1); }
+}

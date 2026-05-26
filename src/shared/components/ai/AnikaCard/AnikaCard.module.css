@@ -1,0 +1,84 @@
+.panel {
+  background: var(--surface-card);
+  border: 1px solid var(--border);
+  border-radius: var(--r16);
+  padding: var(--sp20);
+  box-shadow: var(--card-shadow);
+}
+.header { display: flex; align-items: flex-start; gap: 12px; margin-bottom: var(--sp16); }
+.avatarWrap { position: relative; flex-shrink: 0; }
+.avatarRing {
+  position: absolute;
+  inset: -3px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(139,92,246,0.4);
+  animation: pulseGlow 2.2s ease-in-out infinite;
+}
+.avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #6D28D9 0%, #8B5CF6 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+}
+.headerBody { flex: 1; }
+.name { font-size: 13px; font-weight: 700; color: var(--text0); }
+.status { font-size: 11px; color: var(--text2); display: flex; align-items: center; gap: 4px; margin-top: 2px; }
+.statusDone { color: var(--green); }
+
+.dots { display: flex; gap: 3px; align-items: center; }
+.dot  {
+  width: 4px; height: 4px; border-radius: 50%;
+  background: var(--accent2);
+  animation: dotBounce 1.2s ease-in-out infinite;
+}
+.dot:nth-child(2) { animation-delay: 0.2s; }
+.dot:nth-child(3) { animation-delay: 0.4s; }
+
+.body { font-size: 13px; color: var(--text1); line-height: 1.65; min-height: 40px; }
+
+.shimmer { display: flex; flex-direction: column; gap: 8px; }
+.shimmerLine {
+  height: 11px;
+  background: linear-gradient(90deg, var(--surface-inner) 25%, var(--surface-hover) 50%, var(--surface-inner) 75%);
+  background-size: 200% 100%;
+  border-radius: var(--r6);
+  animation: shimmer 1.4s infinite;
+}
+.w85 { width: 85%; }
+.w65 { width: 65%; }
+
+.message { margin: 0; }
+.cursor {
+  display: inline-block;
+  width: 2px; height: 13px;
+  background: var(--accent2);
+  border-radius: 1px;
+  margin-left: 2px;
+  vertical-align: middle;
+  animation: blink 0.8s step-end infinite;
+}
+
+.footer { margin-top: var(--sp16); }
+.footerDivider { height: 1px; background: var(--border); margin-bottom: var(--sp12); }
+.footerTrust { display: flex; align-items: center; gap: 6px; font-size: 11px; color: var(--text2); }
+
+@keyframes pulseGlow {
+  0%, 100% { opacity: 0.4; transform: scale(1); }
+  50%       { opacity: 0.9; transform: scale(1.05); }
+}
+@keyframes dotBounce {
+  0%, 80%, 100% { transform: translateY(0); }
+  40%           { transform: translateY(-4px); }
+}
+@keyframes shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}

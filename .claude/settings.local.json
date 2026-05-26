@@ -33,7 +33,16 @@
       "Bash(sed -i 's/eyebrow=\"Step 4 · Income\"/eyebrow=\"Step 5 · Income\"/' \"b:/axio/axio-react/src/screens/IncomeScreen.jsx\")",
       "Bash(sed -i 's/eyebrow=\"Step 5 · Assets\"/eyebrow=\"Step 6 · Assets\"/' \"b:/axio/axio-react/src/screens/AssetsScreen.jsx\")",
       "Bash(sed -i 's/eyebrow=\"Step 6 · Liabilities\"/eyebrow=\"Step 7 · Liabilities\"/' \"b:/axio/axio-react/src/screens/LiabilitiesScreen.jsx\")",
-      "Bash(sed -i 's/eyebrow=\"Step 7 · Living expenses\"/eyebrow=\"Step 8 · Living expenses\"/' \"b:/axio/axio-react/src/screens/ExpensesScreen.jsx\")"
+      "Bash(sed -i 's/eyebrow=\"Step 7 · Living expenses\"/eyebrow=\"Step 8 · Living expenses\"/' \"b:/axio/axio-react/src/screens/ExpensesScreen.jsx\")",
+      "Bash(Get-ChildItem -Path \"b:\\\\axio\\\\axio-react\" -Force)",
+      "Bash(Select-Object Name, FullName)",
+      "Bash(xargs wc -l)",
+      "Bash(xargs -I {} sh -c 'echo \"=== {} ===\" && wc -l {}')",
+      "Bash(grep -v \"^\\\\.$\")",
+      "Bash(xargs -I {} sh -c 'echo \"{}:\" && ls \"{}/\" 2>/dev/null | wc -l')",
+      "Bash(node -e ' *)",
+      "Bash(Get-ChildItem -Path \"b:\\\\axio\\\\axio-react\\\\src\\\\features\" -Directory)",
+      "Bash(Select-Object Name)"
     ]
   }
 }

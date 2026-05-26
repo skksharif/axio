@@ -1,0 +1,36 @@
+.wrap  { margin-bottom: var(--sp28); }
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent2);
+  margin-bottom: var(--sp10);
+  background: rgba(139,92,246,0.10);
+  border: 1px solid rgba(139,92,246,0.20);
+  padding: 4px 10px;
+  border-radius: var(--r22);
+}
+.title {
+  font-size: clamp(22px, 4vw, 28px);
+  font-weight: 700;
+  color: var(--text0);
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+}
+.gradient {
+  background: var(--accentg);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.sub {
+  font-size: 13px;
+  color: var(--text1);
+  margin-top: 8px;
+  line-height: 1.6;
+  max-width: 560px;
+}

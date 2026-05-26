@@ -1,5 +1,5 @@
 import { useState, useMemo, useRef, useEffect, useCallback } from 'react';
-import { LENDER_NAMES } from '../../data/lenderNames';
+import { LENDER_NAMES } from '@shared/data/lenderNames';
 import './LenderAutocomplete.css';
 
 export function LenderAutocomplete({ value = '', onChange, placeholder = 'e.g. CBA' }) {

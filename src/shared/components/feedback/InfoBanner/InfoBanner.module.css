@@ -1,0 +1,15 @@
+.banner {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 12px 14px;
+  border-radius: var(--r12);
+  font-size: 12.5px;
+  line-height: 1.55;
+  color: var(--text1);
+}
+.icon { flex-shrink: 0; margin-top: 1px; }
+.blue   { background: rgba(139,92,246,0.08); border: 1px solid rgba(139,92,246,0.18); color: var(--text1); }
+.green  { background: var(--greenbg);        border: 1px solid var(--greenborder);    color: var(--green); }
+.yellow { background: var(--yellowbg);       border: 1px solid var(--yellowborder);   color: var(--yellow); }
+.red    { background: var(--redbg);          border: 1px solid var(--redborder);      color: var(--red); }

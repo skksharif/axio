@@ -1,8 +1,8 @@
 import { Fragment, useMemo, useRef, useEffect } from 'react';
 import { Check } from 'lucide-react';
 import { Icon } from '../common/Icon';
-import { useApp } from '../../context/AppContext';
-import { SCREENS, TRUST_SIDEBAR } from '../../constants/screens';
+import { useApp } from '@shared/hooks/useApp';
+import { SCREENS, TRUST_SIDEBAR } from '@shared/constants/screens';
 import './Sidebar.css';
 
 export function Sidebar({ open, onClose }) {

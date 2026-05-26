@@ -1,7 +1,7 @@
 import { CircleDot } from 'lucide-react';
-import { useApp } from '../../context/AppContext';
-import { SCREENS } from '../../constants/screens';
-import { getInitials } from '../../utils/format';
+import { useApp } from '@shared/hooks/useApp';
+import { SCREENS } from '@shared/constants/screens';
+import { getInitials } from '@shared/utils/format';
 import './TopBar.css';
 
 export function TopBar({ onMenuClick }) {
