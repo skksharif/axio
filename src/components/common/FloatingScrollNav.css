@@ -1,0 +1,47 @@
+.floating-scroll-nav {
+  position: fixed;
+  right: max(var(--sp16), env(safe-area-inset-right));
+  bottom: max(var(--sp20), env(safe-area-inset-bottom));
+  z-index: 120;
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--border2);
+  border-radius: var(--r12);
+  background: var(--accentg);
+  color: var(--text0);
+  box-shadow: var(--glow-lg), 0 0 0 1px var(--glass-border);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  animation: floating-scroll-in 0.22s ease-out;
+}
+
+.floating-scroll-nav:hover {
+  box-shadow: var(--glow-lg), 0 0 0 2px var(--border2);
+}
+
+.floating-scroll-nav:active {
+  transform: scale(0.92);
+  opacity: 0.86;
+}
+
+.floating-scroll-nav:focus-visible {
+  outline: 2px solid var(--hover);
+  outline-offset: 3px;
+}
+
+@keyframes floating-scroll-in {
+  from { opacity: 0; transform: translateY(10px) scale(0.9); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@media (max-width: 900px) {
+  .floating-scroll-nav { display: flex; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .floating-scroll-nav { animation: none; }
+}

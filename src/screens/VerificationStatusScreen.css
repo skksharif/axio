@@ -204,4 +204,7 @@
   .vs-card-grid   { grid-template-columns: 1fr; }
   .vs-bottom-grid { grid-template-columns: 1fr; }
   .vs-main-card   { padding: 20px 18px; }
+  .vs-top-row     { align-items: flex-start; margin-bottom: var(--sp20); }
+  .vs-active-badge { line-height: 1.45; }
+  .vs-bottom-card { padding: var(--sp20); }
 }

@@ -12,6 +12,7 @@
 html {
   scroll-behavior: smooth;
   background: var(--bg0); /* Covers overscroll / scrollbar gutter area */
+  overflow-wrap: anywhere;
 }
 
 html input,
@@ -30,6 +31,7 @@ body {
   font-size: 14px;
   line-height: 1.55;
   min-height: 100vh;
+  min-height: 100dvh;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -74,6 +76,19 @@ body {
   flex: 1;
   width: 100%;
   padding: var(--content-py) var(--content-px) var(--content-pb);
+}
+
+.screen-enter {
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+}
+
+.g2 > *,
+.g3 > *,
+.grid-3 > *,
+.grid-4 > * {
+  min-width: 0;
 }
 
 /* ─── GRID UTILITIES ─────────────────────────────────────── */
@@ -200,7 +215,7 @@ input[type="range"] {
 
 @media (max-width: 900px) {
   .main-content { margin-left: 0; }
-  .screen-area  { padding: var(--sp20) var(--sp20) 48px; }
+  .screen-area  { padding: var(--sp20) var(--sp20) calc(76px + env(safe-area-inset-bottom)); }
   .g2     { grid-template-columns: 1fr; }
   .g3     { grid-template-columns: 1fr 1fr; }
   .grid-3 { grid-template-columns: 1fr 1fr; }
@@ -208,7 +223,23 @@ input[type="range"] {
 }
 
 @media (max-width: 520px) {
+  .screen-area { padding: var(--sp16) var(--sp14) calc(76px + env(safe-area-inset-bottom)); }
   .g3     { grid-template-columns: 1fr; }
   .grid-3 { grid-template-columns: 1fr; }
   .grid-4 { grid-template-columns: 1fr 1fr; }
+
+  .inp,
+  .sel {
+    min-height: 48px;
+    font-size: 16px;
+    padding-inline: var(--sp14);
+  }
+
+  .fl { font-size: 11px; }
+  .sh-sub-row { align-items: flex-start; }
+}
+
+@media (max-width: 360px) {
+  .screen-area { padding-inline: var(--sp12); }
+  .grid-4 { grid-template-columns: 1fr; }
 }

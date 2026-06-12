@@ -490,6 +490,9 @@
 /* ─── Responsive ───────────────────────────────────────────── */
 @media (max-width: 900px) {
   .sidebar {
+    width: min(var(--sidebar-w), calc(100vw - var(--sp32)));
+    min-width: 0;
+    height: 100dvh;
     transform: translateX(-100%);
     box-shadow: none;
   }

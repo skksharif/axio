@@ -59,3 +59,23 @@
   text-transform: uppercase; letter-spacing: .4px; margin-bottom: 3px;
 }
 .rf-val { font-size: 12.5px; font-weight: 700; font-family: var(--font-mono); }
+
+@media (max-width: 600px) {
+  .rego-row {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .rego-row .rego-btn {
+    grid-column: 1 / -1;
+    width: 100%;
+    min-height: 44px;
+  }
+
+  .rego-fields {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 380px) {
+  .rego-row { grid-template-columns: 1fr; }
+}

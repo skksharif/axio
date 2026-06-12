@@ -2,6 +2,7 @@ import { lazy, Suspense, useState, useCallback } from 'react';
 import { useApp } from './context/AppContext';
 import { Sidebar } from './components/layout/Sidebar';
 import { TopBar } from './components/layout/TopBar';
+import { FloatingScrollNav } from './components/common/FloatingScrollNav';
 
 const EligibilityScreen        = lazy(() => import('./screens/EligibilityScreen').then(m => ({ default: m.EligibilityScreen })));
 const ProductScreen            = lazy(() => import('./screens/ProductScreen').then(m => ({ default: m.ProductScreen })));
@@ -67,6 +68,7 @@ export default function App() {
             <CurrentScreen key={state.currentScreen} />
           </Suspense>
         </div>
+        <FloatingScrollNav hidden={sidebarOpen} />
       </div>
     </div>
   );

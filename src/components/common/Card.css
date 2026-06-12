@@ -47,3 +47,15 @@
   flex-shrink: 0;
   border: 1px solid var(--border);
 }
+
+@media (max-width: 520px) {
+  .card {
+    padding: var(--sp16);
+    border-radius: var(--r16);
+  }
+
+  .card-title {
+    align-items: flex-start;
+    margin-bottom: var(--sp16);
+  }
+}

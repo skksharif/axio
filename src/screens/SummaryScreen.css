@@ -137,4 +137,5 @@
   .ah-bottom { padding: 14px 16px; }
   .ah-left { gap: 12px; }
   .ah-narrative { font-size: 13px; }
+  .metrics-grid { grid-template-columns: 1fr; }
 }

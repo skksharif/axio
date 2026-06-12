@@ -75,8 +75,9 @@
 }
 
 @media (max-width: 480px) {
-  .btn-primary { height: 42px; padding: 0 16px; font-size: 13px; gap: 5px; }
-  .btn-ghost   { height: 42px; padding: 0 14px; font-size: 13px; gap: 5px; }
+  .btn-primary { height: 44px; padding: 0 16px; font-size: 13px; gap: 5px; }
+  .btn-ghost   { height: 44px; padding: 0 14px; font-size: 13px; gap: 5px; }
+  .btn-row     { margin-top: var(--sp20); padding-top: var(--sp16); }
   .btn-row .btn-primary { flex: 1; }
   .btn-row .btn-ghost   { flex: 1; }
 }

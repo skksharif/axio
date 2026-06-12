@@ -81,11 +81,14 @@
 
 @media (max-width: 900px) {
   .topbar { padding: 0 var(--sp20); }
-  .topbar-hamburger { display: flex; }
+  .topbar-hamburger { display: flex; width: 44px; height: 44px; }
   .save-indicator   { display: none; }
 }
 
 @media (max-width: 480px) {
+  .topbar { padding: 0 var(--sp14); }
+  .topbar-left { gap: var(--sp8); }
   .topbar-step    { display: none; }
   .topbar-divider { display: none; }
+  .topbar-title { font-size: 13.5px; }
 }
