@@ -57,7 +57,6 @@
   width: 38px;
   height: 38px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #5B21B6 0%, #7C3AED 50%, #9333EA 100%);
   box-shadow:
     0 0 14px rgba(139, 92, 246, 0.45),
     inset 0 1px 0 rgba(255, 255, 255, 0.15);
@@ -67,6 +66,14 @@
   color: #fff;
   position: relative;
   z-index: 1;
+  overflow: hidden;
+}
+
+.ap-avatar-logo {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
 }
 
 /* ─── Header text ───────────────────────────────────────────────── */

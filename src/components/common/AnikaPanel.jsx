@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import { ShieldCheck, Sparkles } from 'lucide-react';
+import { ShieldCheck } from 'lucide-react';
+import anikaLogo from '../../assets/anika.png';
 import './AnikaPanel.css';
 
 export function AnikaPanel({ message, thinkingMs = 800 }) {
@@ -36,7 +37,7 @@ export function AnikaPanel({ message, thinkingMs = 800 }) {
         <div className="ap-avatar-wrap">
           <div className="ap-avatar-ring" />
           <div className="ap-avatar">
-            <Sparkles size={16} />
+            <img src={anikaLogo} alt="Anika AI" className="ap-avatar-logo" />
           </div>
         </div>
 
