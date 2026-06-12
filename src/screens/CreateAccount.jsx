@@ -44,18 +44,26 @@ function validateEmail(v) {
 }
 
 function validateMobile(v) {
-  const d = v.replace(/\s+/g, '');
+  const d = v.replace(/\D/g, '');
   if (!d) return 'Mobile number is required';
-  if (d.length < 10) return 'Mobile number is too short';
-  if (!/^(04|\+614|614)/.test(d)) return 'Enter a valid AU mobile (04xx xxx xxx)';
+  if (d.length !== 9) return 'Enter all 9 digits after +61';
+  if (!/^4\d{8}$/.test(d)) return 'Australian mobile numbers must start with 4';
   return null;
 }
 
 function formatMobile(v) {
-  const d = v.replace(/\D/g, '').slice(0, 10);
-  if (d.length <= 4) return d;
-  if (d.length <= 7) return `${d.slice(0, 4)} ${d.slice(4)}`;
-  return `${d.slice(0, 4)} ${d.slice(4, 7)} ${d.slice(7)}`;
+  const d = v.replace(/\D/g, '').slice(0, 9);
+  if (d.length <= 3) return d;
+  if (d.length <= 6) return `${d.slice(0, 3)} ${d.slice(3)}`;
+  return `${d.slice(0, 3)} ${d.slice(3, 6)} ${d.slice(6)}`;
+}
+
+function normaliseAustralianMobile(v) {
+  let d = v.replace(/\D/g, '');
+  if (d.startsWith('0061')) d = d.slice(4);
+  if (d.startsWith('61')) d = d.slice(2);
+  if (d.startsWith('0')) d = d.slice(1);
+  return d.slice(0, 9);
 }
 
 // ── Constants ──────────────────────────────────────────────────────────
@@ -362,9 +370,9 @@ export function CreateAccount() {
     transition: { duration: 0.22, ease: [0.4, 0, 0.2, 1] },
   };
 
-  // Display mobile with +61 prefix in confirm card (mobile state = raw digits)
+  // Mobile state stores only the national number after the fixed +61 prefix.
   const displayMobile = mobile
-    ? `+61 ${formatMobile(mobile).replace(/^0/, '')}`
+    ? `+61 ${formatMobile(mobile)}`
     : '+61 412 345 678';
 
   return (
@@ -460,23 +468,46 @@ export function CreateAccount() {
                 {/* Mobile */}
                 <div className="ca-field">
                   <label className="ca-lbl" htmlFor="ca-mobile">Mobile number</label>
-                  <div className={`ca-inp-wrap${errors.mobile ? ' ca-inp-wrap--err' : ''}`}>
-                    <Smartphone size={14} className="ca-inp-icon" />
+                  <div className={`ca-phone-control${errors.mobile ? ' ca-phone-control--err' : ''}`}>
+                    <div className="ca-phone-prefix" aria-label="Australia country code plus 61">
+                      <svg
+                        className="ca-phone-flag"
+                        viewBox="0 0 60 42"
+                        role="img"
+                        aria-label="Australian flag"
+                      >
+                        <rect width="60" height="42" fill="#012169" />
+                        <path d="M0 0 30 21M30 0 0 21" stroke="#fff" strokeWidth="5" />
+                        <path d="M0 0 30 21M30 0 0 21" stroke="#C8102E" strokeWidth="2.5" />
+                        <path d="M15 0v21M0 10.5h30" stroke="#fff" strokeWidth="8" />
+                        <path d="M15 0v21M0 10.5h30" stroke="#C8102E" strokeWidth="4" />
+                        <g fill="#fff">
+                          <path d="m15 25.5 1.2 3.3 3.5.1-2.8 2.1 1 3.4-2.9-2-2.9 2 1-3.4-2.8-2.1 3.5-.1z" />
+                          <path d="m46 8 1 2.6 2.8.1-2.2 1.7.8 2.7-2.4-1.6-2.3 1.6.8-2.7-2.3-1.7 2.9-.1z" />
+                          <path d="m38 17 1 2.6 2.8.1-2.2 1.7.8 2.7-2.4-1.6-2.3 1.6.8-2.7-2.3-1.7 2.9-.1z" />
+                          <path d="m50 24 1 2.6 2.8.1-2.2 1.7.8 2.7-2.4-1.6-2.3 1.6.8-2.7-2.3-1.7 2.9-.1z" />
+                          <path d="m42 32 1 2.6 2.8.1-2.2 1.7.8 2.7-2.4-1.6-2.3 1.6.8-2.7-2.3-1.7 2.9-.1z" />
+                        </g>
+                      </svg>
+                      <span className="ca-phone-code" aria-hidden="true">+61</span>
+                    </div>
                     <input
                       id="ca-mobile"
                       ref={mobileInputRef}
-                      className="ca-inp"
+                      className="ca-phone-input"
                       type="tel"
-                      inputMode="tel"
-                      placeholder="+61 412 345 678"
+                      inputMode="numeric"
+                      placeholder="412 345 678"
                       value={formatMobile(mobile)}
-                      autoComplete="tel"
+                      autoComplete="tel-national"
+                      aria-invalid={Boolean(errors.mobile)}
+                      aria-describedby={errors.mobile ? 'ca-mobile-error' : 'ca-mobile-hint'}
                       onChange={e => {
                         const input = e.target;
                         const cursorPos = input.selectionStart;
                         // Count how many digits sat before the cursor in the modified value
                         const digitsBeforeCursor = input.value.slice(0, cursorPos).replace(/\D/g, '').length;
-                        const newRaw = input.value.replace(/\D/g, '').slice(0, 10);
+                        const newRaw = normaliseAustralianMobile(input.value);
                         setMobile(newRaw);
                         // Restore cursor to the matching digit position after re-render
                         requestAnimationFrame(() => {
@@ -495,8 +526,15 @@ export function CreateAccount() {
                       }}
                     />
                   </div>
+                  {!errors.mobile && (
+                    <span id="ca-mobile-hint" className="ca-field-hint">
+                      Enter the 9-digit mobile number after +61.
+                    </span>
+                  )}
                   {errors.mobile && (
-                    <span className="ca-err"><AlertCircle size={11} />{errors.mobile}</span>
+                    <span id="ca-mobile-error" className="ca-err" role="alert">
+                      <AlertCircle size={11} />{errors.mobile}
+                    </span>
                   )}
                 </div>
 

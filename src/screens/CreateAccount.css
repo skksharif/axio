@@ -416,6 +416,105 @@
   box-shadow: 0 0 0 3px var(--redbg);
 }
 
+.ca-phone-control {
+  width: 100%;
+  min-width: 0;
+  height: 48px;
+  display: flex;
+  align-items: stretch;
+  overflow: hidden;
+  background: var(--surface-input);
+  border: 1px solid var(--border);
+  border-radius: var(--r8);
+  transition: border-color 0.2s, box-shadow 0.2s, background-color 0.2s;
+}
+
+.ca-phone-control:hover {
+  border-color: var(--border2);
+}
+
+.ca-phone-control:focus-within {
+  border-color: var(--hover);
+  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.13);
+}
+
+.ca-phone-prefix {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: nowrap;
+  gap: 7px;
+  padding: 0 13px;
+  margin: 0;
+  background: var(--surface-inner);
+  border-right: 1px solid var(--border);
+  color: var(--text0);
+  font-size: 13.5px;
+  font-weight: 700;
+  line-height: 1;
+  flex-shrink: 0;
+  user-select: none;
+  white-space: nowrap;
+}
+
+.ca-phone-flag {
+  display: block;
+  width: 20px;
+  height: 14px;
+  min-width: 20px;
+  padding: 0;
+  margin: 0;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+.ca-phone-code {
+  display: inline-flex;
+  align-items: center;
+  padding: 0;
+  margin: 0;
+  font-family: var(--font-mono);
+  letter-spacing: 0.1px;
+  line-height: 1;
+}
+
+.ca-phone-input {
+  width: 100%;
+  min-width: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: var(--text0);
+  font-family: var(--font-body);
+  font-size: 14px;
+  padding: 0 14px;
+}
+
+.ca-phone-input::placeholder {
+  color: var(--text2);
+  opacity: 0.65;
+}
+
+.ca-phone-control--err {
+  border-color: var(--red);
+  box-shadow: 0 0 0 3px var(--redbg);
+}
+
+.ca-phone-control:has(.ca-phone-input:disabled) {
+  opacity: 0.52;
+  cursor: not-allowed;
+}
+
+.ca-phone-input:disabled {
+  cursor: not-allowed;
+}
+
+.ca-field-hint {
+  font-size: 11px;
+  color: var(--text2);
+  line-height: 1.4;
+}
+
 .ca-err {
   display: flex;
   align-items: center;
@@ -947,6 +1046,8 @@
   .ca-panel-stats { border-radius: var(--r12); }
   .ca-panel-stat { padding: 13px 10px; }
   .ca-panel-stat-val { font-size: 18px; }
+  .ca-phone-prefix { padding-inline: 10px; gap: 5px; }
+  .ca-phone-input { padding-inline: 11px; font-size: 16px; }
 }
 
 /* ≤360px — feature grid single col only at this extreme size */
