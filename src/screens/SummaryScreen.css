@@ -61,7 +61,10 @@
   border-radius: var(--r8);
   padding: 12px 14px;
 }
-.metric-box:hover { border-color: var(--border2); }
+
+.metric-box:hover {
+  border-color: var(--border2);
+}
 
 .metric-lbl {
   font-size: 10.5px;
@@ -71,6 +74,7 @@
   text-transform: uppercase;
   letter-spacing: .4px;
 }
+
 .metric-val {
   font-size: 18px;
   font-weight: 700;
@@ -79,7 +83,11 @@
   margin-bottom: 2px;
   letter-spacing: -.3px;
 }
-.metric-sub { font-size: 10.5px; color: var(--text2); }
+
+.metric-sub {
+  font-size: 10.5px;
+  color: var(--text2);
+}
 
 /* ─── DTI SECTION ─────────────────────────────────────────── */
 .ah-bottom {
@@ -121,21 +129,73 @@
   justify-content: space-between;
   gap: 20px;
   margin-top: 20px;
+  flex-wrap: wrap;
 }
 
-/* ─── RESPONSIVE ─────────────────────────────────────────── */
-@media (max-width: 900px) {
-  .metrics-grid { grid-template-columns: repeat(2, 1fr); }
-  .ah-row       { flex-direction: column; gap: 12px; }
-  .ah-top       { padding: 18px; }
-  .ah-bottom    { padding: 16px 18px; }
-  .submit-card  { flex-direction: column; align-items: stretch; }
+.submit-card-content {
+  flex: 1 1 420px;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.submit-trust {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 6px;
+  flex-wrap: wrap;
+}
+
+.submit-trust-icon {
+  flex-shrink: 0;
+  margin: 0 2px 0 0;
+}
+
+.submit-trust-text {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+}
+
+.submit-cta {
+  flex-shrink: 0;
+}
+
+/* Tablet breakpoint: stack on narrow tablets for better wrapping */
+@media (max-width: 768px) {
+  .submit-card {
+    gap: 12px;
+  }
+
+  .submit-card-content {
+    flex: 1 1 100%;
+  }
+
+  .submit-cta {
+    width: 100%;
+  }
 }
 
 @media (max-width: 580px) {
-  .ah-top    { padding: 16px; }
-  .ah-bottom { padding: 14px 16px; }
-  .ah-left { gap: 12px; }
-  .ah-narrative { font-size: 13px; }
-  .metrics-grid { grid-template-columns: 1fr; }
+  .ah-top {
+    padding: 16px;
+  }
+
+  .ah-bottom {
+    padding: 14px 16px;
+  }
+
+  .ah-left {
+    gap: 12px;
+  }
+
+  .ah-narrative {
+    font-size: 13px;
+  }
+
+  .metrics-grid {
+    grid-template-columns: 1fr;
+  }
 }
