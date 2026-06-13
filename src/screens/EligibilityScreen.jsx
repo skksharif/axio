@@ -1,5 +1,6 @@
 ﻿import { useState } from 'react';
 import { Check, Info } from 'lucide-react';
+import { IconBadge } from '../components/common/IconBadge';
 import { useApp } from '../context/AppContext';
 import { Icon } from '../components/common/Icon';
 import { ScreenHeader } from '../components/common/ScreenHeader';
@@ -110,7 +111,7 @@ export function EligibilityScreen() {
                 tabIndex={0}
                 onKeyDown={e => (e.key === ' ' || e.key === 'Enter') && toggle(item.id)}
               >
-                <div className="elig-card-icon"><Icon name={item.icon} size={14} /></div>
+                    <IconBadge name={item.icon} iconSize={14} />
                 <div className="elig-card-info">
                   <div className="elig-card-title">{item.title}</div>
                   <div className="elig-card-helper">{item.helper}</div>

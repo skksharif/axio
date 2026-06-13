@@ -1,6 +1,7 @@
 import { ShieldCheck, Building2, BadgeCheck, Target } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Icon } from '../components/common/Icon';
+import { IconBadge } from '../components/common/IconBadge';
 import { useApp } from '../context/AppContext';
 import { ScreenHeader } from '../components/common/ScreenHeader';
 import { BtnPrimary } from '../components/common/Button';
@@ -78,7 +79,7 @@ export function ProductScreen() {
               </div>
 
               <div className="pc-body">
-                <div className="pc-icon"><Icon name={p.icon} size={28} /></div>
+                <IconBadge name={p.icon} size="lg" iconSize={28} className="pc-icon" />
                 <div className="pc-title">{p.title}</div>
                 <div className="pc-desc">{p.desc}</div>
                 <div className="pc-rate">{p.rate} <span>{p.rateNote}</span></div>

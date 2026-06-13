@@ -1,6 +1,7 @@
 ﻿import { useEffect } from 'react';
 import { Sparkles, RefreshCw, AlertTriangle, Target, Building2, Check } from 'lucide-react';
 import { Icon } from '../components/common/Icon';
+import { IconBadge } from '../components/common/IconBadge';
 import { useApp } from '../context/AppContext';
 import { ScreenHeader } from '../components/common/ScreenHeader';
 import { AnikaPanel } from '../components/common/AnikaPanel';
@@ -152,11 +153,11 @@ function PersonalLoanDetails({ repay, rateLabel }) {
           thinkingMs={400}
         />
         <ChoiceGrid cols={2}>
-          <ChoiceCard
+            <ChoiceCard
             selected={state.securityType === 'unsecured'}
             onClick={() => updateState({ securityType: 'unsecured' })}
           >
-            <div className="cc-icon"><Icon name="ClipboardList" size={22} /></div>
+            <IconBadge name="ClipboardList" iconSize={22} />
             <div className="cc-title">Unsecured</div>
             <div className="cc-desc">No asset required. Based on income and credit profile.</div>
             <div style={{ marginTop: 10 }}><Badge variant="yellow">From 8.49% p.a.</Badge></div>
@@ -165,7 +166,7 @@ function PersonalLoanDetails({ repay, rateLabel }) {
             selected={state.securityType === 'secured'}
             onClick={() => updateState({ securityType: 'secured' })}
           >
-            <div className="cc-icon"><Icon name="Car" size={22} /></div>
+              <IconBadge name="Car" iconSize={22} />
             <div className="cc-title">Secured — vehicle</div>
             <div className="cc-desc">Use a vehicle you own outright. Lower rate, better approval odds.</div>
             <div style={{ marginTop: 10 }}><Badge variant="green">From 6.49% p.a.</Badge></div>
@@ -187,7 +188,7 @@ function PersonalLoanDetails({ repay, rateLabel }) {
                   className={`sec-type-card${state.securityAssetType === t.id ? ' on' : ''}`}
                   onClick={() => updateState({ securityAssetType: t.id })}
                 >
-                  <div className="sec-type-icon"><Icon name={t.icon} size={18} /></div>
+                    <IconBadge name={t.icon} iconSize={18} />
                   <div className="sec-type-body">
                     <div className="sec-type-title">{t.title}</div>
                     <div className="sec-type-desc">{t.desc}</div>

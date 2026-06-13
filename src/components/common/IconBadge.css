@@ -1,0 +1,40 @@
+.icon-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  min-width: 30px;
+  padding: 0;
+  border-radius: var(--r8);
+  background: var(--surface-active);
+  border: 1px solid var(--border2);
+  color: var(--hover);
+  box-shadow: none;
+  transition: background .18s ease, border-color .18s ease, color .18s ease, box-shadow .18s ease;
+  flex-shrink: 0;
+}
+
+.icon-badge svg { display: block; }
+
+/* Keep size tokens but normalize them to the same visual footprint */
+.icon-badge--sm, .icon-badge--md, .icon-badge--lg, .icon-badge--xl {
+  width: 30px;
+  height: 30px;
+  min-width: 30px;
+}
+
+/* Variant helpers (use sparingly) — visual defaults match employment badge */
+.icon-badge--accent { background: var(--surface-active); border-color: var(--border2); color: var(--hover); }
+.icon-badge--muted  { background: var(--surface-card); color: var(--text2); border-color: var(--border); }
+.icon-badge--status-green { background: rgba(16,185,129,0.12); border-color: rgba(16,185,129,0.2); color: var(--green); }
+.icon-badge--status-yellow { background: rgba(234,179,8,0.12); border-color: rgba(234,179,8,0.2); color: var(--yellow); }
+.icon-badge--status-red { background: rgba(248,113,113,0.12); border-color: rgba(248,113,113,0.2); color: var(--red); }
+
+/* Hover / focus states mirror the employment header appearance */
+.icon-badge:hover, .icon-badge:focus-visible {
+  background: var(--surface-active);
+  border-color: var(--border2);
+  color: var(--hover);
+  outline: none;
+}

@@ -1,4 +1,4 @@
-import { Icon } from './Icon';
+import { IconBadge } from './IconBadge';
 import './Card.css';
 
 export function Card({ children, className = '', style }) {
@@ -9,13 +9,11 @@ export function Card({ children, className = '', style }) {
   );
 }
 
-export function CardTitle({ icon, children }) {
+export function CardTitle({ icon, children, iconWrapperClass = '', iconSize = 18 }) {
   return (
     <div className="card-title">
       {icon && (
-        <div className="card-icon">
-          <Icon name={icon} size={18} />
-        </div>
+        <IconBadge name={icon} iconSize={iconSize} />
       )}
       {children}
     </div>

@@ -2,6 +2,7 @@
 import { AlertTriangle, CheckCircle2, MapPin } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Icon } from '../components/common/Icon';
+import { IconBadge } from '../components/common/IconBadge';
 import { useApp } from '../context/AppContext';
 import { ScreenHeader } from '../components/common/ScreenHeader';
 import { BtnPrimary, BtnGhost, BtnRow } from '../components/common/Button';
@@ -74,9 +75,7 @@ function EmploymentBlock({ typeId, label, icon, entries, onUpdate, otherText, se
       transition={{ duration: 0.24, ease: 'easeOut' }}
     >
       <div className="emp-block-header">
-        <div className="emp-block-icon">
-          <Icon name={icon} size={15} />
-        </div>
+        <IconBadge name={icon} iconSize={15} />
         <span className="emp-block-title">{label}</span>
       </div>
 
@@ -593,7 +592,7 @@ export function ProfileScreen() {
 
       {/* ── Employment ────────────────────────────────────────── */}
       <Card>
-        <CardTitle icon="Briefcase">Employment</CardTitle>
+        <CardTitle icon="Briefcase" iconWrapperClass="emp-block-icon" iconSize={15}>Employment</CardTitle>
 
         <div className="fld">
           <label className="fl">Employment type</label>

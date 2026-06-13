@@ -28,4 +28,5 @@
   border: 1px solid var(--redborder);
   color: var(--red);
 }
-.info-banner .icon { display: flex; align-items: center; line-height: 0; flex-shrink: 0; }
+.info-banner .icon { display: none; }
+.info-banner-icon { display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }

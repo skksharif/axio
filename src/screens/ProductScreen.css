@@ -107,13 +107,29 @@
   min-width: 0;
 }
 .pc-icon {
-  font-size: 32px;
-  width: 54px; height: 54px;
-  background: var(--surface-inner);
-  border-radius: var(--r12);
-  display: flex; align-items: center; justify-content: center;
+  width: 54px;
+  height: 54px;
   margin-bottom: 16px;
-  border: 1px solid var(--border);
+}
+
+/* Slightly larger internal padding for Personal Loan and Car Loan icons only.
+   Keep colors, borders, shadows and iconSize unchanged. Width/height here
+   are increased modestly so the icon (iconSize=28) fits without overflow.
+   This selector targets only the IconBadge instances with `pc-icon--pad`. */
+.icon-badge.pc-icon--pad {
+  padding: 6px; /* increased internal padding */
+  width: 42px;
+  height: 42px;
+  min-width: 42px;
+}
+
+@media (max-width: 520px) {
+  .icon-badge.pc-icon--pad {
+    padding: 5px;
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+  }
 }
 .pc-title {
   font-family: var(--font-display);

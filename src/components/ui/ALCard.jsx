@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { Check, Link, ChevronDown, Trash2, Plus } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { IconBadge } from '../common/IconBadge';
 import { Icon } from '../common/Icon';
 import { ToggleSwitch } from '../forms/ToggleSwitch';
 import { LenderAutocomplete } from '../common/LenderAutocomplete';
@@ -179,7 +180,7 @@ export function ALCard({
         style={isLinked && !onToggle ? { cursor: 'default' } : undefined}
       >
         <div className="al-head-left">
-          <div className="al-icon-box"><Icon name={icon} size={17} /></div>
+          <IconBadge name={icon} iconSize={17} />
           <div className="al-head-info">
             <div className="al-title">{title}</div>
             <div className="al-desc">{desc}</div>

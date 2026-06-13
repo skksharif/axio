@@ -5,11 +5,8 @@
 .doc-item:last-child { border-bottom: none; }
 
 .doc-icon {
-  width: 42px; height: 42px; border-radius: var(--r8);
-  background: var(--surface-inner);
-  border: 1px solid var(--border);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 18px; flex-shrink: 0;
+  width: 42px; height: 42px;
+  flex-shrink: 0;
 }
 
 .doc-info { flex: 1; }

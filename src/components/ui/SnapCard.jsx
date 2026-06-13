@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { ChevronRight, Pencil } from 'lucide-react';
 import { Icon } from '../common/Icon';
+import { IconBadge } from '../common/IconBadge';
 import './SnapCard.css';
 
 export function SnapCard({ id, icon, title, sub, fields, onEdit }) {
@@ -15,7 +16,7 @@ export function SnapCard({ id, icon, title, sub, fields, onEdit }) {
     <div className="snap-card">
       <div className="snap-head" onClick={() => setOpen(p => !p)}>
         <div className="snap-head-left">
-          <div className="snap-h-icon"><Icon name={icon} size={18} /></div>
+          <IconBadge name={icon} iconSize={18} />
           <div>
             <div className="snap-h-title">{title}</div>
             <div className="snap-h-sub">{sub}</div>

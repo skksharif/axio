@@ -1,9 +1,14 @@
+import { IconBadge } from '../common/IconBadge';
 import './DocItem.css';
 
 export function DocItem({ icon, name, sub, actionLabel, actionPrimary, onAction }) {
   return (
     <div className="doc-item">
-      <div className="doc-icon">{icon}</div>
+      {typeof icon === 'string' ? (
+        <IconBadge name={icon} iconSize={18} />
+      ) : (
+        <IconBadge iconSize={18}>{icon}</IconBadge>
+      )}
       <div className="doc-info">
         <div className="doc-name">{name}</div>
         <div className="doc-sub">{sub}</div>

@@ -111,27 +111,7 @@
 }
 
 /* Left icon circle */
-.elig-card-icon {
-  width: 32px;
-  height: 32px;
-  min-width: 32px;
-  border-radius: 50%;
-  background: var(--surface-card);
-  border: 1px solid var(--border);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--text2);
-  flex-shrink: 0;
-  margin-top: 1px;
-  transition: background 0.16s ease, border-color 0.16s ease, color 0.16s ease;
-}
-
-.elig-card.on .elig-card-icon {
-  background: rgba(124, 58, 237, 0.18);
-  border-color: rgba(167, 139, 250, 0.35);
-  color: var(--hover);
-}
+.elig-card-icon { /* legacy wrapper removed — IconBadge controls visuals */ }
 
 /* Card text */
 .elig-card-info {

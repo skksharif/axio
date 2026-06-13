@@ -90,25 +90,7 @@
 }
 
 /* ─── ICON BOX ──────────────────────────────────────────────── */
-.al-icon-box {
-  width: 34px;
-  height: 34px;
-  background: var(--surface-inner);
-  border: 1px solid var(--border);
-  border-radius: var(--r8);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  margin-top: 1px;   /* align with first line of text */
-  color: var(--text1);
-  transition: background .2s, border-color .2s, color .2s, box-shadow .2s;
-}
-.al-card.on .al-icon-box {
-  background: var(--surface-active);
-  border-color: var(--border2);
-  color: var(--hover);
-}
+
 
 /* ─── TYPOGRAPHY ────────────────────────────────────────────── */
 .al-title {

@@ -26,17 +26,7 @@
   min-width: 0;
   flex: 1;
 }
-.snap-h-icon {
-  width: 36px;
-  height: 36px;
-  background: var(--surface-inner);
-  border: 1px solid var(--border);
-  border-radius: var(--r8);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-}
+
 .snap-h-title {
   font-family: var(--font-display);
   font-size: 13.5px;

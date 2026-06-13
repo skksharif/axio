@@ -35,18 +35,7 @@
   color: var(--text0);
 }
 
-.card-icon {
-  font-size: 18px;
-  width: 38px;
-  height: 38px;
-  background: var(--surface-inner);
-  border-radius: var(--r8);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  border: 1px solid var(--border);
-}
+/* Icon visuals are centralized in IconBadge */
 
 @media (max-width: 520px) {
   .card {
