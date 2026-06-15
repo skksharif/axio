@@ -1,4 +1,5 @@
 import { Fragment, useMemo, useRef, useEffect } from 'react';
+import logo from '../../assets/logo.png';
 import { Check } from 'lucide-react';
 import { Icon } from '../common/Icon';
 import { useApp } from '../../context/AppContext';
@@ -80,7 +81,7 @@ export function Sidebar({ open, onClose }) {
 
         <div className="sidebar-brand">
           <div className="brand-logo">
-            <div className="brand-icon">Lu</div>
+            <img src={logo} alt="Lumio Finance" className="brand-icon-img" />
             <div className="brand-text">
               <div className="brand-name">Lumio Finance</div>
               <div className="brand-ai-badge">

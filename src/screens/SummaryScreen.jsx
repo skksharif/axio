@@ -113,23 +113,25 @@ export function SummaryScreen() {
                   />
                 </div>
               </div>
-              <div>
+              <div className="ah-content">
                 <div className="ah-title">Anika financial assessment</div>
+                {/* Badge shown only on mobile — sits between title and narrative */}
+                <div className="ah-badge-col ah-badge-mobile">
+                  <SvcPill variant={SERVICEABILITY.pillCls}>
+                    {SERVICEABILITY.pill}
+                  </SvcPill>
+                  <div className="text-small text-border2">
+                    Serviceability status
+                  </div>
+                </div>
                 <div
                   className="ah-narrative"
                   dangerouslySetInnerHTML={{ __html: SERVICEABILITY.narrative }}
                 />
               </div>
             </div>
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                gap: 5,
-                flexShrink: 0,
-              }}
-            >
+            {/* Badge shown only on desktop — pinned to far right of card */}
+            <div className="ah-badge-col ah-badge-desktop">
               <SvcPill variant={SERVICEABILITY.pillCls}>
                 {SERVICEABILITY.pill}
               </SvcPill>
