@@ -3,6 +3,7 @@ import { Landmark, Sparkles } from 'lucide-react';
 import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Icon } from '../components/common/Icon';
+import { AnikaInsightCard } from '../components/common/AnikaInsightCard';
 import { useApp } from '../context/AppContext';
 import { ScreenHeader } from '../components/common/ScreenHeader';
 import { BtnPrimary, BtnGhost, BtnRow } from '../components/common/Button';
@@ -254,9 +255,12 @@ function SecureConnectModal({ bank, onClose, onSecureConnect, onStatementUpload 
             {/* ── Upload mode ── */}
             {modalMode === 'upload' && (
               <>
-                <div className="sc-upload-warning">
-                  ⚠️ Minimum 3 months of bank statements are required for lender assessment and matching.
-                </div>
+                <AnikaInsightCard
+                  variant="warning"
+                  style={{ marginBottom: 12 }}
+                  message="Bank statement analysis is a mandatory step for most lenders. A minimum of 3 months of statements is required to assess your transaction history, income regularity, and spending patterns. Fewer months of statements may significantly limit your available lender options."
+                  summary="Minimum 3 months of bank statements required for lender assessment and matching."
+                />
 
                 <div className="sc-upload-drop">
                   <input

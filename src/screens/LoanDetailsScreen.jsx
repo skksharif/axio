@@ -8,13 +8,12 @@ import { AnikaPanel } from '../components/common/AnikaPanel';
 import { BtnPrimary, BtnGhost, BtnRow } from '../components/common/Button';
 import { Card, CardTitle } from '../components/common/Card';
 import { Badge } from '../components/common/Badge';
-import { InfoBanner } from '../components/common/InfoBanner';
+import { AnikaInsightCard } from '../components/common/AnikaInsightCard';
 import { ChoiceCard, ChoiceGrid, CondCard } from '../components/forms/ChoiceCard';
 import { Chip, Chips } from '../components/forms/Chip';
 import { RangeSlider } from '../components/forms/RangeSlider';
 import { RepayBox } from '../components/forms/FormField';
 import { RegoLookup } from '../components/ui/RegoLookup';
-import { JointApplicant } from '../components/feature/JointApplicant';
 import { PURPOSES } from '../data/purposes';
 import { MARKETPLACE_CARS, MARKETPLACE_STATS } from '../data/productData';
 import { fmt, calcRepay, getRate, getRateLabel } from '../utils/format';
@@ -173,9 +172,11 @@ function PersonalLoanDetails({ repay, rateLabel }) {
           </ChoiceCard>
         </ChoiceGrid>
         <div className="divider" />
-        <InfoBanner icon="AlertTriangle" variant="yellow">
-          The asset used as security <strong>must be owned outright with no existing finance</strong>. A PPSR / title check will be run during assessment.
-        </InfoBanner>
+        <AnikaInsightCard
+          variant="warning"
+          message="The asset you nominate as loan security must be free of any existing finance, liens, or encumbrances. A PPSR (Personal Property Securities Register) check and title verification will be conducted during assessment to confirm clear ownership before settlement can proceed."
+          summary="The asset must be owned outright with no existing finance to qualify as security."
+        />
         {state.securityType === 'secured' && (
           <div className="sec-type-section">
             <div className="sec-type-hd">
@@ -206,7 +207,6 @@ function PersonalLoanDetails({ repay, rateLabel }) {
         )}
       </Card>
 
-      <JointApplicant />
     </>
   );
 }
@@ -367,7 +367,11 @@ function CarLoanDetails({ repay, rateLabel }) {
         </div>
         {state.tradeIn && (
           <>
-            <InfoBanner icon="Sparkles" variant="blue">Enter your trade-in rego — Anika retrieves vehicle details automatically.</InfoBanner>
+            <AnikaInsightCard
+              variant="info"
+              message="Enter your trade-in vehicle's registration number and Anika will automatically retrieve the vehicle details, current market valuation, and condition estimate. This value will be applied against your loan amount to calculate your net borrowing requirement."
+              summary="Anika will retrieve vehicle details automatically from your registration number."
+            />
             <RegoLookup prefix="ti" />
             <div className="divider" />
             <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', gap: 12 }}>
@@ -427,7 +431,6 @@ function CarLoanDetails({ repay, rateLabel }) {
         </div>
       </Card>
 
-      <JointApplicant />
     </>
   );
 }

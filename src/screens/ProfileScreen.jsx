@@ -1,4 +1,4 @@
-﻿import { useState } from 'react';
+﻿import { useState, useEffect } from 'react';
 import { AlertTriangle, CheckCircle2, MapPin } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Icon } from '../components/common/Icon';
@@ -7,11 +7,12 @@ import { useApp } from '../context/AppContext';
 import { ScreenHeader } from '../components/common/ScreenHeader';
 import { BtnPrimary, BtnGhost, BtnRow } from '../components/common/Button';
 import { Card, CardTitle } from '../components/common/Card';
-import { InfoBanner } from '../components/common/InfoBanner';
+import { AnikaInsightCard } from '../components/common/AnikaInsightCard';
 import { ChoiceCard, ChoiceGrid } from '../components/forms/ChoiceCard';
 import { Chip, Chips } from '../components/forms/Chip';
 import { DateSelect } from '../components/forms/DateSelect';
 import { getInitials } from '../utils/format';
+import { JointApplicant } from '../components/feature/JointApplicant';
 import { getStep } from '../constants/screens';
 import './ProfileScreen.css';
 
@@ -230,6 +231,13 @@ function EmploymentBlock({ typeId, label, icon, entries, onUpdate, otherText, se
 export function ProfileScreen() {
   const { state, updateState, toggleDependantAge, toggleEmploymentType, next, prev } = useApp();
 
+  const isCouple = ['married', 'defacto'].includes(state.relationshipStatus);
+
+  // Clear joint applicant when couple status is lost
+  useEffect(() => {
+    if (!isCouple) updateState({ jointApplicant: false });
+  }, [isCouple, updateState]);
+
   const [dob,          setDob]          = useState(null);
   const [visaExpiry,   setVisaExpiry]   = useState(null);
   const [otherEmpText, setOtherEmpText] = useState('');
@@ -378,7 +386,11 @@ export function ProfileScreen() {
           ))}
         </ChoiceGrid>
         <div className="divider" />
-        <InfoBanner icon="Sparkles" variant="blue">Visa details required by lenders for assessment eligibility.</InfoBanner>
+        <AnikaInsightCard
+          variant="info"
+          message="Your visa holder status is a key factor in lender eligibility. Not all lenders offer products to temporary residents, and those who do may require additional documentation such as a copy of your visa and evidence of remaining validity."
+          summary="Visa details are required for accurate lender matching and eligibility assessment."
+        />
         {state.residency === 'visa' && (
           <div className="g2">
             <div className="fld"><label className="fl">Visa class</label>
@@ -434,13 +446,31 @@ export function ProfileScreen() {
                   <Chip key={a} selected={state.dependantAges.includes(a)} onClick={() => toggleDependantAge(a)}>{a}</Chip>
                 ))}
               </Chips>
-              <InfoBanner icon="Sparkles" variant="blue" style={{ marginTop: 12, marginBottom: 0 }}>
-                Anika: younger dependants attract a higher HEM benchmark applied by lenders.
-              </InfoBanner>
+              <AnikaInsightCard
+                variant="warning"
+                style={{ marginTop: 12, marginBottom: 0 }}
+                message="The ages of your dependants directly affect the HEM (Household Expenditure Measure) applied during serviceability assessment. Younger dependants carry higher benchmark living expense figures, which can reduce your assessed borrowing capacity."
+                summary="Younger dependants attract a higher HEM benchmark applied by lenders."
+              />
             </div>
           )}
         </div>
       </Card>
+
+      {/* ── Joint applicant ───────────────────────────────── */}
+      <AnimatePresence>
+        {isCouple && (
+          <motion.div
+            key="joint-applicant"
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.24, ease: 'easeOut' }}
+          >
+            <JointApplicant />
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* ── Residential history ───────────────────────────────── */}
       <Card>

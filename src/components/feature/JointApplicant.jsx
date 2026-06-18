@@ -41,12 +41,8 @@ export function JointApplicant() {
             </div>
             <div className="fld">
               <label className="fl">Relationship</label>
-              <select className="sel">
-                <option>Spouse / partner</option>
-                <option>Parent</option>
-                <option>Sibling</option>
-                <option>Friend</option>
-                <option>Other</option>
+              <select className="sel" value="Spouse / partner" onChange={() => {}} disabled>
+                <option value="Spouse / partner">Spouse / Partner</option>
               </select>
             </div>
             <div className="fld">

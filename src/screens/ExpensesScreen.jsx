@@ -1,12 +1,13 @@
-﻿import { useState } from "react";
-import { Users, AlertTriangle, Receipt, Sparkles, SlidersHorizontal } from "lucide-react";
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Users, Receipt, Sparkles, SlidersHorizontal } from "lucide-react";
 import { Icon } from "../components/common/Icon";
 import { useApp } from "../context/AppContext";
 import { ScreenHeader } from "../components/common/ScreenHeader";
 import { AnikaPanel } from "../components/common/AnikaPanel";
 import { BtnPrimary, BtnGhost, BtnRow } from "../components/common/Button";
 import { Card, CardTitle } from "../components/common/Card";
-import { InfoBanner } from "../components/common/InfoBanner";
+import { AnikaInsightCard } from "../components/common/AnikaInsightCard";
 import { ToggleSwitch } from "../components/forms/ToggleSwitch";
 import { Stepper } from "../components/forms/Stepper";
 import { RangeSlider } from "../components/forms/RangeSlider";
@@ -20,22 +21,51 @@ import "./ExpensesScreen.css";
 
 export function ExpensesScreen() {
   const { state, updateState, stepExpense, next, prev } = useApp();
-  const isCouple =
+
+  const isMarried = state.relationshipStatus === "married";
+  const isCouple  =
     state.relationshipStatus === "married" ||
     state.relationshipStatus === "defacto";
+  const isRenter  = ['rent---agent', 'rent---private'].includes(state.livingStatus);
+
   const HEM = isCouple ? HEM_COUPLE : HEM_SINGLE;
+
+  const partnerLabel = isMarried ? "spouse" : "partner";
+
+  // Reset shared split state when user is no longer in a couple relationship
+  useEffect(() => {
+    if (!isCouple) {
+      updateState({ sharedExpenses: false, sharedPct: 50 });
+    }
+  }, [isCouple, updateState]);
+
+  // Clear rental fields when user is no longer a renter
+  useEffect(() => {
+    if (!isRenter) {
+      setSoleRenter(null);
+      setRentalAmount('');
+      setRentalFreq('Monthly');
+      setLeaseCount('');
+      setFullRentalAmount('');
+    }
+  }, [isRenter]);
 
   const setExpense = (id, v) =>
     updateState({ expenses: { ...state.expenses, [id]: Math.max(0, v) } });
 
-  const totalExp = Object.values(state.expenses).reduce((a, b) => a + b, 0);
-  const yourShare = Math.round((totalExp * state.sharedPct) / 100);
+  const totalExp      = Object.values(state.expenses).reduce((a, b) => a + b, 0);
+  const yourShare     = Math.round((totalExp * state.sharedPct) / 100);
   const partnerCovers = totalExp - yourShare;
 
-  const [soleRenter, setSoleRenter] = useState(null);
-  const [rentalAmount, setRentalAmount] = useState("");
-  const [rentalFreq, setRentalFreq] = useState("Monthly");
-  const [leaseCount, setLeaseCount] = useState("");
+  const [pctInput,         setPctInput]         = useState(String(state.sharedPct));
+
+  // Keep pct input display in sync when state is reset externally
+  useEffect(() => { setPctInput(String(state.sharedPct)); }, [state.sharedPct]);
+
+  const [soleRenter,       setSoleRenter]       = useState(null);
+  const [rentalAmount,     setRentalAmount]     = useState("");
+  const [rentalFreq,       setRentalFreq]       = useState("Monthly");
+  const [leaseCount,       setLeaseCount]       = useState("");
   const [fullRentalAmount, setFullRentalAmount] = useState("");
 
   return (
@@ -58,82 +88,86 @@ export function ExpensesScreen() {
         }
       />
 
+      {/* ── Household Split ─────────────────────────────────────────── */}
       {isCouple && (
-        <div className={`shared-card ${isCouple ? "show" : ""}`}>
-          <div className="shared-top">
-            <div>
-              <div
-                className="badge badge-green"
-                style={{
-                  marginBottom: 10,
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 5,
-                }}
-              >
-                <Users size={13} /> Household split available
-              </div>
-              <div
-                className="text-strong"
-                style={{ fontSize: 14, fontWeight: 800, marginBottom: 5 }}
-              >
-                Are your expenses shared with your partner?
-              </div>
-              <div className="text-small text-border2">
-                You're{" "}
-                {state.relationshipStatus === "married"
-                  ? "married"
-                  : "in a de facto relationship"}
-                . If your partner contributes, declare your share only —
-                improves serviceability.
-              </div>
+        <div className="hh-split-card">
+          {/* Header */}
+          <div className="hh-split-head">
+            <div className="hh-split-badge">
+              <Users size={11} />
+              Household Split Available
             </div>
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                gap: 5,
-                flexShrink: 0,
-              }}
-            >
+            <div className="hh-split-title">
+              Are your living expenses shared with your {partnerLabel}?
+            </div>
+            <div className="hh-split-sub">
+              You're {isMarried ? "married" : "in a de facto relationship"}. If
+              your {partnerLabel} contributes to household expenses, declare only
+              your share to improve serviceability calculations.
+            </div>
+          </div>
+
+          {/* Toggle row */}
+          <div className="hh-split-toggle-row">
+            <div className="hh-split-toggle-lbl">Shared Expenses</div>
+            <div className="hh-split-toggle-side">
+              <span className={`hh-split-status${state.sharedExpenses ? " on" : ""}`}>
+                {state.sharedExpenses ? "Enabled" : "Disabled"}
+              </span>
               <ToggleSwitch
                 on={state.sharedExpenses}
                 onToggle={() =>
                   updateState({ sharedExpenses: !state.sharedExpenses })
                 }
               />
-              <div className="text-small text-green">
-                {state.sharedExpenses ? "Shared on" : "Shared off"}
-              </div>
             </div>
           </div>
+
+          {/* Slider + stats when enabled */}
           {state.sharedExpenses && (
             <>
-              <div
-                style={{
-                  padding: "18px 20px",
-                  borderBottom: "1px solid var(--greenborder)",
-                }}
-              >
-                <div className="flex-between" style={{ marginBottom: 10 }}>
-                  <span className="text-small text-border2">
+              <div className="hh-split-slider">
+                <div className="hh-split-slider-row">
+                  <span className="hh-split-slider-label">
                     Your share of household expenses
                   </span>
-                  <span className="text-strong">{state.sharedPct}%</span>
                 </div>
                 <RangeSlider
                   label=""
                   value={state.sharedPct}
                   displayValue=""
-                  min={10}
-                  max={90}
+                  min={0}
+                  max={100}
                   step={5}
-                  onChange={(v) => updateState({ sharedPct: v })}
-                  minLabel="10%"
-                  maxLabel="90%"
+                  onChange={(v) => { updateState({ sharedPct: v }); setPctInput(String(v)); }}
+                  minLabel="0%"
+                  maxLabel="100%"
                   accentColor="var(--green)"
                 />
+                <div className="hh-pct-row">
+                  <span className="hh-pct-label">Your Share %</span>
+                  <div className="hh-pct-wrap">
+                    <input
+                      className="hh-pct-input"
+                      type="number"
+                      min="0"
+                      max="100"
+                      value={pctInput}
+                      onChange={e => {
+                        setPctInput(e.target.value);
+                        const n = parseInt(e.target.value, 10);
+                        if (!isNaN(n) && n >= 0 && n <= 100) updateState({ sharedPct: n });
+                      }}
+                      onBlur={() => {
+                        const n = parseInt(pctInput, 10);
+                        const clamped = isNaN(n) ? state.sharedPct : Math.min(100, Math.max(0, n));
+                        updateState({ sharedPct: clamped });
+                        setPctInput(String(clamped));
+                      }}
+                    />
+                    <span className="hh-pct-suffix">%</span>
+                  </div>
+                </div>
               </div>
               <div className="shared-stats">
                 <div className="s-stat">
@@ -141,40 +175,45 @@ export function ExpensesScreen() {
                   <div className="s-stat-val">{state.sharedPct}%</div>
                 </div>
                 <div className="s-stat">
-                  <div className="s-stat-lbl">Partner covers</div>
+                  <div className="s-stat-lbl">
+                    {isMarried ? "Spouse" : "Partner"} covers
+                  </div>
                   <div className="s-stat-val">
                     ${partnerCovers.toLocaleString()}
                   </div>
                 </div>
                 <div className="s-stat">
                   <div className="s-stat-lbl">Your total</div>
-                  <div className="s-stat-val">
-                    ${yourShare.toLocaleString()}
-                  </div>
+                  <div className="s-stat-val">${yourShare.toLocaleString()}</div>
                 </div>
               </div>
             </>
           )}
-          <div className="shared-anika-row">
-            <div
-              className="ai-orb"
-              style={{ width: 26, height: 26, minWidth: 26, fontSize: 9 }}
-            >
-              AI
-            </div>
-            <div className="text-small text-green" style={{ lineHeight: 1.65 }}>
-              <strong>Anika:</strong> Shared split accepted only when partner
-              has demonstrable independent income.
-            </div>
-          </div>
         </div>
       )}
 
+      {/* ── Anika AI guidance — contextual per relationship status ─── */}
       <AnikaPanel
-        message={`Lenders apply a minimum HEM benchmark based on your household type. For a ${isCouple ? "couple" : "single applicant"} in Sydney the minimum is ${isCouple ? "$4,620" : "$3,840"}/mo — if declared expenses fall below this, the higher figure is used in serviceability calculations.`}
+        key={isCouple ? (isMarried ? "married" : "defacto") : "single"}
+        message={
+          isCouple
+            ? `Shared expense declarations are accepted when your ${partnerLabel} contributes independently to household costs. Please ensure declared expenses accurately reflect your personal share.`
+            : `Lenders apply a minimum HEM benchmark based on your household type. For a single applicant in Sydney the minimum is $3,840/mo — if declared expenses fall below this, the higher figure is used in serviceability calculations.`
+        }
         thinkingMs={400}
       />
 
+      {/* ── Rent declaration — shown only for rental residential status ─── */}
+      <AnimatePresence>
+        {isRenter && (
+          <motion.div
+            key="rent-declaration"
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.24, ease: 'easeOut' }}
+            style={{ marginBottom: 20 }}
+          >
       <Card>
         <CardTitle icon="Home">Essential Living Expenses</CardTitle>
         <div className="rent-section">
@@ -262,7 +301,11 @@ export function ExpensesScreen() {
           )}
         </div>
       </Card>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
+      {/* ── Monthly expense breakdown ─────────────────────────────── */}
       <Card>
         <CardTitle icon="BarChart2">Monthly expenses</CardTitle>
         {EXPENSE_CATEGORIES.map((e) => (
@@ -308,15 +351,12 @@ export function ExpensesScreen() {
         </div>
 
         {totalExp < HEM && (
-          <InfoBanner
-            icon="AlertTriangle"
-            variant="yellow"
+          <AnikaInsightCard
+            variant="warning"
             style={{ marginTop: 12, marginBottom: 0 }}
-          >
-            Declared expenses below HEM benchmark of{" "}
-            <strong>${HEM.toLocaleString()}/mo</strong>. Lenders will apply the
-            higher figure in their assessment.
-          </InfoBanner>
+            message={`Your declared expenses are below the HEM benchmark of $${HEM.toLocaleString()}/mo. Lenders are required to use the higher of declared or benchmark expenses when assessing your borrowing capacity. This may reduce the maximum loan amount available to you.`}
+            summary={`Lenders will substitute $${HEM.toLocaleString()}/mo — the HEM benchmark — in their serviceability calculations.`}
+          />
         )}
       </Card>
 

@@ -9,6 +9,7 @@
   border: 1px solid var(--glass-border);
   border-radius: var(--r22);
   padding: 20px;
+  margin-bottom: 20px;
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   box-shadow: var(--card-shadow);

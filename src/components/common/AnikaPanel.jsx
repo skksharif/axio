@@ -3,7 +3,7 @@ import { ShieldCheck } from 'lucide-react';
 import anikaLogo from '../../assets/anika.png';
 import './AnikaPanel.css';
 
-export function AnikaPanel({ message, thinkingMs = 800 }) {
+export function AnikaPanel({ message, thinkingMs = 800, charSpeed = 14 }) {
   const [phase, setPhase] = useState('thinking'); // 'thinking' | 'streaming' | 'done'
   const [displayed, setDisplayed] = useState('');
 
@@ -24,9 +24,9 @@ export function AnikaPanel({ message, thinkingMs = 800 }) {
         clearInterval(id);
         setPhase('done');
       }
-    }, 14);
+    }, charSpeed);
     return () => clearInterval(id);
-  }, [phase, message]);
+  }, [phase, message, charSpeed]);
 
   const isThinking = phase === 'thinking';
   const isStreaming = phase === 'streaming';

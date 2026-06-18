@@ -453,6 +453,30 @@
 }
 .lc-note-last { border-bottom: none; }
 
+/* ─── Embedded Anika AI panel ───────────────────────────────────── */
+.lc-anika-wrap {
+  border-bottom: 1px solid var(--border);
+}
+
+/* Strip standalone-card shell; keep layout, avatar, and animations intact */
+.lc-anika-wrap .anika-panel {
+  background: none;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  margin-bottom: 0;
+  padding: 16px 20px;
+}
+
+/* Remove the top highlight line (no card border to pair it with) */
+.lc-anika-wrap .anika-panel::before { display: none; }
+
+@media (max-width: 480px) {
+  .lc-anika-wrap .anika-panel { padding: 14px 16px; }
+}
+
 /* ─── Typewriter cursor ─────────────────────────────────────────── */
 @keyframes tw-blink {
   0%, 100% { opacity: 1; }

@@ -1,6 +1,7 @@
-import { useState, useEffect, useRef } from 'react';
-import { Star, ChevronDown, Sparkles, CheckCircle2 } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { Star, ChevronDown } from 'lucide-react';
 import { Badge } from '../common/Badge';
+import { AnikaPanel } from '../common/AnikaPanel';
 import { useApp } from '../../context/AppContext';
 import './LenderCard.css';
 
@@ -45,75 +46,41 @@ function InfoRow({ label, value, valCls = '', last }) {
   );
 }
 
-/* ─── Character-by-character typing component ──────────────────── */
-function TypewriterText({ text, phase, myPhase, onDone, charSpeed = 12 }) {
-  const isTyping   = phase === myPhase;
-  const isRevealed = phase > myPhase;
-  const [count, setCount] = useState(0);
-  const doneRef = useRef(onDone);
-  doneRef.current = onDone;
-
-  useEffect(() => {
-    if (isRevealed) { setCount(text.length); return; }
-    if (!isTyping)  { setCount(0); return; }
-    let i = 0;
-    setCount(0);
-    const id = setInterval(() => {
-      i++;
-      setCount(i);
-      if (i >= text.length) {
-        clearInterval(id);
-        setTimeout(() => doneRef.current?.(), 80);
-      }
-    }, charSpeed);
-    return () => clearInterval(id);
-  }, [isTyping, isRevealed, text, charSpeed]);
-
-  if (!isTyping && !isRevealed) return null;
-  const done = count >= text.length;
-  return (
-    <span>
-      {text.slice(0, count)}
-      {isTyping && !done && <span className="tw-cursor" aria-hidden="true" />}
-    </span>
-  );
-}
-
 export function LenderCard({ lender, frequency = 'monthly' }) {
   const { next, state } = useApp();
-  const [open, setOpen]             = useState(false);
-  const [typingPhase, setTypingPhase] = useState(-1);
+  const [open,       setOpen]       = useState(false);
+  const [panelKey,   setPanelKey]   = useState(0);
+  const [notesPhase, setNotesPhase] = useState(-1);
 
   const {
     name, displayName, abbr, logo, logoBg, rate, comp, best,
     etFee, estFee, brokFee, monthlyFee, totalRepayNum,
-    types, approval, reasons, sla,
+    types, approval, sla,
     loanTerm, extraRepayments,
     capacityNote, conductNote, stabilityNote,
+    anikaMessage,
   } = lender;
 
   const shortName = displayName ?? name;
+  const notes = [capacityNote, conductNote, stabilityNote];
 
-  const notes   = [capacityNote, conductNote, stabilityNote];
-  const nextPhase = () => setTypingPhase(p => p + 1);
-
-  /* Start typing after expand animation; reset cleanly on collapse */
+  /* On open: remount Anika panel fresh, schedule sequential note reveal */
   useEffect(() => {
     if (open) {
-      const t = setTimeout(() => setTypingPhase(0), 340);
+      setPanelKey(k => k + 1);
+      // Notes appear after Anika finishes typing (~500ms thinking + ~165 chars × 10ms = ~2150ms)
+      const t = setTimeout(() => setNotesPhase(0), 2400);
       return () => clearTimeout(t);
     }
-    setTypingPhase(-1);
+    setNotesPhase(-1);
   }, [open]);
 
-  /* Once all reasons are done, reveal notes one-by-one at 250 ms each */
+  /* Step each note in one by one */
   useEffect(() => {
-    if (typingPhase < reasons.length) return;
-    const noteIdx = typingPhase - reasons.length;
-    if (noteIdx >= notes.length) return;
-    const t = setTimeout(() => setTypingPhase(p => p + 1), 250);
+    if (notesPhase < 0 || notesPhase >= notes.length) return;
+    const t = setTimeout(() => setNotesPhase(p => p + 1), 280);
     return () => clearTimeout(t);
-  }, [typingPhase, reasons.length, notes.length]);
+  }, [notesPhase, notes.length]);
 
   const repayNum = {
     monthly:     totalRepayNum,
@@ -228,52 +195,37 @@ export function LenderCard({ lender, frequency = 'monthly' }) {
         </button>
       </div>
 
-      {/* ── Expandable: Anika AI insights (typed) + Assessment notes (fade-in) ── */}
+      {/* ── Expandable: Anika AI insight + Assessment notes ── */}
       <div className={`lc-expand${open ? ' open' : ''}`}>
         <div className="lc-expand-inner">
 
-          {/* Anika AI insights — character-by-character typing */}
-          <div className="lc-section">
-            <div className="lc-section-head">
-              <Sparkles size={10} /> Anika AI insights
-            </div>
-            {reasons.map((r, i) => (
-              <div
-                key={i}
-                className="lc-reason"
-                style={{ opacity: typingPhase >= i ? 1 : 0, transition: 'opacity 0.12s ease' }}
-              >
-                <CheckCircle2 size={12} className="lc-reason-icon" />
-                <TypewriterText
-                  text={r}
-                  phase={typingPhase}
-                  myPhase={i}
-                  onDone={nextPhase}
-                />
-              </div>
-            ))}
+          {/* Anika AI — embedded panel, stripped of standalone-card shell */}
+          <div className="lc-anika-wrap">
+            <AnikaPanel
+              key={panelKey}
+              message={anikaMessage}
+              thinkingMs={500}
+              charSpeed={10}
+            />
           </div>
 
-          {/* Assessment notes — sequential fade-in after reasons complete */}
+          {/* Assessment notes — sequential fade-in after Anika finishes */}
           <div className="lc-section lc-section-last">
             <div
               className="lc-section-head"
-              style={{ opacity: typingPhase >= reasons.length ? 1 : 0, transition: 'opacity 0.2s ease' }}
+              style={{ opacity: notesPhase >= 0 ? 1 : 0, transition: 'opacity 0.2s ease' }}
             >
               Assessment notes
             </div>
-            {notes.map((note, j) => {
-              const notePhase = reasons.length + j;
-              return (
-                <div
-                  key={j}
-                  className={`lc-note${j === notes.length - 1 ? ' lc-note-last' : ''}`}
-                  style={{ opacity: typingPhase > notePhase ? 1 : 0, transition: 'opacity 0.3s ease' }}
-                >
-                  {note}
-                </div>
-              );
-            })}
+            {notes.map((note, j) => (
+              <div
+                key={j}
+                className={`lc-note${j === notes.length - 1 ? ' lc-note-last' : ''}`}
+                style={{ opacity: notesPhase > j ? 1 : 0, transition: 'opacity 0.3s ease' }}
+              >
+                {note}
+              </div>
+            ))}
           </div>
 
         </div>

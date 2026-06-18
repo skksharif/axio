@@ -4,7 +4,7 @@ import { useApp } from "../context/AppContext";
 import { ScreenHeader } from "../components/common/ScreenHeader";
 import { BtnPrimary, BtnGhost, BtnRow } from "../components/common/Button";
 import { Card, CardTitle } from "../components/common/Card";
-import { InfoBanner } from "../components/common/InfoBanner";
+import { AnikaInsightCard } from "../components/common/AnikaInsightCard";
 import { INCOME_TYPES } from "../data/incomeTypes";
 import { fmt } from "../utils/format";
 import "../components/ui/ALCard.css";
@@ -90,12 +90,12 @@ export function IncomeScreen() {
           </div>
         )}
 
-        <InfoBanner icon="TrendingUp" variant="green" style={{ marginTop: 14 }}>
-          <strong style={{ color: "var(--green)" }}>
-            Total declared income
-          </strong>{" "}
-          annualised across all sources.
-        </InfoBanner>
+        <AnikaInsightCard
+          variant="success"
+          style={{ marginTop: 14 }}
+          message="Your income has been calculated and annualised across all declared sources for lender serviceability assessment. Lenders assess your annual gross income figure when determining your borrowing capacity and repayment ability."
+          summary="Total declared income annualised across all sources."
+        />
         <div className="totals-row">
           <div className="tot-box hl">
             <div className="tot-lbl">Declared income</div>
