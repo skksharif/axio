@@ -24,7 +24,7 @@ export const PRODUCTS = [
     desc: 'A personal loan allows you to borrow a fixed amount of money and repay it over time with regular repayments. Debt consolidation, travel, medical, renovations, education and more.',
     rate: 'From 6.25%',
     rateNote: 'p.a. comparison rate',
-    features: ['Secured & Unsecured options', '$5,000 – $80,000', '12 – 84 month terms', 'Fixed or Variable rate'],
+    features: ['Secured & Unsecured options', '$5,000 – $100,000', '12 – 84 month terms', 'Fixed or Variable rate'],
     footerNote: 'Over 25 lenders',
     badge: { cls: 'badge-blue', text: 'Most popular' },
   },

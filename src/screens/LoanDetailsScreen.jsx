@@ -83,6 +83,15 @@ export function LoanDetailsScreen() {
 function PersonalLoanDetails({ repay, rateLabel }) {
   const { state, updateState } = useApp();
 
+  const isForced = state.loanAmount > 70000;
+
+  // Auto-lock to secured vehicle when loan exceeds $70k
+  useEffect(() => {
+    if (isForced) {
+      updateState({ securityType: 'secured', securityAssetType: 'vehicle' });
+    }
+  }, [isForced, updateState]);
+
   return (
     <>
       <Card>
@@ -117,9 +126,9 @@ function PersonalLoanDetails({ repay, rateLabel }) {
           label="Loan amount"
           value={state.loanAmount}
           prefix="$"
-          min={5000} max={80000} step={500}
+          min={5000} max={100000} step={500}
           onChange={v => updateState({ loanAmount: v })}
-          minLabel="$5,000" maxLabel="$80,000"
+          minLabel="$5,000" maxLabel="$100,000"
         />
         <div className="divider" />
         <div className="fld">
@@ -151,45 +160,68 @@ function PersonalLoanDetails({ repay, rateLabel }) {
           message="Securing against a vehicle you own outright typically reduces your rate by 1.5–3% and improves approval probability. The vehicle must have no existing finance."
           thinkingMs={400}
         />
-        <ChoiceGrid cols={2}>
-            <ChoiceCard
-            selected={state.securityType === 'unsecured'}
-            onClick={() => updateState({ securityType: 'unsecured' })}
-          >
-            <IconBadge name="ClipboardList" iconSize={22} />
-            <div className="cc-title">Unsecured</div>
-            <div className="cc-desc">No asset required. Based on income and credit profile.</div>
-            <div style={{ marginTop: 10 }}><Badge variant="yellow">From 8.49% p.a.</Badge></div>
-          </ChoiceCard>
-          <ChoiceCard
-            selected={state.securityType === 'secured'}
-            onClick={() => updateState({ securityType: 'secured' })}
-          >
+
+        {isForced ? (
+          <>
+            <div className="sec-lock-notice">
+              <AlertTriangle size={13} />
+              <span>Loans above $70,000 require vehicle security and cannot be submitted as unsecured.</span>
+            </div>
+            <div className="sec-forced-card">
               <IconBadge name="Car" iconSize={22} />
-            <div className="cc-title">Secured — vehicle</div>
-            <div className="cc-desc">Use a vehicle you own outright. Lower rate, better approval odds.</div>
-            <div style={{ marginTop: 10 }}><Badge variant="green">From 6.49% p.a.</Badge></div>
-          </ChoiceCard>
-        </ChoiceGrid>
+              <div className="sec-forced-body">
+                <div className="cc-title">Secured — vehicle</div>
+                <div className="cc-desc">Mandatory for loans above $70,000.</div>
+              </div>
+              <Badge variant="green">From 6.49% p.a.</Badge>
+            </div>
+          </>
+        ) : (
+          <ChoiceGrid cols={2}>
+            <ChoiceCard
+              selected={state.securityType === 'unsecured'}
+              onClick={() => updateState({ securityType: 'unsecured' })}
+            >
+              <IconBadge name="ClipboardList" iconSize={22} />
+              <div className="cc-title">Unsecured</div>
+              <div className="cc-desc">No asset required. Based on income and credit profile.</div>
+              <div style={{ marginTop: 10 }}><Badge variant="yellow">From 8.49% p.a.</Badge></div>
+            </ChoiceCard>
+            <ChoiceCard
+              selected={state.securityType === 'secured'}
+              onClick={() => updateState({ securityType: 'secured' })}
+            >
+              <IconBadge name="Car" iconSize={22} />
+              <div className="cc-title">Secured — vehicle</div>
+              <div className="cc-desc">Use a vehicle you own outright. Lower rate, better approval odds.</div>
+              <div style={{ marginTop: 10 }}><Badge variant="green">From 6.49% p.a.</Badge></div>
+            </ChoiceCard>
+          </ChoiceGrid>
+        )}
+
         <div className="divider" />
         <AnikaInsightCard
           variant="warning"
           message="The asset you nominate as loan security must be free of any existing finance, liens, or encumbrances. A PPSR (Personal Property Securities Register) check and title verification will be conducted during assessment to confirm clear ownership before settlement can proceed."
           summary="The asset must be owned outright with no existing finance to qualify as security."
         />
-        {state.securityType === 'secured' && (
+
+        {(isForced || state.securityType === 'secured') && (
           <div className="sec-type-section">
             <div className="sec-type-hd">
               <span className="sec-type-lbl">What type of asset?</span>
             </div>
             <div className="sec-type-grid">
-              {SECURITY_ASSET_TYPES.map(t => (
+              {(isForced
+                ? SECURITY_ASSET_TYPES.filter(t => t.id === 'vehicle')
+                : SECURITY_ASSET_TYPES
+              ).map(t => (
                 <div
                   key={t.id}
-                  className={`sec-type-card${state.securityAssetType === t.id ? ' on' : ''}`}
-                  onClick={() => updateState({ securityAssetType: t.id })}
+                  className={`sec-type-card${state.securityAssetType === t.id ? ' on' : ''}${isForced ? ' sec-type-card--locked' : ''}`}
+                  onClick={isForced ? undefined : () => updateState({ securityAssetType: t.id })}
                 >
-                    <IconBadge name={t.icon} iconSize={18} />
+                  <IconBadge name={t.icon} iconSize={18} />
                   <div className="sec-type-body">
                     <div className="sec-type-title">{t.title}</div>
                     <div className="sec-type-desc">{t.desc}</div>
